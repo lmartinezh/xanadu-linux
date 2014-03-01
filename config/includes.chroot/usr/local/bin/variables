@@ -1,0 +1,72 @@
+#!/bin/bash
+# Elaborado por Sinfallas
+lock="/home/user/tor.lock"
+lock2="/home/user/i2p.lock"
+persistencia="/usr/local/bin/persistencia"
+function espera ()
+{
+	sleep 30
+}
+
+function seguridad_1 ()
+{
+	sudo modprobe -f ip_tables
+	sudo modprobe -f ip_conntrack
+	sudo modprobe -f iptable_filter
+	sudo modprobe -f iptable_nat
+	sudo modprobe -f ipt_physdev
+	sudo service shorewall start
+	sudo service fail2ban start
+	sudo service psad start
+}
+
+function antivirus_1 ()
+{
+	sudo freshclam
+	sudo clamtk
+}
+
+function tor_1 ()
+{
+	echo "$(date +%d/%m/%Y-%r)" > $lock
+	sudo mv -f /etc/iceweasel/pref/iceweasel.js /etc/iceweasel/pref/iceweasel.bk
+	sudo mv -f /etc/iceweasel/pref/iceweasel.old /etc/iceweasel/pref/iceweasel.js
+	sudo service tor start
+	sudo service polipo start
+	sudo service privoxy start
+	sudo service dnsmasq restart
+	sudo tsocks -on
+	sudo service memlockd start
+}
+
+function tor_0 ()
+{
+	rm -f $lock
+	sudo mv -f /etc/iceweasel/pref/iceweasel.js /etc/iceweasel/pref/iceweasel.old
+	sudo mv -f /etc/iceweasel/pref/iceweasel.bk /etc/iceweasel/pref/iceweasel.js
+	sudo service privoxy stop
+	sudo service polipo stop
+	sudo service tor stop
+	sudo service dnsmasq restart
+	sudo tsocks -off
+	sudo service memlockd stop
+	sudo rm -rf /var/cache/polipo/*
+}
+
+function i2p_1 ()
+{
+	echo "$(date +%d/%m/%Y-%r)" > $lock2
+	i2prouter start
+}
+
+function i2p_0 ()
+{
+	rm -f $lock2
+	i2prouter stop
+}
+
+function hora_1 ()
+{
+	sudo hwclock --systohc
+	sudo service ntp restart
+}

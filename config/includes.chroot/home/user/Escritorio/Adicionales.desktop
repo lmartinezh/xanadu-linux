@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Adicionales
+Comment=Acciones adicionales
+Icon=/usr/share/icons/Mint-X/apps/scalable/bash.svg
+Exec=/usr/local/bin/adicionales
+Terminal=false
+Type=Application

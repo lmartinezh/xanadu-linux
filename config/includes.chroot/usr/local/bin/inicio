@@ -1,0 +1,17 @@
+#!/bin/bash
+# Elaborado por Sinfallas
+mio="/home/user/.mio"
+archiver="/home/user/.config/xarchiver/xarchiverrc"
+if [[ -f $mio ]]; then
+	echo 1 > /dev/null
+else
+	echo "$(date +%d/%m/%Y-%r)" > $mio 	
+	sudo rmmod -f ip_tables ip6_tables iptable_filter iptable_mangle iptable_nat iptable_raw bluetooth rfcomm rfkill
+fi
+if [[ -f $archiver ]]; then
+	echo 1 > /dev/null
+else
+	mkdir -p /home/user/.config/xarchiver/
+	mv -f /home/user/xarchiverrc /home/user/.config/xarchiver/xarchiverrc
+fi
+exit 0

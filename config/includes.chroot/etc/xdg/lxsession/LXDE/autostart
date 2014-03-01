@@ -1,0 +1,7 @@
+@smproxy
+@xscreensaver -no-splash
+@lxpanel --profile LXDE
+@pcmanfm --desktop --profile LXDE
+@fdpowermon
+@inicio
+@adicionales

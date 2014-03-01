@@ -1,0 +1,23 @@
+0f¿QUE ES XANADU GNU/LINUX?07                                                          09F907
+
+
+Es una distribucion LIVE basada de Debian SID que utiliza LXDE como entorno 
+de escritorio, pensada para ser ligera y a la vez util, contiene herramientas 
+para rescate de sistemas, analisis forense y navegacion anonima, ademas de 
+todo lo necesario para su uso en el escritorio.
+
+
+
+
+Dudas, consultas y/o sugerencias por favor enviarlas a: 
+
+
+	sinfallas@gmail.com
+
+
+
+
+
+
+
+Presione F1control y F luego 1 para ir al indice, o ENTER para
