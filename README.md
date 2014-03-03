@@ -12,18 +12,11 @@ Para copiar el contenido de la imagen ISO a una memoria USB puede utilizar unetb
 
 Requerimientos mínimos:
 
-	* 384 Mb RAM
-	* CPU a 800 Mhz o superior
-	* 16 Mb vídeo RAM
+	* 384 Mb RAM (1 Gb RAM para tor)
+	* CPU a 800 Mhz o superior (1.0 Ghz para tor)
+	* Tarjeta de video a 800x600, 16 Mb vídeo RAM
 	* BIOS con capacidad de arranque por USB o CDROM
-
-Requerimientos mínimos para usar TOR:
-
-	* 1 Gb RAM
-	* CPU a 1.0 Ghz o superior
-	* 16 Mb vídeo RAM
-	* BIOS con capacidad de arranque por USB o CDROM
-	* Conexión a internet
+	* 5 Gb de capacidad de disco para instalar
 
 Desarrolladores:
 
