@@ -1,6 +1,4 @@
-                  0fBienvenido a Xanadu GNU/Linux!07                                09F107
-
-
+                  0fBienvenido a Xanadu GNU/Linux!07    09F107
 
 
 0fINDICE DE AYUDA07
@@ -9,17 +7,17 @@
 
 <09F107>   Esta pagina, indice de ayuda.
 <09F207>   Requerimientos minimos para Xanadu.
-<09F307>   Metodos de arranque
-<09F407>   Metodos de arranque II
-<09F507>   Metodos de arranque III
-<09F607>   Parametros especiales - Hardware
-<09F707>   Parametros especiales - Unidades de disco
+<09F307>   Metodos de arranque.
+<09F407>   Metodos de arranque II.
+<09F507>   Metodos de arranque III.
+<09F607>   Parametros especiales - Hardware.
+<09F707>   Parametros especiales - Unidades de disco.
 <09F807>   Persistencia.
-<09F907>   ¿Que es Xanadu GNU/Linux?.
+<09F907>   Que es Xanadu GNU/Linux.
 <09F1007>  Copyrights.
-
-Para F1-F9 presione control y F luego 1-9
-Para F10 presione control y F luego 0
-
 
-Presione desde F2 hasta F10 para detalles, o ENTER para 
+
+
+
+
+Presione desde F2 hasta F10 para detalles, o ENTER para

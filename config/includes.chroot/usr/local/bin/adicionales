@@ -1,5 +1,5 @@
 #!/bin/bash
-# Elaborado por Sinfallas
+#elaborado por sinfallas
 source /usr/local/bin/variables
 file=$(zenity --width=360 --height=420 --list --title Adicionales --column Acciones "Activar Seguridad" "Antivirus" "Iniciar Tor" "Monitor Tor" "Detener Tor" "Iniciar i2p" "Detener i2p" "Como activar la persistencia" "Reparar Hora")
 

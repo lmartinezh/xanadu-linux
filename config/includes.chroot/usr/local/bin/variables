@@ -1,7 +1,11 @@
 #!/bin/bash
-# Elaborado por Sinfallas
-lock="/home/user/tor.lock"
-lock2="/home/user/i2p.lock"
+#elaborado por sinfallas
+if [[ $USER != root ]]; then
+echo "Ejecutar como root" >&2
+exit 1
+fi
+lock="/run/tor.lock"
+lock2="/run/i2p.lock"
 persistencia="/usr/local/bin/persistencia"
 function espera ()
 {
@@ -10,47 +14,47 @@ function espera ()
 
 function seguridad_1 ()
 {
-	sudo modprobe -f ip_tables
-	sudo modprobe -f ip_conntrack
-	sudo modprobe -f iptable_filter
-	sudo modprobe -f iptable_nat
-	sudo modprobe -f ipt_physdev
-	sudo service shorewall start
-	sudo service fail2ban start
-	sudo service psad start
+	modprobe -f ip_tables
+	modprobe -f ip_conntrack
+	modprobe -f iptable_filter
+	modprobe -f iptable_nat
+	modprobe -f ipt_physdev
+	service shorewall start
+	service fail2ban start
+	service psad start
 }
 
 function antivirus_1 ()
 {
-	sudo freshclam
-	sudo clamtk
+	freshclam
+	clamtk
 }
 
 function tor_1 ()
 {
 	echo "$(date +%d/%m/%Y-%r)" > $lock
-	sudo mv -f /etc/iceweasel/pref/iceweasel.js /etc/iceweasel/pref/iceweasel.bk
-	sudo mv -f /etc/iceweasel/pref/iceweasel.old /etc/iceweasel/pref/iceweasel.js
-	sudo service tor start
-	sudo service polipo start
-	sudo service privoxy start
-	sudo service dnsmasq restart
-	sudo tsocks -on
-	sudo service memlockd start
+	mv -f /etc/iceweasel/pref/iceweasel.js /etc/iceweasel/pref/iceweasel.bk
+	mv -f /etc/iceweasel/pref/iceweasel.old /etc/iceweasel/pref/iceweasel.js
+	service tor start
+	service polipo start
+	service privoxy start
+	service dnsmasq restart
+	tsocks -on
+	service memlockd start
 }
 
 function tor_0 ()
 {
 	rm -f $lock
-	sudo mv -f /etc/iceweasel/pref/iceweasel.js /etc/iceweasel/pref/iceweasel.old
-	sudo mv -f /etc/iceweasel/pref/iceweasel.bk /etc/iceweasel/pref/iceweasel.js
-	sudo service privoxy stop
-	sudo service polipo stop
-	sudo service tor stop
-	sudo service dnsmasq restart
-	sudo tsocks -off
-	sudo service memlockd stop
-	sudo rm -rf /var/cache/polipo/*
+	mv -f /etc/iceweasel/pref/iceweasel.js /etc/iceweasel/pref/iceweasel.old
+	mv -f /etc/iceweasel/pref/iceweasel.bk /etc/iceweasel/pref/iceweasel.js
+	service privoxy stop
+	service polipo stop
+	service tor stop
+	service dnsmasq restart
+	tsocks -off
+	service memlockd stop
+	rm -rf /var/cache/polipo/*
 }
 
 function i2p_1 ()
@@ -67,6 +71,6 @@ function i2p_0 ()
 
 function hora_1 ()
 {
-	sudo hwclock --systohc
-	sudo service ntp restart
+	hwclock --systohc
+	service ntp restart
 }

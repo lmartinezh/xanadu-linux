@@ -1,4 +1,4 @@
-0fCOPYRIGHTS07                                                    09F1007
+0fCOPYRIGHTS07                                          09F1007
 
 Copyright (C) Xanadu <sinfallas@gmail.com>
 

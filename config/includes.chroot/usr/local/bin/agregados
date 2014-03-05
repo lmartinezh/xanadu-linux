@@ -1,5 +1,5 @@
 #!/bin/bash
-# Elaborado por Sinfallas
+#elaborado por sinfallas
 source /usr/local/bin/variables
 case "$1" in
 	seguridad)

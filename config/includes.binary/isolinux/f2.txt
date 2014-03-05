@@ -1,22 +1,22 @@
-0fREQUERIMIENTOS MINIMOS07                                           09F207
+0fREQUERIMIENTOS MINIMOS07                              09F207
 
-	* 384 Mb RAM
-	* CPU a 800 Mhz o superior
-	* 16 Mb video RAM
-	* BIOS con capacidad de arranque por USB o CDROM
 
-Para usar TOR:
 
-	* 1 Gb RAM
-	* CPU a 1.0 Ghz o superior
-	* 16 Mb video RAM
-	* BIOS con capacidad de arranque por USB o CDROM
-	* Conexion a internet
+384 Mb RAM (1 Gb RAM para tor)
+CPU de 800 Mhz o superior (1.0 Ghz para tor)
+Resolucion 800x600, 16 Mb video RAM
+BIOS con capacidad de arranque por USB o CDROM
+5 Gb de capacidad de disco para instalar
 
 
 Algunas configuraciones pueden requerir de una NIC adicional
 
 
+
+
+El usuario es: user
+La clave de user es: xanadu
+La clave de ROOT es: xanadu
 
 
 

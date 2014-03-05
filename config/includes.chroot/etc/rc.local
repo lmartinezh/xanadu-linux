@@ -29,6 +29,7 @@ service shorewall stop
 service fail2ban stop
 service psad stop
 service clamav-freshclam stop
+service i2p stop
 service tor stop
 service privoxy stop
 service polipo stop
@@ -36,8 +37,6 @@ service cron stop
 service anacron stop
 service rsyslog stop
 service avahi-daemon stop 
-service bluetooth stop
 service ntp stop
 service memlockd stop
-service i2p stop
 exit 0

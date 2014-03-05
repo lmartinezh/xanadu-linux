@@ -1,9 +1,9 @@
 #!/bin/bash
-# Elaborado por Sinfallas
-archiver="/home/user/.config/xarchiver/xarchiverrc"
+#elaborado por sinfallas
 sudo rmmod -f ip_tables ip6_tables iptable_filter iptable_mangle iptable_nat iptable_raw bluetooth rfcomm rfkill
+archiver="/home/user/.config/xarchiver/xarchiverrc"
 if [[ -f $archiver ]]; then
-	source /usr/local/bin/post
+	echo 1 > /dev/null
 else
 	mkdir -p /home/user/.config/xarchiver/
 	mv -f /home/user/xarchiverrc /home/user/.config/xarchiver/xarchiverrc

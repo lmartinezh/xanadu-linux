@@ -1,4 +1,4 @@
-0fPARAMETROS ESPECIALES - HARDWARE07                                    09F607
+0fPARAMETROS ESPECIALES - HARDWARE07                   09F607
 
 Puede usar los siguientes parametros en prompt de arranque
 en combinacion con los metodos de arranque
