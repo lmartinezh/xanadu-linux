@@ -14,7 +14,7 @@ sobre la marcha.
 
 timezone=TIMEZONE
 Permite establecer la zona horaria del sistema,
-p.ej. Europa/Madrid Por omisión es UTC
+p.ej. Europa/Madrid Por omision es UTC
 
 keyboard-model=KEYBOARD_MODEL
 Permite cambiar el modelo de teclado. No hay ningun valor por omision.

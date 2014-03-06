@@ -9,8 +9,8 @@ BIOS con capacidad de arranque por USB o CDROM
 5 Gb de capacidad de disco para instalar
 
 
-Algunas configuraciones pueden requerir de una NIC adicional
 
+Algunas configuraciones pueden requerir de una NIC adicional
 
 
 

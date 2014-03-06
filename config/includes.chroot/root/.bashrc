@@ -22,3 +22,5 @@ HISTFILESIZE=2000
 shopt -s checkwinsize
 alias ls='ls --color'
 export HISTIGNORE="ls:clear"
+alias cp='gcp'
+alias actualizar='apt-get update && apt-get -y dist-upgrade'

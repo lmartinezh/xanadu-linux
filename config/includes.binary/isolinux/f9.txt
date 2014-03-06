@@ -1,10 +1,10 @@
 0fQUE ES XANADU GNU/LINUX07                             09F907
 
 
-Es una distribucion LIVE basada de Debian SID que utiliza LXDE como entorno 
-de escritorio, pensada para ser ligera y a la vez util, contiene herramientas 
-para rescate de sistemas, analisis forense y navegacion anonima, ademas de 
-todo lo necesario para su uso en el escritorio.
+Es un sabor de Debian que utiliza SID como base y LXDE como entorno
+de escritorio, pensada para ser ligera y a la vez util, contiene
+herramientas para rescate de sistemas, analisis forense y navegacion
+anonima, ademas de todo lo necesario para su uso en el escritorio.
 
 El nombre xanadu se ha convertido en una metafora de la opulencia, sobre todo
 gracias al poema Kubla Khan de Samuel Taylor Coleridge, tambien era la capital

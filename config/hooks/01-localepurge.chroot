@@ -22,6 +22,7 @@ echo "i2p: `dpkg-query -W -f='${Version}\n' i2p`" >> /etc/xanadu/version
 echo "## permisos ##"
 chmod 644 /usr/lib/libvte9/gnome-pty-helper
 chmod 644 /usr/lib/libvte-2.90-9/gnome-pty-helper
+echo "## proteger paquetes ##"
 /bin/echo amd64-microcode hold | /usr/bin/dpkg --set-selections
 /bin/echo dash hold | /usr/bin/dpkg --set-selections
 /bin/echo locales hold | /usr/bin/dpkg --set-selections

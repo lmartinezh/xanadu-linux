@@ -29,3 +29,4 @@ echo "1" > /dev/cgroup/cpu/user/$$/notify_on_release
 fi
 alias ls='ls --color'
 export HISTIGNORE="ls:clear"
+alias cp='gcp'
