@@ -1,7 +1,7 @@
 #!/bin/bash
 # Elaborado por sinfallas
 if [[ $USER != root ]]; then
-echo "Ejecutar como root" >&2
+echo "Ejecutar como root"
 exit 1
 fi
 dispositivo2=$(df / --output=source | tail -n1 | cut -c 19-54)

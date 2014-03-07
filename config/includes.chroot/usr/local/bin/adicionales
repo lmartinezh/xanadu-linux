@@ -1,7 +1,7 @@
 #!/bin/bash
 #elaborado por sinfallas
 source /usr/local/bin/variables
-file=$(zenity --width=360 --height=420 --list --title Adicionales --column Acciones "Activar Seguridad" "Antivirus" "Iniciar Tor" "Monitor Tor" "Detener Tor" "Iniciar i2p" "Detener i2p" "Como activar la persistencia" "Reparar Hora")
+file=$(zenity --width=360 --height=420 --list --title Adicionales --column Acciones "Activar Seguridad" "Antivirus" "Iniciar Tor" "Monitor Tor" "Detener Tor" "Iniciar i2p" "Detener i2p" "Como activar la persistencia" "Reparar Hora" "Iniciar Compton")
 
 if [ "$file" = "Activar Seguridad" ]; then
 	seguridad_1
@@ -38,7 +38,7 @@ elif [ "$file" = "Detener Tor" ]; then
 	fi
 
 elif [ "$file" = "Iniciar i2p" ]; then
-	zenity --info --text="Esta función es experimental y no se garantiza su correcto funcionamiento."
+	zenity --warning --text="Esta función es experimental y no se garantiza su correcto funcionamiento."
 	if [[ -f $lock ]]; then
 		zenity --error --text="I2p no puede ejecutarse conjuntamente con tor."
 		source $0
@@ -67,6 +67,14 @@ elif [ "$file" = "Como activar la persistencia" ]; then
 elif [ "$file" = "Reparar Hora" ]; then
 	zenity --info --text="Esta opción tratara de reparar la forma en la que se muestra la hora en su ordenador."
 	hora_1
+	source $0
+
+elif [ "$file" = "Iniciar Compton" ]; then
+	if zenity --question --text="Esta opción activara el gestor de composición compton aumentando dramáticamente el consumo de recursos en su equipo, ¿desea continuar?."; then
+		compton --config /etc/compton.conf -b
+	else
+		source $0
+	fi	
 	source $0
 
 else
