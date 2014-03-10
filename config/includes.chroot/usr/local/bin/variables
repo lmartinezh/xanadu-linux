@@ -7,6 +7,7 @@ fi
 lock="/run/tor.lock"
 lock2="/run/i2p.lock"
 persistencia="/usr/local/bin/persistencia"
+
 function espera ()
 {
 	sleep 30
@@ -73,4 +74,106 @@ function hora_1 ()
 {
 	hwclock --systohc
 	service ntp restart
+}
+
+function compton_1 ()
+{
+	/usr/bin/compton --config /etc/compton.conf -b
+}
+
+function progress_1 ()
+{
+	zenity --progress --pulsate --no-cancel --text "Instalando Software, esto proceso puede tomar varios minutos, por favor espere" --auto-close
+}
+
+function progress_2 ()
+{
+	yad --progress-text="Instalando Software, esto proceso puede tomar varios minutos, por favor espere" --progress --pulsate --auto-close --auto-kill --skip-taskbar --center --title="INSTALANDO"
+}
+
+function optimizacion_1 ()
+{
+	if [[ -f /root/.optimizado ]]; then
+		echo 1 > /dev/null
+	else
+		rm -f /home/*/Escritorio/instalar-xanadu.desktop
+		rm -f /etc/apt/preferences.d/exclude.pref
+		rm -f /etc/apt/preferences
+		swapoff /swapfile
+		rm -f /swapfile
+		sed -i 's_/swapfile_#/swapfile_g' /etc/fstab
+		sed -i 's/autologin-user=user/#autologin-user=user/g' /etc/lightdm/lightdm.conf
+		sed -i 's/autologin-user-timeout=0/#autologin-user-timeout=0/g' /etc/lightdm/lightdm.conf
+		dispositivo2=$(df / --output=source | tail -n1 | cut -c 19-54)
+		dispositivo=$(blkid -U $dispositivo2 | cut -c 1-8)
+		echo $dispositivo { >> /etc/hdparm.conf
+		echo "lookahead = on" >> /etc/hdparm.conf
+		echo "write_cache = on" >> /etc/hdparm.conf
+		echo "spindown_time = 18" >> /etc/hdparm.conf
+		echo "}" >> /etc/hdparm.conf
+		echo "user ALL=(ALL) ALL" > /etc/sudoers.d/live
+		echo "proc /proc proc defaults,hidepid=2 0 0" >> /etc/fstab
+		echo "tmpfs /tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab
+		echo "tmpfs /run tmpfs rw,nosuid,noexec,nodev,noatime,mode=755 0 0" >> /etc/fstab
+		echo "tmpfs /var/cache/apt/archives tmpfs noatime,nodev 0 0" >> /etc/fstab
+		echo "tmpfs /var/cache/samba tmpfs noatime,nodev 0 0" >> /etc/fstab
+		echo "tmpfs /var/spool tmpfs noatime,nodev 0 0" >> /etc/fstab
+		echo "tmpfs /var/tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab
+		echo "$(date +%d/%m/%Y-%r)" > /root/.optimizado
+	fi
+}
+
+function kde_1 ()
+{
+	apt-get -q update && apt-get -q -y --force-yes install task-kde-desktop kde-plasma-desktop
+}
+
+function gnome_1 ()
+{
+	apt-get -q update && apt-get -q -y --force-yes install task-gnome-desktop gnome-session-fallback gnome-shell gnome-tweak-tool
+}
+
+function xfce_1 ()
+{
+	apt-get -q update && apt-get -q -y --force-yes install task-xfce-desktop xfce4
+}
+
+function e17_1 ()
+{
+	apt-get -q update && apt-get -q -y --force-yes install e17
+}
+
+function cinnamon_1 ()
+{
+	apt-get -q update && apt-get -q -y --force-yes install cinnamon
+}
+
+function wine_1 ()
+{
+	apt-get -q update && apt-get -q -y --force-yes install playonlinux
+}
+
+function xbmc_1 ()
+{
+	apt-get -q update && apt-get -q -y --force-yes install xbmc python-software-properties pkg-config software-properties-common
+}
+
+function ati_1 ()
+{
+	apt-get -q update && apt-get -q -y --force-yes install fglrx-atieventsd fglrx-control fglrx-driver fglrx-modules-dkms radeontool
+}
+
+function nvidia_1 ()
+{
+	apt-get -q update && apt-get -q -y --force-yes install nvclock nvidia-alternative nvidia-glx nvidia-installer-cleanup nvidia-kernel-common nvidia-kernel-dkms nvidia-settings nvidia-support nvidia-vdpau-driver nvidia-xconfig
+}
+
+function liquorix_1 ()
+{
+	apt-get -q update && apt-get -q -y --force-yes install linux-image-liquorix-686 linux-headers-liquorix-686
+}
+
+function icedove_1 ()
+{
+	apt-get -q update && apt-get -q -y --force-yes install icedove
 }

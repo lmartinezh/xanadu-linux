@@ -1,109 +1,12 @@
 #!/bin/bash
 #elaborado por sinfallas
-if [[ $USER != root ]]; then
-echo "Ejecutar como root"
-exit 1
-fi
-zenity --warning --text="Este script solo debe ejecutarse después de realizar una instalación del sistema operativo; si lo ejecuta en modo LIVE puede hacer que su sistema sea inestable."
-install=$(find /home/*/installer_exclude.list)
-echo "proc /proc proc defaults,hidepid=2 0 0" >> /target/etc/fstab
-echo "tmpfs /tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /target/etc/fstab
-echo "tmpfs /run tmpfs rw,nosuid,noexec,nodev,noatime,mode=755 0 0" >> /target/etc/fstab
-echo "tmpfs /var/cache/apt/archives tmpfs noatime,nodev 0 0" >> /target/etc/fstab
-echo "tmpfs /var/cache/samba tmpfs noatime,nodev 0 0" >> /target/etc/fstab
-echo "tmpfs /var/spool tmpfs noatime,nodev 0 0" >> /target/etc/fstab
-echo "tmpfs /var/tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /target/etc/fstab
-rm -f /target/etc/apt/preferences.d/exclude.pref
-rm -f /target/etc/apt/preferences
-swapoff /swapfile
-rm -f /swapfile
-sed -i 's/\/swapfile	swap	swap	defaults	0	0/#/swapfile	swap	swap	defaults	0	0/g' /etc/fstab
-sed -i 's/\autologin-user=user/#autologin-user=user/g' /etc/lightdm/lightdm.conf
-sed -i 's/\autologin-user-timeout=0/#autologin-user-timeout=0/g' /etc/lightdm/lightdm.conf
-file=$(zenity --width=360 --height=420 --list --title Post-instalacion --column Acciones "Instalar KDE" "Instalar GNOME" "Instalar XFCE" "Instalar ENLIGHTENMENT" "Instalar CINNAMON" "Instalar WINE" "Instalar XBMC" "Instalar driver ATI" "Instalar driver NVIDIA" "Instalar kernel LIQUORIX")
+if [[ -f /usr/bin/yad ]]; then
+	source post-gui-yad
 
-if [ "$file" = "Instalar KDE" ]; then
-	if zenity --question --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?"; then
-		apt-get -q -f -y --force-yes install task-kde-desktop kde-plasma-desktop | zenity --progress --pulsate --no-cancel --text "Instalando Software, esto proceso puede tomar varios minutos, por favor espere" --auto-close
-	else
-		source $0
-	fi	
-	source $0
-
-elif [ "$file" = "Instalar GNOME" ]; then
-	if zenity --question --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?"; then
-		apt-get -q -f -y --force-yes install task-gnome-desktop gnome-session-fallback gnome-shell gnome-tweak-tool | zenity --progress --pulsate --no-cancel --text "Instalando Software, esto proceso puede tomar varios minutos, por favor espere" --auto-close
-	else
-		source $0
-	fi	
-	source $0
-
-elif [ "$file" = "Instalar XFCE" ]; then
-	if zenity --question --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?"; then
-		apt-get -q -f -y --force-yes install task-xfce-desktop xfce4 | zenity --progress --pulsate --no-cancel --text "Instalando Software, esto proceso puede tomar varios minutos, por favor espere" --auto-close
-	else
-		source $0
-	fi	
-	source $0
-
-elif [ "$file" = "Instalar ENLIGHTENMENT" ]; then
-	if zenity --question --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?"; then
-		apt-get -q -f -y --force-yes install e17 | zenity --progress --pulsate --no-cancel --text "Instalando Software, esto proceso puede tomar varios minutos, por favor espere" --auto-close
-	else
-		source $0
-	fi	
-	source $0
-
-elif [ "$file" = "Instalar CINNAMON" ]; then
-	if zenity --question --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?"; then
-		apt-get -q -f -y --force-yes install cinnamon | zenity --progress --pulsate --no-cancel --text "Instalando Software, esto proceso puede tomar varios minutos, por favor espere" --auto-close
-	else
-		source $0
-	fi	
-	source $0
-
-elif [ "$file" = "Instalar WINE" ]; then
-	if zenity --question --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?"; then
-		apt-get -q -f -y --force-yes install playonlinux | zenity --progress --pulsate --no-cancel --text "Instalando Software, esto proceso puede tomar varios minutos, por favor espere" --auto-close
-	else
-		source $0
-	fi	
-	source $0
-
-elif [ "$file" = "Instalar XBMC" ]; then
-	if zenity --question --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?"; then
-		apt-get -q -f -y --force-yes install xbmc python-software-properties pkg-config software-properties-common | zenity --progress --pulsate --no-cancel --text "Instalando Software, esto proceso puede tomar varios minutos, por favor espere" --auto-close
-	else
-		source $0
-	fi	
-	source $0
-
-elif [ "$file" = "Instalar driver ATI" ]; then
-	if zenity --question --text="¿Esta seguro de querer instalar este software?"; then
-		apt-get -q -f -y --force-yes install fglrx-atieventsd fglrx-control fglrx-driver fglrx-modules-dkms radeontool | zenity --progress --pulsate --no-cancel --text "Instalando Software, esto proceso puede tomar varios minutos, por favor espere" --auto-close
-	else
-		source $0
-	fi	
-	source $0	
-
-elif [ "$file" = "Instalar driver NVIDIA" ]; then
-	if zenity --question --text="¿Esta seguro de querer instalar este software?"; then
-		apt-get -q -f -y --force-yes install nvclock nvidia-alternative nvidia-glx nvidia-installer-cleanup nvidia-kernel-common nvidia-kernel-dkms nvidia-settings nvidia-support nvidia-vdpau-driver nvidia-xconfig | zenity --progress --pulsate --no-cancel --text "Instalando Software, esto proceso puede tomar varios minutos, por favor espere" --auto-close
-	else
-		source $0
-	fi	
-	source $0	
-
-elif [ "$file" = "Instalar kernel LIQUORIX" ]; then
-	if zenity --question --text="¿Esta seguro de querer instalar este software?"; then
-		apt-get -q -f -y --force-yes install linux-image-liquorix-686 linux-headers-liquorix-686 | zenity --progress --pulsate --no-cancel --text "Instalando Software, esto proceso puede tomar varios minutos, por favor espere" --auto-close
-	else
-		source $0
-	fi	
-	source $0	
+elif [[ -f /usr/bin/zenity ]]; then
+	source post-gui-zen
 
 else
-exit 0
-
+	echo 1 > /dev/null
 fi
 exit 0

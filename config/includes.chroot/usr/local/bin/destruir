@@ -1,5 +1,5 @@
 #!/bin/bash
-# Elaborado por sinfallas
+# elaborado por sinfallas
 if [[ $USER != root ]]; then
 echo "Ejecutar como root"
 exit 1

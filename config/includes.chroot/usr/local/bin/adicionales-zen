@@ -1,0 +1,83 @@
+#!/bin/bash
+#elaborado por sinfallas
+source /usr/local/bin/variables
+file=$(zenity --width=360 --height=420 --list --title Adicionales --column Acciones "Activar Seguridad" "Antivirus" "Iniciar Tor" "Monitor Tor" "Detener Tor" "Iniciar i2p" "Detener i2p" "Como activar la persistencia" "Reparar Hora" "Iniciar Compton")
+
+if [ "$file" = "Activar Seguridad" ]; then
+	seguridad_1
+	zenity --info --text="Los servicios: shorewall, fail2ban y psad se han iniciado pero NO contienen ninguna configuración, deben ser implementadas de acuerdo a sus necesidades, presione aceptar para continuar."
+	source $0
+
+elif [ "$file" = "Antivirus" ]; then
+	zenity --info --text="La actualización de base de firmas de virus retardara el inicio, por favor espere, presione aceptar para continuar."
+	antivirus_1
+
+elif [ "$file" = "Iniciar Tor" ]; then
+	if [[ -f $lock ]]; then
+		zenity --error --text="Tor ya se esta ejecutando."
+		source $0
+	else
+    		tor_1
+		zenity --info --text="Espere mientras se inicia TOR se le notificara al completarse la tarea."
+		espera
+		zenity --info --text="Inicio completado. Si utiliza un navegador diferente de Iceweasel, introduzca la siguiente configuración de PROXY en su navegador: localhost (o el ip del servidor) puerto 8118 (9151 para socks) y localhost (o el ip del servidor) puerto 9050 para las otras aplicaciones que usen socks."
+		iceweasel https://check.torproject.org/
+	fi
+
+elif [ "$file" = "Monitor Tor" ]; then
+	lxterminal -e sudo -u debian-tor arm
+	source $0
+
+elif [ "$file" = "Detener Tor" ]; then
+	if [[ -f $lock ]]; then
+		tor_0
+		zenity --info --text="Servicio finalizado exitosamente."
+	else
+		zenity --error --text="Tor no se esta ejecutando."
+		source $0
+	fi
+
+elif [ "$file" = "Iniciar i2p" ]; then
+	zenity --warning --text="Esta función es experimental y no se garantiza su correcto funcionamiento."
+	if [[ -f $lock ]]; then
+		zenity --error --text="I2p no puede ejecutarse conjuntamente con tor."
+		source $0
+	else
+		if [[ -f $lock2 ]]; then
+			zenity --error --text="I2p ya se esta ejecutando."
+			source $0
+		else
+    			i2p_1
+		fi
+	fi
+
+elif [ "$file" = "Detener i2p" ]; then
+	if [[ -f $lock2 ]]; then
+		i2p_0
+		zenity --info --text="Servicio finalizado exitosamente."
+	else
+		zenity --error --text="I2p no se esta ejecutando."
+		source $0
+	fi
+
+elif [ "$file" = "Como activar la persistencia" ]; then
+	zenity --text-info --title="Persistencia" --filename=$persistencia
+	source $0
+
+elif [ "$file" = "Reparar Hora" ]; then
+	zenity --info --text="Esta opción tratara de reparar la forma en la que se muestra la hora en su ordenador."
+	hora_1
+	source $0
+
+elif [ "$file" = "Iniciar Compton" ]; then
+	if zenity --question --text="Esta opción activara el gestor de composición compton aumentando dramáticamente el consumo de recursos en su equipo, ¿desea continuar?."; then
+		compton_1
+	else
+		source $0
+	fi	
+	
+else
+exit 0
+
+fi
+exit 0
