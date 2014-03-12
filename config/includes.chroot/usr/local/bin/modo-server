@@ -1,0 +1,22 @@
+#!/bin/bash
+#elaborado por sinfallas
+if [[ $USER != root ]]; then
+echo "Ejecutar como root"
+exit 1
+fi
+case "$1" in
+	start)
+		apt-get -y purge lightdm lxde lxappearance lxappearance-obconf lxde-common lxde-core lxde-icon-theme lxinput lxlauncher lxmenu-data lxmusic lxpanel lxrandr lxsession lxshortcut lxtask lxterminal brasero vlc xsane w32codecs iceweasel pidgin filezilla turpial libreoffice xorg x11-session-utils thunar gksu fdpowermon disk-manager clamtk synaptic gparted compton evince
+		apt-get -y --force-yes autoremove
+		apt-get -y purge $(deborphan)
+		apt-get clean
+		apt-get -y install ssh
+		reboot
+		;;
+
+	*)
+		echo "Al iniciar este modo se eliminaran todos los programas que utilizan interfaz grafica"
+		echo "USO: $0 start"
+		exit 0
+		;;
+exit 0

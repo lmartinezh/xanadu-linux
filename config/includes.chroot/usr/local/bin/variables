@@ -55,6 +55,8 @@ function tor_0 ()
 	service dnsmasq restart
 	tsocks -off
 	service memlockd stop
+	mv -f /etc/tor/torrc /etc/tor/torrc.obfs
+	mv -f /etc/tor/torrc.old /etc/tor/torrc
 	rm -rf /var/cache/polipo/*
 }
 

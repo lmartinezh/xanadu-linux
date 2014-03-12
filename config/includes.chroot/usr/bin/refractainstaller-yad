@@ -5,65 +5,16 @@ version="Refracta Installer (Yad) 9.0.9beta6 (20131204)"
 # License: GPL-3
 # This is free software with NO WARRANTY. Use at your own risk!
 
-
-# DESCRIPTION
-# This script is used for installing a live system to a hard drive. User
-# input is via popup windows created by yad. It should be run from
-# a terminal; if it's started from a menu item or a panel launcher, it
-# should be run in a persistent terminal, so that progress messages can
-# be seen and for user input in a few places.
-#
-# There are two modes for installation - Simple or Expert
-#   Simple Mode:
-# Create rsync excludes file if default file is missing.
-# User can run partitioner inside the installer or skip it.
-# User selects partition for installation. Bootloader goes to /dev/sda.
-# Summary window asks to proceed with installation.
-# Stuff happens without interaction.
-#
-#  Expert Mode:
-# User selects installation options - change username, select up to three
-# partitions (/, /boot, /home), select filesystem type for each partition, 
-# choose whether to encrypt partitions or not, choose whether to write 
-# random data or zeros to partitions.
-# User has option to exit and use custom excludes file.
-# User can run partitioner inside the installer.
-# Summary window asks to proceed with installation.
-# Stuff happens with some interaction (passwords, username, edit /etc/sudoers)
-#
-#  Stuff:
-# Cleanup (in case of previous aborted run)
-# Create encrypted volumes *(Expert mode only)
-# Write random data or zeros *
-# Mount partition(s) and create filesystem(s)
-# Copy system with rsync
-# Create swapfile or use existing swap partition
-# Copy update-initramfs
-# Set up fstab
-# Set up crypttab *
-# Install bootloader
-# Cleanup
-# Change username and passwords, edit /etc/sudoers *
-# Re-enable update-db and freshclam, disable ssh root login.
-
-
-# If you want to change any defaults, change them in the configfile.
-# Default is /etc/refractainstaller.conf
-# If you want to use a different config file for testing, change this
-# variable. Normally, users should not edit anything in this script.
-
-
-
 configfile="/etc/refractainstaller.conf"
 
 if [[ -f $configfile ]]; then
     source $configfile
 else
-	yad --title=Warning --window-icon=error \
+	yad --title=Advertencia --window-icon=error \
 	--button=Exit:0 \
-	--text="  Config file $configfile is missing.  
+	--text="  El archivo de configuracion $configfile no existe.  
   "
-	echo " Config file $configfile is missing."
+	echo " El archivo de configuracion $configfile no existe."
 	exit 1
 fi
 
@@ -288,8 +239,8 @@ If you don't understand an option, you probably don't need it." \
   FALSE 11 "Use UUID in /etc/fstab. (Useful if drive order changes.)" \
   FALSE 12 "Use filesystem labels (disk labels) in /etc/fstab." \
   FALSE 13 "Change hostname." \
-  FALSE 14 "Disable automatic login to desktop." \
-  FALSE 15 "Disable automatic login to console. (Use stock Debian inittab)" \
+  TRUE 14 "Disable automatic login to desktop." \
+  TRUE 15 "Disable automatic login to console. (Use stock Debian inittab)" \
   $var16 16 "Run pre-install scripts (listed below)
 $pre_install_list" \
   $var17 17 "Run post-install scripts (listed below)
@@ -753,7 +704,7 @@ select_hostname () {
 	new_hostname=$(yad --entry --title="Change hostname" \
 	--text="Enter new hostname for installed system." \
 	--entry-text="$HOSTNAME" --width=500 --button="OK":0)
-	test_hostname
+	new_hostname="$HOSTNAME"
 }
 
 
@@ -1390,34 +1341,34 @@ fi
 
 
 # Edit /etc/sudoers
-if [[ $install = "expert" ]]; then
-    yad --title="Edit /etc/sudoers" --button=Yes:0 --button=No:1 \
-     --text="You may need to edit /etc/sudoers to comment out the line that gives $oldname absolute power, 
-or replace $oldname with $newname. A simple text-editor will open in the terminal if you do this now.
+#if [[ $install = "expert" ]]; then
+#    yad --title="Edit /etc/sudoers" --button=Yes:0 --button=No:1 \
+#     --text="You may need to edit /etc/sudoers to comment out the line that gives $oldname absolute power, 
+#or replace $oldname with $newname. A simple text-editor will open in the terminal if you do this now.
  
-Edit /etc/sudoers now?" 
-	ans="$?"
-    if [[ $ans = "0" ]]; then
-        edit_sudoers="yes"
-        #xterm  -fa monaco -fs 12 -geometry 80x20+0+0 -e chroot /target visudo
-        chroot /target visudo
-    fi
-fi
+#Edit /etc/sudoers now?" 
+#	ans="$?"
+#    if [[ $ans = "0" ]]; then
+#        edit_sudoers="yes"
+#        #xterm  -fa monaco -fs 12 -geometry 80x20+0+0 -e chroot /target visudo
+#        chroot /target visudo
+#    fi
+#fi
 
 
 # Disable sudo-mode for gksu
-if [[ $edit_sudoers = "yes" ]]; then
-    yad --title="Disable sudo mode for gksu" --button="Yes, I commented out the line.":0 --button="No, I replaced the old name with the new one.":1 \
-     --text="If you commented out the line in /etc/sudoers in the last step, one more file will be changed for you so that gksu will work properly." 
-		ans="$?"
-        if [[ $ans = "0" ]]; then
-            if [[ -n $newname ]]; then
-                sed -i~ '/sudo-mode/s/true/false/' /target/home/"$newname"/.gconf/apps/gksu/%gconf.xml
-            else
-                sed -i~ '/sudo-mode/s/true/false/' /target/home/user/.gconf/apps/gksu/%gconf.xml
-            fi
-        fi
-fi
+#if [[ $edit_sudoers = "yes" ]]; then
+#    yad --title="Disable sudo mode for gksu" --button="Yes, I commented out the line.":0 --button="No, I replaced the old name with the new one.":1 \
+#     --text="If you commented out the line in /etc/sudoers in the last step, one more file will be changed for you so that gksu will work properly." 
+#		ans="$?"
+#        if [[ $ans = "0" ]]; then
+#            if [[ -n $newname ]]; then
+#                sed -i~ '/sudo-mode/s/true/false/' /target/home/"$newname"/.gconf/apps/gksu/%gconf.xml
+#            else
+#                sed -i~ '/sudo-mode/s/true/false/' /target/home/user/.gconf/apps/gksu/%gconf.xml
+#            fi
+#        fi
+#fi
 
 
 
