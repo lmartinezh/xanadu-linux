@@ -13,7 +13,9 @@ Para copiar el contenido de la imagen ISO a una memoria USB puede utilizar unetb
 --------------------------
 
 El usuario es:		user
+
 La clave de user es:	xanadu
+
 La clave de ROOT es:	xanadu
 
 --------------------------
