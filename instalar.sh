@@ -4,7 +4,7 @@ if [[ $USER != root ]]; then
 echo "Error: Debe tener privilegios de ROOT"
 exit 1
 fi
-echo "deb http://ftp.us.debian.org/debian testing main contrib non-free" >> /etc/apt/source.list
+echo "deb http://ftp.debian.org/debian testing main contrib non-free" > /etc/apt/source.list
 echo "deb http://ftp.debian.org/debian/ jessie-updates main contrib non-free" >> /etc/apt/source.list
 echo "deb http://security.debian.org/ jessie/updates main contrib non-free" >> /etc/apt/source.list
 apt-get update
