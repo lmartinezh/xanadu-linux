@@ -4,9 +4,13 @@ if [[ $USER != root ]]; then
 echo "Error: Debe tener privilegios de ROOT"
 exit 1
 fi
-echo "deb http://ftp.debian.org/debian testing main contrib non-free" > /etc/apt/sources.list
-echo "deb http://ftp.debian.org/debian/ jessie-updates main contrib non-free" >> /etc/apt/sources.list
-echo "deb http://security.debian.org/ jessie/updates main contrib non-free" >> /etc/apt/sources.list
+if [[ -f /etc/xanadu/version ]]; then
+	echo 1 > /dev/null
+else
+	echo "deb http://ftp.debian.org/debian testing main contrib non-free" > /etc/apt/sources.list
+	echo "deb http://ftp.debian.org/debian/ jessie-updates main contrib non-free" >> /etc/apt/sources.list
+	echo "deb http://security.debian.org/ jessie/updates main contrib non-free" >> /etc/apt/sources.list
+fi
 apt-get update
 apt-get -y install live-build live-boot live-config squid3 git
 echo "http_port 3128" > /etc/squid3/squid.conf
