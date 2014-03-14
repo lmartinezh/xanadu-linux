@@ -5,13 +5,14 @@ echo "Error: Debe tener privilegios de ROOT"
 exit 1
 fi
 if [[ -f /etc/xanadu/version ]]; then
-	echo 1 > /dev/null
+	apt-get update
+	apt-get -y dist-upgrade
 else
 	echo "deb http://ftp.debian.org/debian testing main contrib non-free" > /etc/apt/sources.list
 	echo "deb http://ftp.debian.org/debian/ jessie-updates main contrib non-free" >> /etc/apt/sources.list
 	echo "deb http://security.debian.org/ jessie/updates main contrib non-free" >> /etc/apt/sources.list
+	apt-get update
 fi
-apt-get update
 apt-get -y install live-build live-boot live-config squid3 git
 echo "http_port 3128" > /etc/squid3/squid.conf
 echo "icp_port 0" >> /etc/squid3/squid.conf
