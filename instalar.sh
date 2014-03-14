@@ -14,6 +14,7 @@ else
 	apt-get update
 fi
 apt-get -y install live-build live-boot live-config squid3 git
+sed -i 's_tmpfs /var/spool_#tmpfs /var/spool_g' /etc/fstab
 mkdir -p /var/spool/squid3
 chown -hR root /var/spool/squid3
 chmod -R 0666 /var/spool/squid3
@@ -76,5 +77,5 @@ echo "export ftp_proxy=http://127.0.0.1:3128/" >> /root/.bashrc
 mkdir live-default
 cd live-default
 lb config --config git://github.com/sinfallas/xanadu-linux.git
-echo "Instalación Finalizada"
+echo "Instalación Finalizada, debe reiniciar el equipo.."
 exit 0
