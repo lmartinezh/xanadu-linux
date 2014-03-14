@@ -1,3 +1,0 @@
-#!/bin/bash
-lb config noauto "${@}"
-lb config --config git://github.com/sinfallas/xanadu-linux.git
