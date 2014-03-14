@@ -15,7 +15,9 @@ else
 fi
 apt-get -y install live-build live-boot live-config squid3 git
 mkdir -p /var/spool/squid3
-chmod 666 /var/spool/squid3
+chown -hR root /var/spool/squid3
+chmod -R 0666 /var/spool/squid3
+service squid3 stop
 echo "http_port 3128" > /etc/squid3/squid.conf
 echo "icp_port 0" >> /etc/squid3/squid.conf
 echo "htcp_port 0" >> /etc/squid3/squid.conf
@@ -66,7 +68,8 @@ echo "icp_access deny all" >> /etc/squid3/squid.conf
 echo "htcp_access deny all" >> /etc/squid3/squid.conf
 echo "snmp_access deny all" >> /etc/squid3/squid.conf
 echo "http_access allow all" >> /etc/squid3/squid.conf
-service squid3 restart
+squid3 -z
+service squid3 start
 echo "export http_proxy=http://127.0.0.1:3128/" >> /root/.bashrc
 echo "export https_proxy=http://127.0.0.1:3128/" >> /root/.bashrc
 echo "export ftp_proxy=http://127.0.0.1:3128/" >> /root/.bashrc
