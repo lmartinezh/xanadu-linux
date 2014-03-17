@@ -90,7 +90,7 @@ function progress_1 ()
 
 function progress_2 ()
 {
-	yad --progress-text="Instalando Software, esto proceso puede tomar varios minutos, por favor espere" --progress --pulsate --auto-close --auto-kill --skip-taskbar --center --title="INSTALANDO"
+	yad --fixed --progress-text="Instalando Software, esto proceso puede tomar varios minutos, por favor espere" --progress --pulsate --auto-close --auto-kill --skip-taskbar --center --title="INSTALANDO"
 }
 
 function optimizacion_1 ()
@@ -98,6 +98,10 @@ function optimizacion_1 ()
 	if [[ -f /root/.optimizado ]]; then
 		echo 1 > /dev/null
 	else
+		if [[ $(hostname) = xanadu ]]; then
+			echo xanadu-$(printf '%02X%02X%02X\n' $((RANDOM%256)) $((RANDOM%256)) $((RANDOM%256))) > /etc/hostname
+			sed -i 's_xanadu_'$(cat /etc/hostname)'_g' /etc/hosts
+		fi		
 		rm -f /home/*/Escritorio/instalar-xanadu.desktop
 		rm -f /etc/apt/preferences.d/exclude.pref
 		rm -f /etc/apt/preferences
@@ -106,6 +110,8 @@ function optimizacion_1 ()
 		sed -i 's_/swapfile_#/swapfile_g' /etc/fstab
 		sed -i 's/autologin-user=user/#autologin-user=user/g' /etc/lightdm/lightdm.conf
 		sed -i 's/autologin-user-timeout=0/#autologin-user-timeout=0/g' /etc/lightdm/lightdm.conf
+		sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="quiet"/GRUB_CMDLINE_LINUX_DEFAULT="acpi_osi=Linux cgroup_enable=memory swapaccount=1 ipv6.disable=1 security=apparmor panic=10 quiet splash"/g' /etc/default/grub
+		update-grub2
 		dispositivo2=$(df / --output=source | tail -n1 | cut -c 19-54)
 		dispositivo=$(blkid -U $dispositivo2 | cut -c 1-8)
 		echo $dispositivo { >> /etc/hdparm.conf
@@ -115,12 +121,14 @@ function optimizacion_1 ()
 		echo "}" >> /etc/hdparm.conf
 		echo "user ALL=(ALL) ALL" > /etc/sudoers.d/live
 		echo "proc /proc proc defaults,hidepid=2 0 0" >> /etc/fstab
+		echo "cgroup /sys/fs/cgroup cgroup defaults 0 0" >> /etc/fstab
 		echo "tmpfs /tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab
 		echo "tmpfs /run tmpfs rw,nosuid,noexec,nodev,noatime,mode=755 0 0" >> /etc/fstab
 		echo "tmpfs /var/cache/apt/archives tmpfs noatime,nodev 0 0" >> /etc/fstab
 		echo "tmpfs /var/cache/samba tmpfs noatime,nodev 0 0" >> /etc/fstab
 		echo "tmpfs /var/spool tmpfs noatime,nodev 0 0" >> /etc/fstab
 		echo "tmpfs /var/tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab
+		apt-get -y install apparmor-profiles
 		echo "$(date +%d/%m/%Y-%r)" > /root/.optimizado
 	fi
 }

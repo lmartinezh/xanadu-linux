@@ -5,3 +5,4 @@ rm -f *.tar.gz
 rm -rf cache/bootstrap
 rm -rf cache/contents.chroot/*
 rm -rf cache/contents.binary/*
+clear

@@ -5,50 +5,6 @@ version="Refracta Installer 9.0.9beta6 (20131206)"
 # License: GPL-3
 # This is free software with NO WARRANTY. Use at your own risk!
 
-
-# DESCRIPTION
-# This script is used for installing a live system to a hard drive. User
-# input is via popup windows created by zenity. It should be run from
-# a terminal; if it's started from a menu item or a panel launcher, it
-# should be run in a persistent terminal, so that progress messages can
-# be seen and for user input in a few places.
-#
-# There are two modes for installation - Simple or Expert
-#   Simple Mode:
-# Create rsync excludes file if default file is missing.
-# User can run partitioner inside the installer or skip it.
-# User selects partition for installation. Bootloader goes to /dev/sda.
-# Summary window asks to proceed with installation.
-# Stuff happens without interaction.
-#
-#  Expert Mode:
-# User selects installation options - change username, select up to three
-# partitions (/, /boot, /home), select filesystem type for each partition, 
-# choose whether to encrypt partitions or not, choose whether to write 
-# random data or zeros to partitions.
-# User has option to exit and use custom excludes file.
-# User can run partitioner inside the installer.
-# Summary window asks to proceed with installation.
-# Stuff happens with some interaction (passwords, username, edit /etc/sudoers)
-#
-#  Stuff:
-# Run pre-install scripts
-# Cleanup (in case of previous aborted run)
-# Create encrypted volumes *(Expert mode only)
-# Write random data or zeros *
-# Mount partition(s) and create filesystem(s)
-# Copy system with rsync
-# Create swapfile or use existing swap partition
-# Copy update-initramfs
-# Set up fstab
-# Set up crypttab *
-# Install bootloader
-# Cleanup
-# Change username and passwords, edit /etc/sudoers *
-# Re-enable update-db and freshclam, disable ssh root login.
-# Run post-install scripts
-
-
 # If you want to change any defaults, change them in the configfile.
 # Default is /etc/refractainstaller.conf
 # If you want to use a different config file for testing, change this

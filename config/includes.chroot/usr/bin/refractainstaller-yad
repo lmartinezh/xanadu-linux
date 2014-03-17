@@ -10,7 +10,7 @@ configfile="/etc/refractainstaller.conf"
 if [[ -f $configfile ]]; then
     source $configfile
 else
-	yad --title=Advertencia --window-icon=error \
+	yad --skip-taskbar --fixed --center --text-align=fill --borders=6 --title=Advertencia --window-icon=error \
 	--button=Exit:0 \
 	--text="  El archivo de configuracion $configfile no existe.  
   "
@@ -18,7 +18,6 @@ else
 	exit 1
 fi
 
-# Record errors in a logfile.
 exec 2>"$error_log"
 
 
@@ -28,17 +27,17 @@ show_help () {
 }
 
 help_text="
-	Usage:  $0  [option]
+	Uso:  $0  [opciones]
 	
-	Run refractainstaller-yad from a terminal with no options  
-	or select Refracta Installer  from the System menu to install 
-	a running live-CD or live-usb-hdd to a hard drive. 
+	Ejecute refractainstaller-yad desde un terminal sin opciones
+	o selecione selecione el instalador desde el menu sistema para 
+	instalar un live-CD o live-usb-hdd a un disco duro. 
 	
 	
-	valid options:
-		-h, --help		show this help text
-		-v, --version	display the version information
-		-d. --debug		debug mode
+	opciones validas:
+		-h, --help		muestra esta ayuda
+		-v, --version	        muestra la version
+		-d. --debug		modo debug
 		
 "
 
@@ -57,8 +56,8 @@ while [[ $1 == -* ]]; do
 			break ;;
 		
 		*) 
-			printf "\t invalid option: $1 \n\n"
-			printf "\t Try:  $0 -h for full help. \n\n"
+			printf "\t opcion invalida: $1 \n\n"
+			printf "\t Intente:  $0 -h para ayuda completa. \n\n"
 			exit 1 ;;
     esac
 done
@@ -69,22 +68,15 @@ if [[ $DEBUG = "yes" ]] ; then
 fi
 
 
-# Check that xserver is running and user is root.
-[[ $DISPLAY ]] || { echo "There is no xserver running. Exiting..." ; exit 1 ; }
+[[ $DISPLAY ]] || { echo "No hay servidor X en ejecucion, Saliendo..." ; exit 1 ; }
 if [[ $(id -u) -ne 0 ]] ; then
-	yad --title=Error --window-icon=error --text="
-	You need to be root!
-"
+	yad --skip-taskbar --fixed --center --text-align=fill --borders=6 --title=Error --window-icon=error --text="Usted necesita ser root!"
 	exit 1
 fi
 
-# Check version of yad
 yadversion=$(yad --version | cut -d. -f2)
 if [[ $yadversion < 17 ]]; then
-	yad --title=Error --window-icon=error --text="
-	The version of Yad is too old. You need 0.17.1.1 or later. If Zenity
-	is installed, you can run refractainstaller-gui instead.
-"
+	yad --skip-taskbar --fixed --center --text-align=fill --borders=6 --title=Error --window-icon=error --text="Esta version de Yad es muy vieja. Si Zenity esta instalado usted puede ejecutar refractainstaller-gui."
 fi
 
 
