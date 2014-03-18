@@ -5,5 +5,5 @@ xanadu (0.3) beta 8
 * se instala apparmor al entrar por primera vez en post-instalacion
 * se agregan varios comandos a la configuracion por defecto de grub al entrar por primera vez en post-instalacion
 * si el usuario no cambio el hostname al momento de instalar el sistema se generara uno de forma aleatoria al entrar por primera vez en post-instalacion
-* se coloco el directorio .cache de los usuarios en tmpfs
 * se elimina turpial
+* al ejecutar post-instalador se crea en /etc/fstab una entrada para colocar el directorio .cache del usuario en tmpfs

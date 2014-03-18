@@ -128,6 +128,9 @@ function optimizacion_1 ()
 		echo "tmpfs /var/cache/samba tmpfs noatime,nodev 0 0" >> /etc/fstab
 		echo "tmpfs /var/spool tmpfs noatime,nodev 0 0" >> /etc/fstab
 		echo "tmpfs /var/tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab
+		for i in $( who | cut -d' ' -f1 | sort | uniq ); do
+			echo "tmpfs /home/$i/.cache  tmpfs noatime,nodev,rw 0 0" >> /etc/fstab
+		done
 		apt-get -y install apparmor-profiles
 		echo "$(date +%d/%m/%Y-%r)" > /root/.optimizado
 	fi
