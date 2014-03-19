@@ -5,7 +5,7 @@ mio=$(yad --fixed --center --width=360 --height=420 --no-click --list --title="A
 
 if [ "$mio" = "Activar Seguridad|" ]; then
 	seguridad_1
-	yad --skip-taskbar --button=ACEPTAR:1 --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="Los servicios: shorewall, fail2ban y psad se han iniciado pero NO contienen ninguna configuración, deben ser implementadas de acuerdo a sus necesidades, presione aceptar para continuar."
+	yad --skip-taskbar --button=ACEPTAR:1 --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="Los servicios: shorewall, fail2ban y psad se han iniciado con sus configuraciones por defecto, es necesario que el usuario las modifique de acuerdo a sus necesidades, presione aceptar para continuar."
 	source $0
 
 elif [ "$mio" = "Antivirus|" ]; then

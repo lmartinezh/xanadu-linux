@@ -1,3 +1,4 @@
+task-lxde-desktop
 lightdm
 lxde
 lxappearance
@@ -19,7 +20,6 @@ x11-session-utils
 menu-l10n
 obconf
 thunar
-thunar-data
 thunar-archive-plugin
 thunar-volman
 gksu
@@ -27,7 +27,6 @@ fdpowermon
 fdpowermon-icons
 network-manager-gnome
 disk-manager
-clamav
 clamtk
 synaptic
 xterm

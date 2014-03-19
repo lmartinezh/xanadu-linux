@@ -6,7 +6,6 @@ gvfs
 gvfs-fuse
 udevil
 bash-completion
-fakeroot
 fakeroot-ng
 finger
 less

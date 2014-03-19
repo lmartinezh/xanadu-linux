@@ -5,7 +5,7 @@ file=$(zenity --width=360 --height=420 --list --title Adicionales --column Accio
 
 if [ "$file" = "Activar Seguridad" ]; then
 	seguridad_1
-	zenity --info --text="Los servicios: shorewall, fail2ban y psad se han iniciado pero NO contienen ninguna configuración, deben ser implementadas de acuerdo a sus necesidades, presione aceptar para continuar."
+	zenity --info --text="Los servicios: shorewall, fail2ban y psad se han iniciado con sus configuraciones por defecto, es necesario que el usuario las modifique de acuerdo a sus necesidades, presione aceptar para continuar."
 	source $0
 
 elif [ "$file" = "Antivirus" ]; then

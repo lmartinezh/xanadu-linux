@@ -1,9 +1,6 @@
 #!/bin/bash
 #elaborado por sinfallas
-if [[ $USER != root ]]; then
-echo "Ejecutar como root"
-exit 1
-fi
+source /usr/local/bin/variables
 
 if ! [[ -d /lib/live/mount/medium ]] ; then
 	echo 1 > /dev/null
@@ -14,11 +11,12 @@ fi
 
 case "$1" in
 	start)
-		apt-get -y purge lightdm lxde lxappearance lxappearance-obconf lxde-common lxde-core lxde-icon-theme lxinput lxlauncher lxmenu-data lxmusic lxpanel lxrandr lxsession lxshortcut lxtask lxterminal brasero vlc xsane w32codecs iceweasel pidgin filezilla turpial libreoffice xorg x11-session-utils thunar gksu fdpowermon disk-manager clamtk synaptic gparted compton evince
+		apt-get -y purge lightdm lxde lxappearance lxappearance-obconf lxde-common lxde-core lxde-icon-theme lxinput lxlauncher lxmenu-data lxmusic lxpanel lxrandr lxsession lxshortcut lxtask lxterminal brasero vlc xsane w32codecs iceweasel pidgin filezilla libreoffice xorg x11-session-utils wireshark thunar gksu fdpowermon disk-manager clamtk synaptic gparted compton evince yad zenity
 		apt-get -y --force-yes autoremove
 		apt-get -y purge $(deborphan)
 		apt-get clean
 		apt-get -y install ssh
+		optimizacion_1
 		reboot
 		;;
 
