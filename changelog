@@ -7,3 +7,8 @@ xanadu (0.3) beta 8
 * si el usuario no cambio el hostname al momento de instalar el sistema se generara uno de forma aleatoria al entrar por primera vez en post-instalacion
 * se elimina turpial
 * al ejecutar post-instalador se crea en /etc/fstab una entrada para colocar el directorio .cache del usuario en tmpfs
+* se agrego la funcion optimizar al modo server
+* se simplificaron las listas de paquetes
+* se cambio el comando de arranque en syslinux
+* se modificaron valores por defecto en iceweasel
+* se cambio el menu de arranque para mayor facilidad de uso

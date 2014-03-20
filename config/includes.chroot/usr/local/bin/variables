@@ -110,7 +110,7 @@ function optimizacion_1 ()
 		sed -i 's_/swapfile_#/swapfile_g' /etc/fstab
 		sed -i 's/autologin-user=user/#autologin-user=user/g' /etc/lightdm/lightdm.conf
 		sed -i 's/autologin-user-timeout=0/#autologin-user-timeout=0/g' /etc/lightdm/lightdm.conf
-		sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="quiet"/GRUB_CMDLINE_LINUX_DEFAULT="acpi_osi=Linux cgroup_enable=memory swapaccount=1 ipv6.disable=1 security=apparmor panic=10 quiet splash"/g' /etc/default/grub
+		sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="quiet"/GRUB_CMDLINE_LINUX_DEFAULT="swapaccount=1 cgroup_enable=memory disable=1 disable_ipv6=1 security=apparmor panic=10 quiet splash"/g' /etc/default/grub
 		update-grub2
 		dispositivo2=$(df / --output=source | tail -n1 | cut -c 19-54)
 		dispositivo=$(blkid -U $dispositivo2 | cut -c 1-8)
