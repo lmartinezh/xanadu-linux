@@ -65,9 +65,6 @@ echo "http_access allow localhost" >> /etc/squid3/squid.conf
 echo "http_access allow downloads" >> /etc/squid3/squid.conf
 echo "http_access deny !Safe_ports" >> /etc/squid3/squid.conf
 echo "http_access deny CONNECT !SSL_ports" >> /etc/squid3/squid.conf
-echo "icp_access deny all" >> /etc/squid3/squid.conf
-echo "htcp_access deny all" >> /etc/squid3/squid.conf
-echo "snmp_access deny all" >> /etc/squid3/squid.conf
 echo "http_access allow all" >> /etc/squid3/squid.conf
 squid3 -z
 service squid3 start
