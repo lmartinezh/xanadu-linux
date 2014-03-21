@@ -3,7 +3,7 @@
 source /usr/local/bin/variables
 
 if ! [[ -d /lib/live/mount/medium ]] ; then
-	optimizacion_1 | yad --fixed --progress-text="Iniciando post-instalador, por favor espere" --progress --pulsate --auto-close --auto-kill --skip-taskbar --center --title="Iniciando"
+	optimizacion_1 | yad --fixed --progress-text="Iniciando optimizacion post-instalacion, el equipo se reiniciara al finalizar, por favor espere." --progress --pulsate --auto-close --auto-kill --skip-taskbar --center --title="Iniciando"
 else
 	yad --skip-taskbar --button=ACEPTAR:1 --title="ERROR" --fixed --center --text-align=fill --borders=6 --text="Este programa no se puede ejecutar en modo live."
 	exit 1

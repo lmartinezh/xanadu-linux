@@ -1,6 +1,6 @@
 #!/bin/bash
 #elaborado por sinfallas
-sudo rmmod -f ip_tables ip6_tables iptable_filter iptable_mangle iptable_nat iptable_raw bluetooth rfcomm rfkill
+sudo rmmod -f ip_tables ip6_tables iptable_filter iptable_mangle iptable_nat iptable_raw
 archiver="/home/user/.config/xarchiver/xarchiverrc"
 if [[ -f $archiver ]]; then
 	echo 1 > /dev/null

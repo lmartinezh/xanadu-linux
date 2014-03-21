@@ -1,3 +1,15 @@
+xanadu (0.4) beta 1
+
+* se modificaron las opciones por defecto en iceweasel para activar spdy
+* se agregaron algunos modulos al blacklist
+* se modifico el rc.local para detectar si se ejcuta en un entorno virtual
+* ciertas optimizaciones solo se realizan fuera de un entorno virtualizado
+* se agregaron acciones personalizada a thunar
+* se modifico post-gui para optimizar el sistema recien instalado
+* se agrego el paquete virt-what a la lista de paquetes
+* correcion de errores en modo-server
+
+
 xanadu (0.3) beta 8
 
 * se corrige comportamiento de cgroup

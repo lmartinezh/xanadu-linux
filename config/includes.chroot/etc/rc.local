@@ -10,19 +10,34 @@
 # bits.
 #
 # By default this script does nothing.
+if [[ -z $(virt-what) ]]; then
+	echo "always" > /sys/kernel/mm/transparent_hugepage/enabled
+	echo "20000" > /sys/kernel/mm/transparent_hugepage/khugepaged/pages_to_scan
+	echo "1" > /sys/kernel/mm/ksm/run
+	echo "20000" > /sys/kernel/mm/ksm/pages_to_scan
+	modprobe microcode zram
+	echo $((100*1024*1024)) > /sys/block/zram0/disksize
+	mkswap /dev/zram0
+	swapon -p 50 /dev/zram0
+	procesador=$(lscpu | grep Vendor | head -n1 | cut -d ':' -f2 | tr -d ' ')
+	case "$procesador" in
+    	"GenuineIntel")
+       		INTEL_BATCH=1
+		;;
+
+    	*)
+    		echo 1 > /dev/null
+		;;
+
+	esac
+else
+	echo $(virt-what) > /tmp/virtualizado
+fi
 echo "1" > /sys/fs/cgroup/notify_on_release
 echo "/usr/local/sbin/cgroup_clean" > /sys/fs/cgroup/release_agent
-echo "always" > /sys/kernel/mm/transparent_hugepage/enabled
-echo "20000" > /sys/kernel/mm/transparent_hugepage/khugepaged/pages_to_scan
-echo "1" > /sys/kernel/mm/ksm/run
-echo "20000" > /sys/kernel/mm/ksm/pages_to_scan
-modprobe zram
-echo $((100*1024*1024)) > /sys/block/zram0/disksize
-mkswap /dev/zram0
-swapon -p 50 /dev/zram0
 miswap=$(fdisk -l | grep swap | cut -c 1-9)
 swapon -f $miswap
-rmmod -f ip_tables ip6_tables iptable_filter iptable_mangle iptable_nat iptable_raw bluetooth rfcomm rfkill
+rmmod -f ip_tables ip6_tables iptable_filter iptable_mangle iptable_nat iptable_raw
 service anacron stop
 service avahi-daemon stop
 service clamav-freshclam stop

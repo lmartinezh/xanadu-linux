@@ -13,7 +13,6 @@ localepurge
 hardlink
 dnsmasq
 prelink
-plymouth
 deborphan
 lvm2
 dmraid
@@ -26,3 +25,4 @@ memlockd
 grub-pc
 grub2-common
 cgroup-bin
+virt-what

@@ -18,6 +18,7 @@ lxtask
 lxterminal
 x11-session-utils
 menu-l10n
+plymouth
 obconf
 thunar
 thunar-archive-plugin

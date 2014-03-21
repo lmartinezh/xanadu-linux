@@ -1,7 +1,5 @@
 #!/bin/bash
 #elaborado por sinfallas
-source /usr/local/bin/variables
-
 if ! [[ -d /lib/live/mount/medium ]] ; then
 	echo 1 > /dev/null
 else
@@ -11,18 +9,54 @@ fi
 
 case "$1" in
 	start)
-		apt-get -y purge lightdm lxde lxappearance lxappearance-obconf lxde-common lxde-core lxde-icon-theme lxinput lxlauncher lxmenu-data lxmusic lxpanel lxrandr lxsession lxshortcut lxtask lxterminal brasero vlc xsane w32codecs iceweasel pidgin filezilla libreoffice xorg x11-session-utils wireshark thunar gksu fdpowermon disk-manager clamtk synaptic gparted compton evince yad zenity
+		apt-get -y purge task-lxde-desktop lightdm lxde lxappearance lxappearance-obconf lxde-common lxde-core lxde-icon-theme lxinput lxlauncher lxmenu-data lxmusic lxpanel lxrandr lxsession lxshortcut lxtask lxterminal brasero vlc xsane w32codecs iceweasel pidgin filezilla libreoffice xorg x11-session-utils wireshark thunar gksu fdpowermon disk-manager clamtk synaptic gparted compton evince yad plymouth zenity
 		apt-get -y --force-yes autoremove
 		apt-get -y purge $(deborphan)
 		apt-get clean
 		apt-get -y install ssh
-		optimizacion_1
+		if [[ $(hostname) = xanadu ]]; then
+			echo xanadu-$(printf '%02X%02X%02X\n' $((RANDOM%256)) $((RANDOM%256)) $((RANDOM%256))) > /etc/hostname
+			sed -i 's_xanadu_'$(cat /etc/hostname)'_g' /etc/hosts
+		fi		
+		rm -f /home/*/Escritorio/instalar-xanadu.desktop
+		rm -f /etc/apt/preferences.d/exclude.pref
+		rm -f /etc/apt/preferences
+		swapoff /swapfile
+		rm -f /swapfile
+		sed -i 's_/swapfile_#/swapfile_g' /etc/fstab
+		sed -i 's/autologin-user=user/#autologin-user=user/g' /etc/lightdm/lightdm.conf
+		sed -i 's/autologin-user-timeout=0/#autologin-user-timeout=0/g' /etc/lightdm/lightdm.conf
+		sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="quiet"/GRUB_CMDLINE_LINUX_DEFAULT="swapaccount=1 cgroup_enable=memory disable=1 disable_ipv6=1 security=apparmor panic=10 quiet"/g' /etc/default/grub
+		update-grub2		
+		dispositivo2=$(df / --output=source | tail -n1 | cut -c 19-54)
+		dispositivo=$(blkid -U $dispositivo2 | cut -c 1-8)
+		echo $dispositivo { >> /etc/hdparm.conf
+		echo "lookahead = on" >> /etc/hdparm.conf
+		echo "write_cache = on" >> /etc/hdparm.conf
+		echo "spindown_time = 18" >> /etc/hdparm.conf
+		echo "}" >> /etc/hdparm.conf
+		echo "user ALL=(ALL) ALL" > /etc/sudoers.d/live
+		echo "proc /proc proc defaults,hidepid=2 0 0" >> /etc/fstab
+		echo "cgroup /sys/fs/cgroup cgroup defaults 0 0" >> /etc/fstab
+		echo "tmpfs /tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab
+		echo "tmpfs /run tmpfs rw,nosuid,noexec,nodev,noatime,mode=755 0 0" >> /etc/fstab
+		echo "tmpfs /var/cache/apt/archives tmpfs noatime,nodev 0 0" >> /etc/fstab
+		echo "tmpfs /var/cache/samba tmpfs noatime,nodev 0 0" >> /etc/fstab
+		echo "tmpfs /var/spool tmpfs noatime,nodev 0 0" >> /etc/fstab
+		echo "tmpfs /var/tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab
+		apt-get -q update		
+		apt-get -q -y install apparmor-profiles
+		echo "$(date +%d/%m/%Y-%r)" > /root/.optimizado		
+		for i in $( who | cut -d' ' -f1 | sort | uniq ); do
+			echo "tmpfs /home/$i/.cache  tmpfs noatime,nodev,rw 0 0" >> /etc/fstab
+		done
 		reboot
 		;;
 
 	*)
-		echo "Al iniciar este modo se eliminaran todos los programas que utilizan interfaz grafica"
+		echo "Al iniciar este modo se eliminaran todos los programas que utilizan interfaz grafica,"
+		echo "tambien se instalara el servicio SSH"
 		echo "USO: $0 start"
-		exit 0
 		;;
+esac
 exit 0
