@@ -1,10 +1,10 @@
-tor
-tor-arm
-torsocks
-privoxy
-polipo
-socat
-tsocks
 connect-proxy
 i2p
 onioncat
+polipo
+privoxy
+socat
+tor
+tor-arm
+torsocks
+tsocks

@@ -1,12 +1,12 @@
 arpon
 fail2ban
+macchanger
 modemmanager
-nmap
 network-manager
+nmap
 ntp
 shorewall
 tcptraceroute
 wireless-tools
 wireshark
 zsync
-macchanger

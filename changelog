@@ -7,6 +7,10 @@ xanadu (0.4) beta 1
 * correccion de errores en modo-server
 * se cambio el repositorio de i2p por presentar problemas
 * se actualizaron los repositorios
+* se creo un script llamado "entorno" para generar un reporte sobre las caracteristicas del pc
+* se corrigio la falla en microcode
+* nuevos drivers para intel
+* se eliminaron paquetes innecesarios
 
 
 xanadu (0.3) beta 8

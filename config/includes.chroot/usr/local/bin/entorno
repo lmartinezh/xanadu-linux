@@ -1,0 +1,16 @@
+#!/bin/bash
+#elaborado por sinfallas
+echo "## CPU ##" > /tmp/reporte-entorno
+lscpu >> /tmp/reporte-entorno
+echo "## HARDWARE ##" >> /tmp/reporte-entorno
+lshw -short >> /tmp/reporte-entorno
+echo "## MEMORIA ##" >> /tmp/reporte-entorno
+free -h >> /tmp/reporte-entorno
+echo "## DISCO ##" >> /tmp/reporte-entorno
+df -h >> /tmp/reporte-entorno
+echo "## LAPTOP ##" >> /tmp/reporte-entorno
+laptop-detect -v >> /tmp/reporte-entorno
+echo "## VIRTUALIZACION ##" >> /tmp/reporte-entorno
+virt-what >> /tmp/reporte-entorno
+echo "El reporte se ha generado en /tmp/reporte-entorno"
+exit 0

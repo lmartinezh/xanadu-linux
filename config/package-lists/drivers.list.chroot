@@ -1,5 +1,4 @@
 atmel-firmware
-libertas-firmware
 firmware-linux
 firmware-linux-free
 firmware-linux-nonfree
@@ -13,16 +12,18 @@ firmware-ralink
 firmware-realtek
 firmware-b43legacy-installer
 firmware-b43-installer
+libertas-firmware
 linux-wlan-ng
 b43-fwcutter
 broadcom-sta-common
 i965-va-driver
+libva-intel-vaapi-driver
+vainfo
 amd64-microcode
-microcode.ctl
 intel-microcode
+hplip
 system-config-printer
 system-config-printer-udev
-hplip
 printer-driver-all
 printer-driver-all-enforce
 usb-modeswitch

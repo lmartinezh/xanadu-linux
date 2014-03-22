@@ -27,8 +27,9 @@ echo "## proteger paquetes ##"
 /bin/echo amd64-microcode hold | /usr/bin/dpkg --set-selections
 /bin/echo dash hold | /usr/bin/dpkg --set-selections
 /bin/echo locales hold | /usr/bin/dpkg --set-selections
-/bin/echo microcode.ctl hold | /usr/bin/dpkg --set-selections
 /bin/echo i965-va-driver hold | /usr/bin/dpkg --set-selections
+/bin/echo libva-intel-vaapi-driver hold | /usr/bin/dpkg --set-selections
+/bin/echo vainfo hold | /usr/bin/dpkg --set-selections
 echo "## purge ##"
 apt-get -y purge $(deborphan --libdevel) $(deborphan --find-config) bluetooth bluez bluez-alsa bluez-firmware bluez-gstreamer linux-wlan-ng-doc aptitude aptitude-common vim-tiny man-db manpages libc6-dev gcc g++ make dpkg-dev build-essential
 echo "## purge headers ##"
