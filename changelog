@@ -5,6 +5,8 @@ xanadu (0.4) beta 1
 * se agregaron acciones personalizada a thunar
 * se modifico post-gui para optimizar el sistema recien instalado
 * correccion de errores en modo-server
+* se cambio el repositorio de i2p por presentar problemas
+* se actualizaron los repositorios
 
 
 xanadu (0.3) beta 8
