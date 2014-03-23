@@ -1,5 +1,9 @@
 #!/bin/bash
 #elaborado por sinfallas
+if [[ $USER != root ]]; then
+echo "Ejecutar como root"
+exit 1
+fi
 echo "## CPU ##" > /tmp/reporte-entorno
 lscpu >> /tmp/reporte-entorno
 echo "## HARDWARE ##" >> /tmp/reporte-entorno
@@ -9,8 +13,9 @@ free -h >> /tmp/reporte-entorno
 echo "## DISCO ##" >> /tmp/reporte-entorno
 df -h >> /tmp/reporte-entorno
 echo "## LAPTOP ##" >> /tmp/reporte-entorno
-laptop-detect -v >> /tmp/reporte-entorno
+echo $(laptop-detect -v 2>&1) >> /tmp/reporte-entorno
 echo "## VIRTUALIZACION ##" >> /tmp/reporte-entorno
 virt-what >> /tmp/reporte-entorno
+clear
 echo "El reporte se ha generado en /tmp/reporte-entorno"
 exit 0
