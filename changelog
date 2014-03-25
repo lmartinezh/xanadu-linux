@@ -11,6 +11,7 @@ xanadu (0.4) beta 1
 * se corrigio la falla en microcode
 * nuevos drivers para intel
 * se eliminaron paquetes innecesarios
+* se agrego fish shell 
 
 
 xanadu (0.3) beta 8

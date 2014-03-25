@@ -98,6 +98,7 @@ function optimizacion_1 ()
 	if [[ -f /root/.optimizado ]]; then
 		echo 1 > /dev/null
 	else
+		zenity --info --text="Por favor reinicie el equipo."		
 		if [[ $(hostname) = xanadu ]]; then
 			echo xanadu-$(printf '%02X%02X%02X\n' $((RANDOM%256)) $((RANDOM%256)) $((RANDOM%256))) > /etc/hostname
 			sed -i 's_xanadu_'$(cat /etc/hostname)'_g' /etc/hosts
@@ -128,13 +129,10 @@ function optimizacion_1 ()
 		echo "tmpfs /var/cache/samba tmpfs noatime,nodev 0 0" >> /etc/fstab
 		echo "tmpfs /var/spool tmpfs noatime,nodev 0 0" >> /etc/fstab
 		echo "tmpfs /var/tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab
-		apt-get -q update		
-		apt-get -q -y install apparmor-profiles
 		echo "$(date +%d/%m/%Y-%r)" > /root/.optimizado		
 		for i in $( who | cut -d' ' -f1 | sort | uniq ); do
 			echo "tmpfs /home/$i/.cache  tmpfs noatime,nodev,rw 0 0" >> /etc/fstab
 		done
-		reboot		
 	fi
 }
 
@@ -191,4 +189,9 @@ function liquorix_1 ()
 function icedove_1 ()
 {
 	apt-get -q update && apt-get -q -y --force-yes install icedove
+}
+
+function apparmor_1 ()
+{
+	apt-get -q update && apt-get -q -y --force-yes install apparmor-profiles
 }

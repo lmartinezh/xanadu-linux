@@ -3,13 +3,13 @@
 source /usr/local/bin/variables
 
 if ! [[ -d /lib/live/mount/medium ]] ; then
-	optimizacion_1 | yad --fixed --progress-text="Iniciando optimizacion post-instalacion, el equipo se reiniciara al finalizar, por favor espere." --progress --pulsate --auto-close --auto-kill --skip-taskbar --center --title="Iniciando"
+	optimizacion_1
 else
 	yad --skip-taskbar --button=ACEPTAR:1 --title="ERROR" --fixed --center --text-align=fill --borders=6 --text="Este programa no se puede ejecutar en modo live."
 	exit 1
 fi
 
-file=$(yad --fixed --center --width=360 --height=420 --no-click --list --title="Post-instalación" --column=Acciones "Instalar KDE" "Instalar GNOME" "Instalar XFCE" "Instalar ENLIGHTENMENT" "Instalar CINNAMON" "Instalar WINE" "Instalar XBMC" "Instalar driver ATI" "Instalar driver NVIDIA" "Instalar kernel LIQUORIX" "Instalar ICEDOVE")
+file=$(yad --fixed --center --width=360 --height=420 --no-click --list --title="Post-instalación" --column=Acciones "Instalar Apparmor (RECOMENDADO)" "Instalar KDE" "Instalar GNOME" "Instalar XFCE" "Instalar ENLIGHTENMENT" "Instalar CINNAMON" "Instalar WINE" "Instalar XBMC" "Instalar driver ATI" "Instalar driver NVIDIA" "Instalar kernel LIQUORIX" "Instalar ICEDOVE")
 
 if [ "$file" = "Instalar KDE|" ]; then
 	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?"; then
@@ -94,6 +94,14 @@ elif [ "$file" = "Instalar kernel LIQUORIX|" ]; then
 elif [ "$file" = "Instalar ICEDOVE|" ]; then
 	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="¿Esta seguro de querer instalar este software?"; then
 		icedove_1 | progress_2
+	else
+		source $0
+	fi	
+	source $0
+
+elif [ "$file" = "Instalar Apparmor|" ]; then
+	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="¿Esta seguro de querer instalar este software?"; then
+		apparmor_1 | progress_2
 	else
 		source $0
 	fi	
