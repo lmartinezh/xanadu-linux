@@ -1,5 +1,10 @@
 #!/bin/bash
 #elaborado por sinfallas
+if [[ $USER != root ]]; then
+echo "Ejecutar como root"
+exit 1
+fi
+
 if ! [[ -d /lib/live/mount/medium ]] ; then
 	echo 1 > /dev/null
 else
@@ -13,7 +18,8 @@ case "$1" in
 		apt-get -y --force-yes autoremove
 		apt-get -y purge $(deborphan)
 		apt-get clean
-		apt-get -y install ssh
+		apt-get -q update
+		apt-get -q -y install ssh apparmor-profiles
 		if [[ $(hostname) = xanadu ]]; then
 			echo xanadu-$(printf '%02X%02X%02X\n' $((RANDOM%256)) $((RANDOM%256)) $((RANDOM%256))) > /etc/hostname
 			sed -i 's_xanadu_'$(cat /etc/hostname)'_g' /etc/hosts
@@ -24,6 +30,8 @@ case "$1" in
 		swapoff /swapfile
 		rm -f /swapfile
 		sed -i 's_/swapfile_#/swapfile_g' /etc/fstab
+		sed -i 's_miswap_#miswap_g' /etc/rc.local
+		sed -i 's_swapon -f_#swapon -f_g' /etc/rc.local
 		sed -i 's/autologin-user=user/#autologin-user=user/g' /etc/lightdm/lightdm.conf
 		sed -i 's/autologin-user-timeout=0/#autologin-user-timeout=0/g' /etc/lightdm/lightdm.conf
 		sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="quiet"/GRUB_CMDLINE_LINUX_DEFAULT="swapaccount=1 cgroup_enable=memory disable=1 disable_ipv6=1 security=apparmor panic=10 quiet"/g' /etc/default/grub
@@ -44,13 +52,14 @@ case "$1" in
 		echo "tmpfs /var/cache/samba tmpfs noatime,nodev 0 0" >> /etc/fstab
 		echo "tmpfs /var/spool tmpfs noatime,nodev 0 0" >> /etc/fstab
 		echo "tmpfs /var/tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab
-		apt-get -q update		
-		apt-get -q -y install apparmor-profiles
-		echo "$(date +%d/%m/%Y-%r)" > /root/.optimizado		
+		miswap=$(fdisk -l | grep swap | cut -c 1-9)
+		miswap2=$(blkid -o export $miswap | grep UUID)
+		echo $miswap2 "none swap sw 0 0" >> /etc/fstab
+		echo "$(date +%d/%m/%Y-%r)" > /root/.optimizado
+		echo "Debe reiniciar el equipo"	
 		for i in $( who | cut -d' ' -f1 | sort | uniq ); do
 			echo "tmpfs /home/$i/.cache  tmpfs noatime,nodev,rw 0 0" >> /etc/fstab
 		done
-		reboot
 		;;
 
 	*)

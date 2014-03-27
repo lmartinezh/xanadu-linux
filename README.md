@@ -47,127 +47,114 @@ Paquetes incluidos:
 
 * Kernel
 
- 3.13.1.686-pae
+3.13.1.686-pae
 
 * Escritorio
 
- LXDE
+LXDE
 
 * Ofimatica
 
- Libreoffice
+Libreoffice
 
 * Gestor de Archivos
 
- Thunar
- PCManFM
+Thunar
+PCManFM
 
 * Accesorios
 
- gCalculator
+gCalculator
 
 * Editor de Textos
 
- Leafpad
- nano 
+Leafpad
+Nano 
 
 * Visor - Editor de Imágenes
 
- Gimp
- GPicView
- Xsane
+Gimp
+GPicView
+Xsane
 
 * Visor PDF
 
- Evince
+Evince
 
 * Internet 
 
  IceWeasel
  Flashplugin-nonfree
  FileZilla
- OpenJDK 7
  Pidgin
 
 * Herramientas del Sistema
 
- htop
- iotop
- Orphaner
+Htop
+Iotop
+Orphaner
 
 * Sonido y Vídeo
 
- Brasero
- Qjackctl
- VLC
-
-* Terminal - Consola
-
- LXTerminal
+Brasero
+Qjackctl
+Vlc
 
 * Gestor de Software
 
- Synaptic 
+Synaptic 
 
 * Antivirus
 
- ClamAV 
-
-* DNS
-
- DnsMasq
-
-* Fuentes
-
- Ttf-mscorefonts-installer
+ClamAV 
 
 * Seguridad y Testeo
 
- Autopsy
- Sleuthkit
- Chkrootkit
- Fail2ban
- Nmap
- Psad
- Rkhunter
- Shorewall
- Wireshark
- Arpon
+Autopsy
+Sleuthkit
+Chkrootkit
+Fail2ban
+Nmap
+Psad
+Rkhunter
+Shorewall
+Wireshark
+Arpon
 
 * Herramientas de Discos
 
- Extundelete
- Disk-manager
- Dmraid
- Magicrescue
- Parted
- Testdisk
- Secure-delete
+Extundelete
+Disk-manager
+Dmraid
+Magicrescue
+GParted
+Testdisk
+Secure-delete
 
 * Anonimato
 
- Tor
- I2p
+Tor
+I2p
 
-* Comprimir / Descomprimir
+* Compresores
 
- Unrar-free
- Unzip
- P7zip-full
- Xarchiver
+Unrar
+Unzip
+P7zip-full
+Xarchiver
 
 * Otras
 
- Btrfs-tools
- Cmospwd
- Drbl
- Fdpowermon
- Foremost
- Fuse
- Gvfs
- Udevil
- Lvm2
- Ntfs-3g
- Xfsprogs
- Tmux
- Zsync
+Btrfs-tools
+Cmospwd
+Drbl
+Foremost
+Fuse
+Fish
+Gvfs
+Udevil
+Lvm2
+Ntfs-3g
+Xfsprogs
+Tmux
+Zsync

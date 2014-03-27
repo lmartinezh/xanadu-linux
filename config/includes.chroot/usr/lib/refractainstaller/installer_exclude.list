@@ -28,3 +28,4 @@
 - /lib/live/rootfs
 - /lib/live/mount
 - /run/*
+- /var/tmp/*

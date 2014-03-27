@@ -14,6 +14,12 @@ echo "## DISCO ##" >> /tmp/reporte-entorno
 df -h >> /tmp/reporte-entorno
 echo "## LAPTOP ##" >> /tmp/reporte-entorno
 echo $(laptop-detect -v 2>&1) >> /tmp/reporte-entorno
+echo "## INSTALACION ##" >> /tmp/reporte-entorno
+if ! [[ -d /lib/live/mount/medium ]] ; then
+	echo "Xanadu esta ejecutandose desde una instalacion." >> /tmp/reporte-entorno
+else
+	echo "Xanadu esta ejecutandose en modo live." >> /tmp/reporte-entorno
+fi
 echo "## VIRTUALIZACION ##" >> /tmp/reporte-entorno
 virt-what >> /tmp/reporte-entorno
 clear

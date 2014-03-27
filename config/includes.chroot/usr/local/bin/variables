@@ -109,6 +109,8 @@ function optimizacion_1 ()
 		swapoff /swapfile
 		rm -f /swapfile
 		sed -i 's_/swapfile_#/swapfile_g' /etc/fstab
+		sed -i 's_miswap_#miswap_g' /etc/rc.local
+		sed -i 's_swapon -f_#swapon -f_g' /etc/rc.local
 		sed -i 's/autologin-user=user/#autologin-user=user/g' /etc/lightdm/lightdm.conf
 		sed -i 's/autologin-user-timeout=0/#autologin-user-timeout=0/g' /etc/lightdm/lightdm.conf
 		sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="quiet"/GRUB_CMDLINE_LINUX_DEFAULT="swapaccount=1 cgroup_enable=memory disable=1 disable_ipv6=1 security=apparmor panic=10 quiet splash"/g' /etc/default/grub
@@ -129,6 +131,10 @@ function optimizacion_1 ()
 		echo "tmpfs /var/cache/samba tmpfs noatime,nodev 0 0" >> /etc/fstab
 		echo "tmpfs /var/spool tmpfs noatime,nodev 0 0" >> /etc/fstab
 		echo "tmpfs /var/tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab
+		miswap=$(fdisk -l | grep swap | cut -c 1-9)
+		miswap2=$(blkid -o export $miswap | grep UUID)
+		echo $miswap2 "none swap sw 0 0" >> /etc/fstab
+		yes "" | sensors-detect
 		echo "$(date +%d/%m/%Y-%r)" > /root/.optimizado		
 		for i in $( who | cut -d' ' -f1 | sort | uniq ); do
 			echo "tmpfs /home/$i/.cache  tmpfs noatime,nodev,rw 0 0" >> /etc/fstab
