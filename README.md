@@ -16,7 +16,7 @@ El usuario es:		user
 
 La clave de user es:	xanadu
 
-La clave de ROOT es:	xanadu
+La clave de ROOT es:	enfilade
 
 --------------------------
 
@@ -35,7 +35,9 @@ Desarrolladores:
 
 Colaboradores:
 
+	* Alvaro Hernandez	
 	* David Rondon
+
 
 Dudas, consultas y/o sugerencias por favor enviarlas a: sinfallas@gmail.com
 
@@ -83,10 +85,10 @@ Evince
 
 * Internet 
 
- IceWeasel
- Flashplugin-nonfree
- FileZilla
- Pidgin
+IceWeasel
+Flashplugin-nonfree
+FileZilla
+Pidgin
 
 * Herramientas del Sistema
 
