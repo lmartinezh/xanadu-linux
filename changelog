@@ -1,3 +1,12 @@
+xanadu (0.4) beta 2
+
+* nuevos repos (aptosid y siduction)
+* se desactivo sudo
+* se corrigieron errores en el script entorno
+* se cambio la clave de root a enfilade
+* se coloco icono de la papelera en escritorio
+
+
 xanadu (0.4) beta 1
 
 * se modificaron las opciones por defecto en iceweasel para activar spdy

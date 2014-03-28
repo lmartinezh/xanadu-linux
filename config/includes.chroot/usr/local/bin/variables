@@ -98,7 +98,7 @@ function optimizacion_1 ()
 	if [[ -f /root/.optimizado ]]; then
 		echo 1 > /dev/null
 	else
-		zenity --info --text="Por favor reinicie el equipo."		
+		zenity --info --timeout 3 --text="Por favor reinicie el equipo."		
 		if [[ $(hostname) = xanadu ]]; then
 			echo xanadu-$(printf '%02X%02X%02X\n' $((RANDOM%256)) $((RANDOM%256)) $((RANDOM%256))) > /etc/hostname
 			sed -i 's_xanadu_'$(cat /etc/hostname)'_g' /etc/hosts
@@ -122,7 +122,8 @@ function optimizacion_1 ()
 		echo "write_cache = on" >> /etc/hdparm.conf
 		echo "spindown_time = 18" >> /etc/hdparm.conf
 		echo "}" >> /etc/hdparm.conf
-		echo "user ALL=(ALL) ALL" > /etc/sudoers.d/live
+		# echo "user ALL=(ALL) ALL" > /etc/sudoers.d/live
+		echo " " > /etc/sudoers.d/live
 		echo "proc /proc proc defaults,hidepid=2 0 0" >> /etc/fstab
 		echo "cgroup /sys/fs/cgroup cgroup defaults 0 0" >> /etc/fstab
 		echo "tmpfs /tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab

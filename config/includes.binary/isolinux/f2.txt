@@ -16,7 +16,7 @@ Algunas configuraciones pueden requerir de una NIC adicional
 
 El usuario es: user
 La clave de user es: xanadu
-La clave de ROOT es: xanadu
+La clave de ROOT es: enfilade
 
 
 
