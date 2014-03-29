@@ -1,11 +1,12 @@
 xanadu (0.4.2)
 
 * nuevos repos (aptosid y siduction)
-* se desactivo sudo
+* se desactivo sudo en el post-instalador
 * se corrigieron errores en el script entorno
 * se cambio la clave de root a enfilade
-* se coloco icono de la papelera en escritorio
+* se agrega icono de la papelera
 * nuevo estilo de numeracion mas acorde con lo sugerido por debian
+* se cambio el archivo chroot para que apuntara a linux-image en lugar de linux-image-3.13
 
 
 xanadu (0.4) beta 1

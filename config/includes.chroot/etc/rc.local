@@ -10,16 +10,18 @@
 # bits.
 #
 # By default this script does nothing.
+modprobe zram
+echo $((100*1024*1024)) > /sys/block/zram0/disksize
+mkswap /dev/zram0
+swapon -p 50 /dev/zram0
 echo "always" > /sys/kernel/mm/transparent_hugepage/enabled
 echo "20000" > /sys/kernel/mm/transparent_hugepage/khugepaged/pages_to_scan
 echo "1" > /sys/kernel/mm/ksm/run
 echo "20000" > /sys/kernel/mm/ksm/pages_to_scan
 echo "1" > /sys/fs/cgroup/notify_on_release
 echo "/usr/local/sbin/cgroup_clean" > /sys/fs/cgroup/release_agent
-modprobe zram
-echo $((100*1024*1024)) > /sys/block/zram0/disksize
-mkswap /dev/zram0
-swapon -p 50 /dev/zram0
+miswap=$(fdisk -l | grep swap | cut -c 1-9)
+swapon -f $miswap
 service anacron stop
 service avahi-daemon stop
 service clamav-freshclam stop
@@ -35,6 +37,4 @@ service psad stop
 service rsyslog stop
 service shorewall stop
 service tor stop
-miswap=$(fdisk -l | grep swap | cut -c 1-9)
-swapon -f $miswap
 exit 0
