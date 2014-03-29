@@ -1,10 +1,11 @@
-xanadu (0.4) beta 2
+xanadu (0.4.2)
 
 * nuevos repos (aptosid y siduction)
 * se desactivo sudo
 * se corrigieron errores en el script entorno
 * se cambio la clave de root a enfilade
 * se coloco icono de la papelera en escritorio
+* nuevo estilo de numeracion mas acorde con lo sugerido por debian
 
 
 xanadu (0.4) beta 1
