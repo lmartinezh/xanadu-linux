@@ -1,3 +1,11 @@
+xanadu (0.4.3)
+
+* se revierte la desactivacion de sudo por presentar problemas con los script
+* se agrega el paquete ssh con modificaciones en la configuracion por defecto
+* se elimina el icono "adicionales" del escritorio, ahora solo esta accesible desde su correspondiente menu
+* se eliminan funciones redundantes en los script
+
+
 xanadu (0.4.2)
 
 * nuevos repos (aptosid y siduction)

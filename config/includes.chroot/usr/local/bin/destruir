@@ -1,12 +1,6 @@
 #!/bin/bash
 # elaborado por sinfallas
-if [[ $USER != root ]]; then
-echo "Ejecutar como root"
-exit 1
-fi
-dispositivo2=$(df / --output=source | tail -n1 | cut -c 19-54)
-dispositivo=$(blkid -U $dispositivo2 | cut -c 1-8)
-miswap=$(fdisk -l | grep swap | cut -c 1-9)
+source /usr/local/bin/variables
 mv -f /etc/memlockd.cfg /etc/memlockd.cfg.old
 mv -f /etc/memlockd.cfg.des /etc/memlockd.cfg
 service memlockd start

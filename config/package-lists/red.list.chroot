@@ -6,6 +6,7 @@ network-manager
 nmap
 ntp
 shorewall
+ssh
 tcptraceroute
 wireless-tools
 wireshark

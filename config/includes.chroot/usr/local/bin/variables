@@ -7,6 +7,10 @@ fi
 lock="/run/tor.lock"
 lock2="/run/i2p.lock"
 persistencia="/usr/local/bin/persistencia"
+dispositivo2=$(df / --output=source | tail -n1 | cut -c 19-54)
+dispositivo=$(blkid -U $dispositivo2 | cut -c 1-8)
+miswap=$(fdisk -l | grep swap | cut -c 1-9)
+miswap2=$(blkid -o export $miswap | grep UUID)
 
 function espera ()
 {
@@ -115,15 +119,12 @@ function optimizacion_1 ()
 		sed -i 's/autologin-user-timeout=0/#autologin-user-timeout=0/g' /etc/lightdm/lightdm.conf
 		sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="quiet"/GRUB_CMDLINE_LINUX_DEFAULT="swapaccount=1 cgroup_enable=memory disable=1 disable_ipv6=1 security=apparmor panic=10 quiet splash"/g' /etc/default/grub
 		update-grub2
-		dispositivo2=$(df / --output=source | tail -n1 | cut -c 19-54)
-		dispositivo=$(blkid -U $dispositivo2 | cut -c 1-8)
 		echo $dispositivo { >> /etc/hdparm.conf
 		echo "lookahead = on" >> /etc/hdparm.conf
 		echo "write_cache = on" >> /etc/hdparm.conf
 		echo "spindown_time = 18" >> /etc/hdparm.conf
 		echo "}" >> /etc/hdparm.conf
-		# echo "user ALL=(ALL) ALL" > /etc/sudoers.d/live
-		echo " " > /etc/sudoers.d/live
+		echo "user ALL=(ALL) ALL" > /etc/sudoers.d/live
 		echo "proc /proc proc defaults,hidepid=2 0 0" >> /etc/fstab
 		echo "cgroup /sys/fs/cgroup cgroup defaults 0 0" >> /etc/fstab
 		echo "tmpfs /tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab
@@ -132,8 +133,6 @@ function optimizacion_1 ()
 		echo "tmpfs /var/cache/samba tmpfs noatime,nodev 0 0" >> /etc/fstab
 		echo "tmpfs /var/spool tmpfs noatime,nodev 0 0" >> /etc/fstab
 		echo "tmpfs /var/tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab
-		miswap=$(fdisk -l | grep swap | cut -c 1-9)
-		miswap2=$(blkid -o export $miswap | grep UUID)
 		echo $miswap2 "none swap sw 0 0" >> /etc/fstab
 		yes "" | sensors-detect
 		echo "$(date +%d/%m/%Y-%r)" > /root/.optimizado		

@@ -36,5 +36,6 @@ service privoxy stop
 service psad stop
 service rsyslog stop
 service shorewall stop
+service ssh stop
 service tor stop
 exit 0
