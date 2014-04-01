@@ -1,9 +1,15 @@
 xanadu (0.4.3)
 
 * se revierte la desactivacion de sudo por presentar problemas con los script
+* se desactiva el acceso grafico al root
 * se agrega el paquete ssh con modificaciones en la configuracion por defecto
-* se elimina el icono "adicionales" del escritorio, ahora solo esta accesible desde su correspondiente menu
+* se agrega el paquete systemd-shim para corregir el error que no permitia cerrar sesion
+* se agrega el paquete systemd-sysv para corregir el error de conexion a dbus
+* se crea lista de paquetes llamada systemd para ubicar los paquetes relacionados con ese sistema
+* se elimina el icono "adicionales" del escritorio, solo estara accesible desde su correspondiente menu
 * se eliminan funciones redundantes en los script
+* se modificaron algunas configuraciones a openbox
+* se eliminaron archivos innecesarios en includes.chroot
 
 
 xanadu (0.4.2)

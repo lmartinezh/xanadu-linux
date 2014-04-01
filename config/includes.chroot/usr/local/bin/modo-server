@@ -15,7 +15,7 @@ case "$1" in
 		apt-get -y --force-yes autoremove
 		apt-get -y purge $(deborphan)
 		apt-get -q update
-		apt-get -q -y install apparmor-profiles
+		apparmor_1
 		apt-get clean
 		optimizacion_1
 		sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="swapaccount=1 cgroup_enable=memory disable=1 disable_ipv6=1 security=apparmor panic=10 quiet splash"/GRUB_CMDLINE_LINUX_DEFAULT="swapaccount=1 cgroup_enable=memory disable=1 disable_ipv6=1 security=apparmor panic=10 quiet"/g' /etc/default/grub

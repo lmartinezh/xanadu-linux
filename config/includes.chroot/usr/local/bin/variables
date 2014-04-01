@@ -125,6 +125,7 @@ function optimizacion_1 ()
 		echo "spindown_time = 18" >> /etc/hdparm.conf
 		echo "}" >> /etc/hdparm.conf
 		echo "user ALL=(ALL) ALL" > /etc/sudoers.d/live
+		echo "auth required pam_succeed_if.so user != root quiet" >> /etc/pam.d/lightdm
 		echo "proc /proc proc defaults,hidepid=2 0 0" >> /etc/fstab
 		echo "cgroup /sys/fs/cgroup cgroup defaults 0 0" >> /etc/fstab
 		echo "tmpfs /tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab
@@ -199,5 +200,5 @@ function icedove_1 ()
 
 function apparmor_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install apparmor-profiles
+	apt-get -q update && apt-get -q -y --force-yes install apparmor-profiles systemd-sysv
 }
