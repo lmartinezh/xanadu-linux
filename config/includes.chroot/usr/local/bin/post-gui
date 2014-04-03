@@ -6,7 +6,5 @@ if [[ -f /usr/bin/yad ]]; then
 elif [[ -f /usr/bin/zenity ]]; then
 	source post-gui-zen
 
-else
-	echo 1 > /dev/null
 fi
 exit 0

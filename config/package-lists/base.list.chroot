@@ -24,4 +24,4 @@ devio
 memlockd
 grub-pc
 grub2-common
-cgroup-bin
+ulatency

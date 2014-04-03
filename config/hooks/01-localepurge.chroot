@@ -16,7 +16,7 @@ update-usbids
 groupadd -r dnsmasq
 adduser dnsmasq dnsmasq
 aide --config /etc/aide/aide.conf --init
-# echo "Se ejecutara aideinit por favor espere"
+# echo "## aideinit ##"
 # aideinit -y -f
 # mv -f -v /var/lib/aide/aide.db.new /var/lib/aide/aide.db
 echo "## permisos ##"

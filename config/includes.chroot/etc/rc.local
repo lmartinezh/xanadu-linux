@@ -10,7 +10,8 @@
 # bits.
 #
 # By default this script does nothing.
-modprobe zram
+num_cpus=$(grep -c processor /proc/cpuinfo)
+modprobe zram zram_num_devices=$num_cpus
 echo $((100*1024*1024)) > /sys/block/zram0/disksize
 mkswap /dev/zram0
 swapon -p 50 /dev/zram0
@@ -18,8 +19,12 @@ echo "always" > /sys/kernel/mm/transparent_hugepage/enabled
 echo "20000" > /sys/kernel/mm/transparent_hugepage/khugepaged/pages_to_scan
 echo "1" > /sys/kernel/mm/ksm/run
 echo "20000" > /sys/kernel/mm/ksm/pages_to_scan
-echo "1" > /sys/fs/cgroup/notify_on_release
-echo "/usr/local/sbin/cgroup_clean" > /sys/fs/cgroup/release_agent
+echo "200" > /sys/kernel/mm/ksm/sleep_millisecs
+mkdir -p /dev/cgroup/cpu
+mount -t cgroup cgroup /dev/cgroup/cpu -o cpu
+mkdir -m 0777 /dev/cgroup/cpu/user
+echo "/usr/local/sbin/cgroup_clean" > /dev/cgroup/cpu/release_agent
+echo "1" > /dev/cgroup/cpu/notify_on_release
 miswap=$(fdisk -l | grep swap | cut -c 1-9)
 swapon -f $miswap
 service anacron stop

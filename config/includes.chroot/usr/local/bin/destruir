@@ -5,7 +5,7 @@ mv -f /etc/memlockd.cfg /etc/memlockd.cfg.old
 mv -f /etc/memlockd.cfg.des /etc/memlockd.cfg
 service memlockd start
 history -c
-sswap -f $miswap
 sfill -f $dispositivo &
 sdmem -f &
+sswap -f $miswap
 exit 0

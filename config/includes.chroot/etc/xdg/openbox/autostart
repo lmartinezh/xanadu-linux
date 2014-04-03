@@ -16,5 +16,5 @@
 #
 #xfce-mcs-manager &
 thunar --daemon &
-nitrato &
 tint2 &
+nitrato &

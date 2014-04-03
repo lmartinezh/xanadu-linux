@@ -1,3 +1,13 @@
+xanadu (0.4.4)
+
+* se modifica la forma de montar cgroup para adaptarse a ulatency
+* se agrega el paquete ulatency
+* se adapta el script variables para la nueva configuracion de cgroup
+* mejoras a zram
+* se elimina cgroup-bin por conflicto con ulatency
+* se eliminan paquetes innecesarios
+
+
 xanadu (0.4.3)
 
 * se revierte la desactivacion de sudo por presentar problemas con los script

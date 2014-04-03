@@ -11,6 +11,7 @@ dispositivo2=$(df / --output=source | tail -n1 | cut -c 19-54)
 dispositivo=$(blkid -U $dispositivo2 | cut -c 1-8)
 miswap=$(fdisk -l | grep swap | cut -c 1-9)
 miswap2=$(blkid -o export $miswap | grep UUID)
+quien=$(who | cut -d' ' -f1 | sort | uniq)
 
 function espera ()
 {
@@ -108,6 +109,7 @@ function optimizacion_1 ()
 			sed -i 's_xanadu_'$(cat /etc/hostname)'_g' /etc/hosts
 		fi		
 		rm -f /home/*/Escritorio/instalar-xanadu.desktop
+		rm -f /home/*/Escritorio/post-instalador.desktop
 		rm -f /etc/apt/preferences.d/exclude.pref
 		rm -f /etc/apt/preferences
 		swapoff /swapfile
@@ -127,7 +129,6 @@ function optimizacion_1 ()
 		echo "user ALL=(ALL) ALL" > /etc/sudoers.d/live
 		echo "auth required pam_succeed_if.so user != root quiet" >> /etc/pam.d/lightdm
 		echo "proc /proc proc defaults,hidepid=2 0 0" >> /etc/fstab
-		echo "cgroup /sys/fs/cgroup cgroup defaults 0 0" >> /etc/fstab
 		echo "tmpfs /tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab
 		echo "tmpfs /run tmpfs rw,nosuid,noexec,nodev,noatime,mode=755 0 0" >> /etc/fstab
 		echo "tmpfs /var/cache/apt/archives tmpfs noatime,nodev 0 0" >> /etc/fstab
@@ -137,7 +138,7 @@ function optimizacion_1 ()
 		echo $miswap2 "none swap sw 0 0" >> /etc/fstab
 		yes "" | sensors-detect
 		echo "$(date +%d/%m/%Y-%r)" > /root/.optimizado		
-		for i in $( who | cut -d' ' -f1 | sort | uniq ); do
+		for i in $quien; do
 			echo "tmpfs /home/$i/.cache  tmpfs noatime,nodev,rw 0 0" >> /etc/fstab
 		done
 	fi
@@ -145,12 +146,12 @@ function optimizacion_1 ()
 
 function kde_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install task-kde-desktop kde-plasma-desktop
+	apt-get -q update && apt-get -q -y --force-yes install task-kde-desktop kde-full
 }
 
 function gnome_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install task-gnome-desktop gnome-session-fallback gnome-shell gnome-tweak-tool
+	apt-get -q update && apt-get -q -y --force-yes install task-gnome-desktop gnome-session-fallback gnome-shell gnome-tweak-tool gnome
 }
 
 function xfce_1 ()
