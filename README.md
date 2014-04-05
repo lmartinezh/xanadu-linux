@@ -6,7 +6,7 @@ El nombre xanadu se ha considerado como sinónimo de opulencia y misterio, sobre
 
 Se construye usando Live-build, la imagen .ISO y sus configuraciones para crearla se encuentran disponibles bajo licencia GPL v2 (GNU GENERAL PUBLIC LICENSE, Version 2, June 1991) y pueden ser descargadas desde: 
 
-http://www.mediafire.com/download/puxc1n2bs8yeytr/xanadu-0.3-i386-beta-7.zip
+http://www.mediafire.com/download/8ply6722azd77ih/xanadu-0.4.4-i386.zip
 
 Para copiar el contenido de la imagen ISO a una memoria USB puede utilizar unetbootin o el comando bb de la siguiente forma: dd if=nombre.iso of=/dev/sdx oflag=direct bs=1048576
 
