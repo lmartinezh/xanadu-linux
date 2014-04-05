@@ -103,7 +103,7 @@ function optimizacion_1 ()
 	if [[ -f /root/.optimizado ]]; then
 		echo 1 > /dev/null
 	else
-		zenity --info --timeout 3 --text="Por favor reinicie el equipo."		
+		zenity --info --timeout 3 --text="Por favor reinicie el equipo, presione aceptar para continuar."		
 		if [[ $(hostname) = xanadu ]]; then
 			echo xanadu-$(printf '%02X%02X%02X\n' $((RANDOM%256)) $((RANDOM%256)) $((RANDOM%256))) > /etc/hostname
 			sed -i 's_xanadu_'$(cat /etc/hostname)'_g' /etc/hosts
@@ -202,4 +202,11 @@ function icedove_1 ()
 function apparmor_1 ()
 {
 	apt-get -q update && apt-get -q -y --force-yes install apparmor-profiles systemd-sysv
+}
+
+function limpiar_1 ()
+{
+	apt-get clean
+	apt-get -y --force-yes autoremove
+	apt-get -y purge $(deborphan)
 }

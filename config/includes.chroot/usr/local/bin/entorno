@@ -4,24 +4,25 @@ if [[ $USER != root ]]; then
 echo "Ejecutar como root"
 exit 1
 fi
-echo -e "## CPU ##""\n" > /tmp/reporte-entorno
-lscpu >> /tmp/reporte-entorno
-echo -e "\n""## HARDWARE ##""\n" >> /tmp/reporte-entorno
-lshw -short >> /tmp/reporte-entorno
-echo -e "\n""## MEMORIA ##""\n" >> /tmp/reporte-entorno
-free -h >> /tmp/reporte-entorno
-echo -e "\n""## DISCO ##""\n" >> /tmp/reporte-entorno
-df -h >> /tmp/reporte-entorno
-echo -e "\n""## LAPTOP ##""\n" >> /tmp/reporte-entorno
-echo $(laptop-detect -v 2>&1) >> /tmp/reporte-entorno
-echo -e "\n""## INSTALACION ##""\n" >> /tmp/reporte-entorno
-if ! [[ -d /lib/live/mount/medium ]] ; then
-	echo "Xanadu esta ejecutandose desde una instalacion." >> /tmp/reporte-entorno
+nombre=reporte
+echo -e "## CPU ##""\n" > /tmp/$nombre
+lscpu >> /tmp/$nombre
+echo -e "\n""## HARDWARE ##""\n" >> /tmp/$nombre
+lshw -short >> /tmp/$nombre
+echo -e "\n""## MEMORIA ##""\n" >> /tmp/$nombre
+free -h >> /tmp/$nombre
+echo -e "\n""## DISCO ##""\n" >> /tmp/$nombre
+df -h >> /tmp/$nombre
+echo -e "\n""## LAPTOP ##""\n" >> /tmp/$nombre
+echo $(laptop-detect -v 2>&1) >> /tmp/$nombre
+echo -e "\n""## INSTALACION ##""\n" >> /tmp/$nombre
+if ! [[ -d /lib/live/mount/rootfs ]] ; then
+	echo "Xanadu esta ejecutandose desde una instalacion." >> /tmp/$nombre
 else
-	echo "Xanadu esta ejecutandose en modo live." >> /tmp/reporte-entorno
+	echo "Xanadu esta ejecutandose en modo live." >> /tmp/$nombre
 fi
-echo -e "\n""## VIRTUALIZACION ##""\n" >> /tmp/reporte-entorno
-virt-what >> /tmp/reporte-entorno
+echo -e "\n""## VIRTUALIZACION ##""\n" >> /tmp/$nombre
+virt-what >> /tmp/$nombre
 clear
-echo -e "\n""El reporte se ha generado en /tmp/reporte-entorno"
+echo -e "\n""El reporte se ha generado en /tmp/$nombre"
 exit 0

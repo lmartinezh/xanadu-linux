@@ -1,26 +1,26 @@
 #!/bin/bash
 #elaborado por sinfallas
 source /usr/local/bin/variables
-mio=$(yad --fixed --center --width=360 --height=420 --no-click --list --title="Adicionales" --column=Acciones "Activar Seguridad" "Antivirus" "Iniciar Tor" "Monitor Tor" "Detener Tor" "Iniciar i2p" "Detener i2p" "Como activar la persistencia" "Reparar Hora" "Iniciar Compton")
+mio=$(yad --sticky --fixed --center --width=360 --height=420 --no-click --list --title="Adicionales" --column=Acciones "Activar Seguridad" "Antivirus" "Iniciar Tor" "Monitor Tor" "Detener Tor" "Iniciar i2p" "Detener i2p" "Como activar la persistencia" "Reparar Hora" "Iniciar Compton")
 
 if [ "$mio" = "Activar Seguridad|" ]; then
 	seguridad_1
-	yad --skip-taskbar --button=ACEPTAR:1 --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="Los servicios: shorewall, fail2ban y psad se han iniciado con sus configuraciones por defecto, es necesario que el usuario las modifique de acuerdo a sus necesidades, presione aceptar para continuar."
+	yad --timeout=7 --skip-taskbar --button=ACEPTAR:1 --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="Los servicios: shorewall, fail2ban y psad se han iniciado con sus configuraciones por defecto, es necesario que el usuario las modifique de acuerdo a sus necesidades, presione aceptar para continuar."
 	source $0
 
 elif [ "$mio" = "Antivirus|" ]; then
-	yad --skip-taskbar --button=ACEPTAR:1 --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="La actualización de base de firmas de virus retardara el inicio, por favor espere, presione aceptar para continuar."
+	yad --timeout=5 --skip-taskbar --button=ACEPTAR:1 --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="La actualización de base de firmas de virus retardara el inicio, por favor espere, presione aceptar para continuar."
 	antivirus_1
 
 elif [ "$mio" = "Iniciar Tor|" ]; then
 	if [[ -f $lock ]]; then
-		yad --skip-taskbar --button=ACEPTAR:1 --title="ERROR" --fixed --center --text-align=fill --borders=6 --text="Tor ya se esta ejecutando."
+		yad --timeout=3 --skip-taskbar --button=ACEPTAR:1 --title="ERROR" --fixed --center --text-align=fill --borders=6 --text="Tor ya se esta ejecutando."
 		source $0
 	else
     		tor_1
-		yad --skip-taskbar --button=ACEPTAR:1 --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="Espere mientras se inicia TOR se le notificara al completarse la tarea."
+		yad --timeout=3 --skip-taskbar --button=ACEPTAR:1 --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="Espere mientras se inicia TOR se le notificara al completarse la tarea."
 		espera
-		yad --skip-taskbar --button=ACEPTAR:1 --title="FINALIZADO" --fixed --center --text-align=fill --borders=6 --text="Inicio completado. Si utiliza un navegador diferente de Iceweasel, introduzca la siguiente configuración de PROXY en su navegador: localhost (o el ip del servidor) puerto 8118 (9151 para socks) y localhost (o el ip del servidor) puerto 9050 para las otras aplicaciones que usen socks."
+		yad --timeout=7 --skip-taskbar --button=ACEPTAR:1 --title="FINALIZADO" --fixed --center --text-align=fill --borders=6 --text="Inicio completado. Si utiliza un navegador diferente de Iceweasel, introduzca la siguiente configuración de PROXY en su navegador: localhost (o el ip del servidor) puerto 8118 (9151 para socks) y localhost (o el ip del servidor) puerto 9050 para las otras aplicaciones que usen socks."
 		iceweasel https://check.torproject.org/
 	fi
 
@@ -31,20 +31,20 @@ elif [ "$mio" = "Monitor Tor|" ]; then
 elif [ "$mio" = "Detener Tor|" ]; then
 	if [[ -f $lock ]]; then
 		tor_0
-		yad --skip-taskbar --button=ACEPTAR:1 --title="FINALIZADO" --fixed --center --text-align=fill --borders=6 --text="Servicio finalizado exitosamente."
+		yad --timeout=3 --skip-taskbar --button=ACEPTAR:1 --title="FINALIZADO" --fixed --center --text-align=fill --borders=6 --text="Servicio finalizado exitosamente."
 	else
-		yad --skip-taskbar --button=ACEPTAR:1 --title="ERROR" --fixed --center --text-align=fill --borders=6 --text="Tor no se esta ejecutando."
+		yad --timeout=3 --skip-taskbar --button=ACEPTAR:1 --title="ERROR" --fixed --center --text-align=fill --borders=6 --text="Tor no se esta ejecutando."
 		source $0
 	fi
 
 elif [ "$mio" = "Iniciar i2p|" ]; then
-	yad --skip-taskbar --button=ACEPTAR:1 --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="Esta función es experimental y no se garantiza su correcto funcionamiento."
+	yad --timeout=3 --skip-taskbar --button=ACEPTAR:1 --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="Esta función es experimental y no se garantiza su correcto funcionamiento."
 	if [[ -f $lock ]]; then
-		yad --skip-taskbar --button=ACEPTAR:1 --title="ERROR" --fixed --center --text-align=fill --borders=6 --text="I2p no puede ejecutarse conjuntamente con tor."
+		yad --timeout=3 --skip-taskbar --button=ACEPTAR:1 --title="ERROR" --fixed --center --text-align=fill --borders=6 --text="I2p no puede ejecutarse conjuntamente con tor."
 		source $0
 	else
 		if [[ -f $lock2 ]]; then
-			yad --skip-taskbar --button=ACEPTAR:1 --title="ERROR" --fixed --center --text-align=fill --borders=6 --text="I2p ya se esta ejecutando."
+			yad --timeout=3 --skip-taskbar --button=ACEPTAR:1 --title="ERROR" --fixed --center --text-align=fill --borders=6 --text="I2p ya se esta ejecutando."
 			source $0
 		else
     			i2p_1
@@ -54,9 +54,9 @@ elif [ "$mio" = "Iniciar i2p|" ]; then
 elif [ "$mio" = "Detener i2p|" ]; then
 	if [[ -f $lock2 ]]; then
 		i2p_0
-		yad --skip-taskbar --button=ACEPTAR:1 --title="FINALIZADO" --fixed --center --text-align=fill --borders=6 --text="Servicio finalizado exitosamente."
+		yad --timeout=3 --skip-taskbar --button=ACEPTAR:1 --title="FINALIZADO" --fixed --center --text-align=fill --borders=6 --text="Servicio finalizado exitosamente."
 	else
-		yad --skip-taskbar --button=ACEPTAR:1 --title="ERROR" --fixed --center --text-align=fill --borders=6 --text="I2p no se esta ejecutando."
+		yad --timeout=3 --skip-taskbar --button=ACEPTAR:1 --title="ERROR" --fixed --center --text-align=fill --borders=6 --text="I2p no se esta ejecutando."
 		source $0
 	fi
 

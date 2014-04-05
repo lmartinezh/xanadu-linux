@@ -1,0 +1,17 @@
+LISTA DE PRUEBAS
+
+* Verificar si la version del kernel es la correcta
+* Verificar si los directorios listados en /etc/fstab se hayan montado correctamente
+* Verificar si el hostname es el correcto
+* Verificar si los modulos listados en el arvhivo /etc/modules se cargaron correctamente
+* Verificar si el procedimiento ubicado en /etc/rc.local se ejecuto correctamente
+* Comprobar la existencia del archivo version en /etc/xanadu
+* Verificar si los programas ubicados en el autorun de cada escritorio de ejecutan correctamente
+* Comprobar la existencia de los directorios /var/log/tor y /var/lib/tor
+* Verificar si la clave de user y de root son correctas
+* Verificar si el instalador funciona correctamente
+* Verificar si cada uno de los script en /usr/local/bin funcionan adecuadamente
+* Verificar si cada una de las opciones de booteo funcionan adecuadamente
+* Verificar si xzoom y expose funcionan adecuadamente
+* Ejecutar los programas de uso comun para verificar si funcionan adecuadamente y estan en español
+* Verificar si las ultimas correcciones que aparecen en changelog realmente funcionan

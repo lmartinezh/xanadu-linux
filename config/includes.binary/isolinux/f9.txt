@@ -1,7 +1,7 @@
 0fQUE ES XANADU GNU/LINUX07                             09F907
 
 
-Es un sabor de Debian que utiliza SID como base y LXDE como entorno
+Es un derivado de Debian que utiliza SID como base y LXDE como entorno
 de escritorio, pensada para ser ligera y a la vez util, contiene
 herramientas para rescate de sistemas, analisis forense y navegacion
 anonima, ademas de todo lo necesario para su uso en el escritorio.

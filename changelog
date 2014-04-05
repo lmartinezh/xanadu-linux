@@ -1,65 +1,76 @@
+xanadu (0.4.5)
+
+	* modificaciones en hook
+	* se coloco timeout a las advertencias de los script
+	* se agrego la funcion limpiar_1 a variables
+	* se crea una lista de pruebas a realizar antes del lanzamiento de cada version
+	* se corrigen errores en iceweasel
+	* se corrigen errores en el instalador
+	* se corrige el error verificacion de modo de ejecucion (live) en varios scripts
+
+
 xanadu (0.4.4)
 
-* se modifica la forma de montar cgroup para adaptarse a ulatency
-* se agrega el paquete ulatency
-* se adapta el script variables para la nueva configuracion de cgroup
-* mejoras a zram
-* se elimina cgroup-bin por conflicto con ulatency
-* se eliminan paquetes innecesarios
+	* se modifica la forma de montar cgroup para adaptarse a ulatency
+	* se agrega el paquete ulatency
+	* se adapta el script variables para la nueva configuracion de cgroup
+	* mejoras a zram
+	* se elimina cgroup-bin por conflicto con ulatency
+	* se eliminan paquetes innecesarios
 
 
 xanadu (0.4.3)
 
-* se revierte la desactivacion de sudo por presentar problemas con los script
-* se desactiva el acceso grafico al root
-* se agrega el paquete ssh con modificaciones en la configuracion por defecto
-* se agrega el paquete systemd-shim para corregir el error que no permitia cerrar sesion
-* se agrega el paquete systemd-sysv para corregir el error de conexion a dbus
-* se crea lista de paquetes llamada systemd para ubicar los paquetes relacionados con ese sistema
-* se elimina el icono "adicionales" del escritorio, solo estara accesible desde su correspondiente menu
-* se eliminan funciones redundantes en los script
-* se modificaron algunas configuraciones a openbox
-* se eliminaron archivos innecesarios en includes.chroot
+	* se revierte la desactivacion de sudo por presentar problemas con los script
+	* se desactiva el acceso grafico al root
+	* se agrega el paquete ssh con modificaciones en la configuracion por defecto
+	* se agrega el paquete systemd-shim para corregir el error que no permitia cerrar sesion
+	* se agrega el paquete systemd-sysv para corregir el error de conexion a dbus
+	* se crea lista de paquetes llamada systemd para ubicar los paquetes relacionados con ese sistema
+	* se elimina el icono "adicionales" del escritorio, solo estara accesible desde su correspondiente menu
+	* se eliminan funciones redundantes en los script
+	* se modificaron algunas configuraciones a openbox
+	* se eliminaron archivos innecesarios en includes.chroot
 
 
 xanadu (0.4.2)
 
-* nuevos repos (aptosid y siduction)
-* se desactivo sudo en el post-instalador
-* se corrigieron errores en el script entorno
-* se cambio la clave de root a enfilade
-* se agrega icono de la papelera
-* nuevo estilo de numeracion mas acorde con lo sugerido por debian
-* se cambio el archivo chroot para que apuntara a linux-image en lugar de linux-image-3.13
+	* nuevos repos (aptosid y siduction)
+	* se desactivo sudo en el post-instalador
+	* se corrigieron errores en el script entorno
+	* se cambio la clave de root a enfilade
+	* se agrega icono de la papelera
+	* nuevo estilo de numeracion mas acorde con lo sugerido por debian
+	* se cambio el archivo chroot para que apuntara a linux-image en lugar de linux-image-3.13
 
 
 xanadu (0.4) beta 1
 
-* se modificaron las opciones por defecto en iceweasel para activar spdy
-* se agregaron algunos modulos al blacklist
-* se agregaron acciones personalizada a thunar
-* se modifico post-gui para optimizar el sistema recien instalado
-* correccion de errores en modo-server
-* se cambio el repositorio de i2p por presentar problemas
-* se actualizaron los repositorios
-* se creo un script llamado "entorno" para generar un reporte sobre las caracteristicas del pc
-* se corrigio la falla en microcode
-* nuevos drivers para intel
-* se eliminaron paquetes innecesarios
-* se agrego fish shell 
+	* se modificaron las opciones por defecto en iceweasel para activar spdy
+	* se agregaron algunos modulos al blacklist
+	* se agregaron acciones personalizada a thunar
+	* se modifico post-gui para optimizar el sistema recien instalado
+	* correccion de errores en modo-server
+	* se cambio el repositorio de i2p por presentar problemas
+	* se actualizaron los repositorios
+	* se creo un script llamado "entorno" para generar un reporte sobre las caracteristicas del pc
+	* se corrigio la falla en microcode
+	* nuevos drivers para intel
+	* se eliminaron paquetes innecesarios
+	* se agrego fish shell 
 
 
 xanadu (0.3) beta 8
 
-* se corrige comportamiento de cgroup
-* se agrega verificacion de modo de ejecucion (live) en post-instalacion
-* se instala apparmor al entrar por primera vez en post-instalacion
-* se agregan varios comandos a la configuracion por defecto de grub al entrar por primera vez en post-instalacion
-* si el usuario no cambio el hostname al momento de instalar el sistema se generara uno de forma aleatoria al entrar por primera vez en post-instalacion
-* se elimina turpial
-* al ejecutar post-instalador se crea en /etc/fstab una entrada para colocar el directorio .cache del usuario en tmpfs
-* se agrego la funcion optimizar al modo server
-* se simplificaron las listas de paquetes
-* se cambio el comando de arranque en syslinux
-* se modificaron valores por defecto en iceweasel
-* se cambio el menu de arranque para mayor facilidad de uso
+	* se corrige comportamiento de cgroup
+	* se agrega verificacion de modo de ejecucion (live) en post-instalacion
+	* se instala apparmor al entrar por primera vez en post-instalacion
+	* se agregan varios comandos a la configuracion por defecto de grub al entrar por primera vez en post-instalacion
+	* si el usuario no cambio el hostname al momento de instalar el sistema se generara uno de forma aleatoria al entrar por primera vez en post-instalacion
+	* se elimina turpial
+	* al ejecutar post-instalador se crea en /etc/fstab una entrada para colocar el directorio .cache del usuario en tmpfs
+	* se agrego la funcion optimizar al modo server
+	* se simplificaron las listas de paquetes
+	* se cambio el comando de arranque en syslinux
+	* se modificaron valores por defecto en iceweasel
+	* se cambio el menu de arranque para mayor facilidad de uso

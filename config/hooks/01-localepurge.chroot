@@ -31,7 +31,7 @@ echo "## proteger paquetes ##"
 /bin/echo vainfo hold | /usr/bin/dpkg --set-selections
 /bin/echo systemd-shim hold | /usr/bin/dpkg --set-selections
 echo "## purge ##"
-apt-get -y purge $(deborphan --libdevel) $(deborphan --find-config) bluetooth bluez bluez-alsa bluez-firmware bluez-gstreamer linux-wlan-ng-doc aptitude aptitude-common vim-tiny man-db manpages libc6-dev gcc g++ make dpkg-dev build-essential
+apt-get -y purge $(deborphan --libdevel) $(deborphan --find-config) bluetooth bluez bluez-alsa bluez-firmware bluez-gstreamer linux-wlan-ng-doc aptitude aptitude-common vim-tiny man-db manpages libc6-dev gcc g++ make dpkg-dev build-essential gvfs-fuse
 echo "## purge headers ##"
 apt-get -y purge linux-headers-3.13-1-686-pae linux-headers-3.13-1-common linux-headers-686-pae
 echo "## autoremove ##"
