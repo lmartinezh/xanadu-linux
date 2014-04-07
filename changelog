@@ -1,10 +1,19 @@
+xanadu (0.4.6)
+
+	* se desactivaron modulos innecesarios
+	* se corrigen errores en iceweasel
+	* cambios en el .bashrc de user y root
+	* se agrego rfkill al archivo modules
+	* correcciones varias
+	* se desactivo zsync en live-build
+
+
 xanadu (0.4.5)
 
 	* modificaciones en hook
 	* se coloco timeout a las advertencias de los script
 	* se agrego la funcion limpiar_1 a variables
 	* se crea una lista de pruebas a realizar antes del lanzamiento de cada version
-	* se corrigen errores en iceweasel
 	* se corrigen errores en el instalador
 	* se corrige el error verificacion de modo de ejecucion (live) en varios scripts
 

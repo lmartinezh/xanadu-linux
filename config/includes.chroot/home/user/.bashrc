@@ -26,3 +26,4 @@ alias ls='ls --color'
 export HISTIGNORE="ls:clear"
 alias cp='gcp'
 alias rotorar='unrar e -kb -y'
+export EDITOR="nano"

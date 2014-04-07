@@ -38,7 +38,7 @@ LB_COMPRESSION="none"
 
 # $LB_ZSYNC: set zsync
 # (Default: true)
-LB_ZSYNC="true"
+LB_ZSYNC="false"
 
 # ${LB_BUILD_WITH_CHROOT: control if we build binary images chrooted
 # (Default: true)
