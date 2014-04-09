@@ -6,6 +6,8 @@ xanadu (0.4.6)
 	* se agrego rfkill al archivo modules
 	* correcciones varias
 	* se desactivo zsync en live-build
+	* nueva version del instalador
+	* se elimina arpon por no funcionar correctamente
 
 
 xanadu (0.4.5)

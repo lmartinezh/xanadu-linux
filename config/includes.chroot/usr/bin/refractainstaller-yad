@@ -1,23 +1,73 @@
 #!/usr/bin/env bash
-version="Refracta Installer (Yad) 9.0.9beta6 (20131204)"
-# Copyright 2011, 2012, 2013 fsmithred@gmail.com
+version="Refracta Installer (Yad) 9.1.0 (20140327)"
+# Copyright 2011, 2012, 2013, 2014 fsmithred@gmail.com
 # Based on refractainstaller-8.0.3 by Dean Linkous
 # License: GPL-3
 # This is free software with NO WARRANTY. Use at your own risk!
+
+
+# DESCRIPTION
+# This script is used for installing a live system to a hard drive. User
+# input is via popup windows created by yad. It should be run from
+# a terminal; if it's started from a menu item or a panel launcher, it
+# should be run in a persistent terminal, so that progress messages can
+# be seen and for user input in a few places.
+#
+# There are two modes for installation - Simple or Expert
+#   Simple Mode:
+# Create rsync excludes file if default file is missing.
+# User can run partitioner inside the installer or skip it.
+# User selects partition for installation. Bootloader goes to /dev/sda.
+# Summary window asks to proceed with installation.
+# Stuff happens without interaction.
+#
+#  Expert Mode:
+# User selects installation options - change username, select up to three
+# partitions (/, /boot, /home), select filesystem type for each partition, 
+# choose whether to encrypt partitions or not, choose whether to write 
+# random data or zeros to partitions.
+# User has option to exit and use custom excludes file.
+# User can run partitioner inside the installer.
+# Summary window asks to proceed with installation.
+# Stuff happens with some interaction (passwords, username, edit /etc/sudoers)
+#
+#  Stuff:
+# Cleanup (in case of previous aborted run)
+# Create encrypted volumes *(Expert mode only)
+# Write random data or zeros *
+# Mount partition(s) and create filesystem(s)
+# Copy system with rsync
+# Create swapfile or use existing swap partition
+# Copy update-initramfs
+# Set up fstab
+# Set up crypttab *
+# Install bootloader
+# Cleanup
+# Change username and passwords, edit /etc/sudoers *
+# Re-enable update-db and freshclam, disable ssh root login.
+
+
+# If you want to change any defaults, change them in the configfile.
+# Default is /etc/refractainstaller.conf
+# If you want to use a different config file for testing, change this
+# variable. Normally, users should not edit anything in this script.
+
+
 
 configfile="/etc/refractainstaller.conf"
 
 if [[ -f $configfile ]]; then
     source $configfile
 else
-	yad --skip-taskbar --fixed --center --text-align=fill --borders=6 --title=Advertencia --window-icon=error \
+	yad --title=Warning --window-icon=error \
 	--button=Exit:0 \
-	--text="  El archivo de configuracion $configfile no existe.  
+	--text="  Config file $configfile is missing.  
   "
-	echo " El archivo de configuracion $configfile no existe."
+	echo " Config file $configfile is missing."
 	exit 1
 fi
 
+# Record errors in a logfile.
 exec 2>"$error_log"
 
 
@@ -27,17 +77,17 @@ show_help () {
 }
 
 help_text="
-	Uso:  $0  [opciones]
+	Usage:  $0  [option]
 	
-	Ejecute refractainstaller-yad desde un terminal sin opciones
-	o selecione selecione el instalador desde el menu sistema para 
-	instalar un live-CD o live-usb-hdd a un disco duro. 
+	Run refractainstaller-yad from a terminal with no options  
+	or select Refracta Installer  from the System menu to install 
+	a running live-CD or live-usb-hdd to a hard drive. 
 	
 	
-	opciones validas:
-		-h, --help		muestra esta ayuda
-		-v, --version	        muestra la version
-		-d. --debug		modo debug
+	valid options:
+		-h, --help		show this help text
+		-v, --version	display the version information
+		-d. --debug		debug mode
 		
 "
 
@@ -56,8 +106,8 @@ while [[ $1 == -* ]]; do
 			break ;;
 		
 		*) 
-			printf "\t opcion invalida: $1 \n\n"
-			printf "\t Intente:  $0 -h para ayuda completa. \n\n"
+			printf "\t invalid option: $1 \n\n"
+			printf "\t Try:  $0 -h for full help. \n\n"
 			exit 1 ;;
     esac
 done
@@ -68,15 +118,33 @@ if [[ $DEBUG = "yes" ]] ; then
 fi
 
 
-[[ $DISPLAY ]] || { echo "No hay servidor X en ejecucion, Saliendo..." ; exit 1 ; }
+# Check that xserver is running and user is root.
+[[ $DISPLAY ]] || { echo "There is no xserver running. Exiting..." ; exit 1 ; }
 if [[ $(id -u) -ne 0 ]] ; then
-	yad --skip-taskbar --fixed --center --text-align=fill --borders=6 --title=Error --window-icon=error --text="Usted necesita ser root!"
+	yad --title=Error --window-icon=error --text="
+	You need to be root!
+"
 	exit 1
 fi
 
-yadversion=$(yad --version | cut -d. -f2)
-if [[ $yadversion < 17 ]]; then
-	yad --skip-taskbar --fixed --center --text-align=fill --borders=6 --title=Error --window-icon=error --text="Esta version de Yad es muy vieja. Si Zenity esta instalado usted puede ejecutar refractainstaller-gui."
+# Make sure yad is installed, and check the version.
+if [[ -f /usr/bin/yad ]] ; then
+	yadversion=$(yad --version | cut -d. -f2)
+	if [[ $yadversion < 17 ]]; then
+		yad --title=Error --window-icon=error --text="
+	The version of Yad is too old. You need 0.17.1.1 or later. If Zenity
+	is installed, you can run refractainstaller-gui instead.
+"
+		echo "
+	The version of Yad is too old. You need 0.17.1.1 or later. If Zenity
+	is installed, you can run refractainstaller-gui instead.
+"
+		exit 1
+	fi
+else
+	echo "Yad is not installed. Use refractainstaller-gui or refractainstaller instead.
+Exiting..."
+	exit 1
 fi
 
 
@@ -231,8 +299,8 @@ If you don't understand an option, you probably don't need it." \
   FALSE 11 "Use UUID in /etc/fstab. (Useful if drive order changes.)" \
   FALSE 12 "Use filesystem labels (disk labels) in /etc/fstab." \
   FALSE 13 "Change hostname." \
-  TRUE 14 "Disable automatic login to desktop." \
-  TRUE 15 "Disable automatic login to console. (Use stock Debian inittab)" \
+  FALSE 14 "Disable automatic login to desktop." \
+  FALSE 15 "Disable automatic login to console. (Use stock Debian inittab)" \
   $var16 16 "Run pre-install scripts (listed below)
 $pre_install_list" \
   $var17 17 "Run post-install scripts (listed below)
@@ -683,7 +751,9 @@ you can use the minus sign (-) as long as it's not at the beginning or end." \
 }
 
 test_hostname () {
-	if [[ $new_hostname =~ [_]|[@]|[~]|[\!]|[\#]|[=]|[+]|[\&]|[\^]|[\$]|[%]|[\(]|[\)]|[\*]|[\:]|[\;]|[\"]|[\']|[\`]|[,]|[.]|[\<]|[\>]|[\?]|[\{]|[\}]|[\[]|[\]]|[/]|[\|]|[\ ] ]]; then
+	if [[ $new_hostname =~ "$"|"%"|"("|")"|"*"|"_"|"@"|"~"|"!"|"#"|"="|"+"|"&"|"^"|":"|";"|"'"|","|"."|"<"|">"|"?"|"{"|"}"|"["|"]"|"/"|"|"|" " ]]; then
+		fix_hostname
+	elif [[ $new_hostname =~ "\""|"\`" ]];then
  		fix_hostname
 	elif [[ $new_hostname = -* ]] || [[ $new_hostname = *- ]]; then
 		fix_hostname
@@ -696,7 +766,7 @@ select_hostname () {
 	new_hostname=$(yad --entry --title="Change hostname" \
 	--text="Enter new hostname for installed system." \
 	--entry-text="$HOSTNAME" --width=500 --button="OK":0)
-	new_hostname="$HOSTNAME"
+	test_hostname
 }
 
 
@@ -746,7 +816,7 @@ if [[ -n $boot_dev ]] ; then
 fi
 
 if [[ $encrypt_os = yes ]] || [[ $encrypt_home = yes ]] ; then
-    proceed_message="***  IF YOU PROCEED, YOU WILL NEED TO RESPOND TO SOME QUESTIONS IN THE TERMINAL.   Be prepared to create 
+    proceed_message="***  IF YOU PROCEED, YOU WILL NEED TO RESPOND TO SOME QUESTIONS.   Be prepared to create 
     passphrases for any encrypted partitions (several times each.) When you see the progress bar come up, you can take a break."
 fi
 
@@ -782,8 +852,8 @@ yad --info --title=Summary --button="Proceed with the installation.":0 --button=
 Here is a summary of what will be done. THIS IS YOUR LAST CHANCE TO EXIT before any changes are made to the disk.
 
 $grub_dev_message
-$install_dev_message$os_enc_message
-$home_dev_message$home_enc_message
+$install_dev_message
+$home_dev_message
 $boot_dev_message
 $user_message
 $desktop_message
@@ -941,12 +1011,42 @@ fi
 # install_dev must maintain the device name for cryptsetup
 # install_part will be either device name or /dev/mapper name as needed.
 mkdir /target ;  check_exit
+
+make_luks () {
+exec 2>/dev/null
+	setpass=$(yad --form --field "Password:H" --field "Retype Password:H" --separator="@_@" \
+	--title "Passphrase" --image="dialog-password" --button=OK:0 --text="Enter a passphrase for the encrypted volume: $mapper_name  ")
+
+	if [[ $(echo $setpass  | awk -F"@_@" '{print $1}') != $(echo $setpass | awk -F"@_@" '{print $2}') ]] ; then
+		try_again
+		return
+	else
+		passphr=$(echo $setpass | awk -F"@_@" '{ print $1 }')
+		echo "$passphr" | cryptsetup luksFormat "$luks_dev"
+		echo "$passphr" | cryptsetup luksOpen "$luks_dev" "$mapper_name"
+		 
+	fi
+exec 2>>"$error_log"
+}
+
+
+try_again () {
+yad --image="gtk-dialog-warning" --title "Error" --button=Yes:0 --button="Exit":1 \
+--text "Entries do not match. Do you want to try again?"
+if [[ $? = 0 ]] ; then
+	make_luks
+else
+	cleanup
+	exit 0
+fi
+}
+
+
 if [[ $encrypt_os = yes ]] ; then
-#    xterm -fa monaco -fs 12 -geometry 80x20+0+0 -e cryptsetup luksFormat "$install_dev" ; check_exit
-#    xterm -fa monaco -fs 12 -geometry 80x20+0+0 -e cryptsetup luksOpen "$install_dev" root_fs ; check_exit
-    cryptsetup luksFormat "$install_dev" ; check_exit
-    cryptsetup luksOpen "$install_dev" root_fs ; check_exit
-    install_part="/dev/mapper/root_fs"
+	luks_dev="$install_dev"
+	mapper_name="root_fs"
+	make_luks
+	install_part="/dev/mapper/$mapper_name"
 else
     install_part="$install_dev"
 fi 
@@ -962,13 +1062,10 @@ mount "$install_part" /target ; check_exit
 if [[ -n $home_dev ]] ; then
     mkdir /target_home ; check_exit
     if [[ $encrypt_home = yes ]]; then
-        #xterm -fa monaco -fs 12 -geometry 80x20+0+0 -e cryptsetup luksFormat "$home_dev"
-        cryptsetup luksFormat "$home_dev"
-        check_exit
-        #xterm -fa monaco -fs 12 -geometry 80x20+0+0 -e cryptsetup luksOpen "$home_dev" home_fs
-        cryptsetup luksOpen "$home_dev" home_fs
-        check_exit
-        home_part="/dev/mapper/home_fs"
+		luks_dev="$home_dev"
+		mapper_name="home_fs"
+		make_luks
+        home_part="/dev/mapper/$mapper_name"
     else
         home_part=$home_dev
 	fi
@@ -1020,13 +1117,13 @@ if ! [[ $use_existing_swap = "yes" ]] ; then
 fi
 
 
-# copy the real update-initramfs back in place
-if [[ -f /target/usr/sbin/update-initramfs.distrib ]] ; then
-    cp /target/usr/sbin/update-initramfs.distrib /target/usr/sbin/update-initramfs
-fi
-if [[ -f /target/usr/sbin/update-initramfs.debian ]] ; then
-    cp /target/usr/sbin/update-initramfs.debian /target/usr/sbin/update-initramfs
-fi
+# copy the real update-initramfs back in place ### OBSOLETE???
+#if [[ -f /target/usr/sbin/update-initramfs.distrib ]] ; then
+#    cp /target/usr/sbin/update-initramfs.distrib /target/usr/sbin/update-initramfs
+#fi
+#if [[ -f /target/usr/sbin/update-initramfs.debian ]] ; then
+#    cp /target/usr/sbin/update-initramfs.debian /target/usr/sbin/update-initramfs
+#fi
 
 
 # Disallow mounting of all fixed drives with pmount
@@ -1287,7 +1384,11 @@ error_message=""
 
 # Run update-initramfs to include dm-mod if using encryption
 if [[ $encrypt_os = yes ]] || [[ $encrypt_home = yes ]] ; then
-    chroot /target /usr/sbin/update-initramfs.orig.initramfs-tools -u >> "$error_log"
+	if [[ -f /usr/sbin/update-initramfs.orig.initramfs-tools ]] ; then
+		chroot /target /usr/sbin/update-initramfs.orig.initramfs-tools -u >> "$error_log"
+	else
+		chroot /target /usr/sbin/update-initramfs -u >> "$error_log"
+	fi
 fi
 
 if [[ -n $grub_dev ]] || [[ -n $grub_partition ]] ; then
@@ -1332,74 +1433,148 @@ the trailing commas\)." --width=350 --button="OK":0)
 fi
 
 
-# Edit /etc/sudoers
-#if [[ $install = "expert" ]]; then
-#    yad --title="Edit /etc/sudoers" --button=Yes:0 --button=No:1 \
-#     --text="You may need to edit /etc/sudoers to comment out the line that gives $oldname absolute power, 
-#or replace $oldname with $newname. A simple text-editor will open in the terminal if you do this now.
+## sort sudo
  
-#Edit /etc/sudoers now?" 
-#	ans="$?"
-#    if [[ $ans = "0" ]]; then
-#        edit_sudoers="yes"
-#        #xterm  -fa monaco -fs 12 -geometry 80x20+0+0 -e chroot /target visudo
-#        chroot /target visudo
-#    fi
-#fi
+ TITLE="Refracta Installer"
 
 
-# Disable sudo-mode for gksu
-#if [[ $edit_sudoers = "yes" ]]; then
-#    yad --title="Disable sudo mode for gksu" --button="Yes, I commented out the line.":0 --button="No, I replaced the old name with the new one.":1 \
-#     --text="If you commented out the line in /etc/sudoers in the last step, one more file will be changed for you so that gksu will work properly." 
-#		ans="$?"
-#        if [[ $ans = "0" ]]; then
-#            if [[ -n $newname ]]; then
-#                sed -i~ '/sudo-mode/s/true/false/' /target/home/"$newname"/.gconf/apps/gksu/%gconf.xml
-#            else
-#                sed -i~ '/sudo-mode/s/true/false/' /target/home/user/.gconf/apps/gksu/%gconf.xml
-#            fi
-#        fi
-#fi
+# find out now if a root password is actually set
+
+rootpass_hash=$(cat /etc/shadow|grep ^root |awk -F ":" '{print $2}')
+if [ "$rootpass_hash" = "*" ] || [ "$rootpass_hash" = "" ]; then
+	rootpass_is_set=false
+#	TEXT="There is no root password.
+fi
+ 
+TEXT="\n\nThis live image uses 'sudo' for root access. No password is required.\n\\nIt is recommended to disable sudo in an installation and use 'su' with a root password \n\nOptionally you may keep sudo if preferred. \n\n\Disable default sudo in the installed system (recommended)?"
+
+
+ 
+yad --image=gtk-dialog-question --width=460 --height=240 --title="$TITLE" \
+--button="Disable sudo":0 --button="Use sudo":1 --text="$TEXT"
+ 
+	if [ "$?" = 1 ]; then
+		SUDOCONFIG=enabled
+	fi
+ 
+# =>wheezy live-config now uses /etc/sudoers.d
+if [ -e /target/etc/sudoers.d/live ]; then
+	rm -f /target/etc/sudoers.d/live
+fi
+
+# squeeze (or other distro) might have used /etc/sudoers
+if grep -qs $oldname /target/etc/sudoers ; then
+	sed -i "/$oldname/d" /target/etc/sudoers
+fi
+
+
+
+
+if [ -z "$SUDOCONFIG" ]; then
+
+	# fix gksu in user's home
+	if [ -f /target/home/"$newname"/.gconf/apps/gksu/%gconf.xml ]; then
+		sed -i '/sudo-mode/s/true/false/' /target/home/"$newname"/.gconf/apps/gksu/%gconf.xml
+		
+		# TODO fix kde4 or TDE in user's home
+	fi
+
+	set_rootpass=force
+	rootpasstext="You must set (or reset) the root password. \n"
+
+else
+	# $newname will use sudo so add him to sudo group
+	chroot /target usermod -a -G sudo $newname
+
+		# it shoud be already there in =>wheezy.. in case it's not: 
+		if ! grep -qs "^%sudo" /target/etc/sudoers ; then 
+			echo "%sudo ALL=(ALL:ALL) ALL" >> /etc/sudoers
+		fi
+
+		if [ "$rootpass_is_set" = "false" ]; then
+
+			rootpasstext="No root password is set. You should create one now (Recommended). \n\nIf you are sure you don't want a root password set you may choose 'cancel'\n"
+		else
+			set_rootpass=force
+			rootpasstext="You must set (or reset) the root password. \n"
+		fi
+fi
+
+
+try_again_root () {
+	yad --image="gtk-dialog-warning" --title "Error" --button=Yes:0 --button="No":1 \
+	--text "Entries do not match. Do you want to try again?"
+
+	if [[ $? = 0 ]] ; then
+		set_root_pass
+	else
+		exec 2>>"$error_log"
+	fi
+}
+
+
+try_again_user () {
+	yad --image="gtk-dialog-warning" --title "Error" --button=Yes:0 --button="No":1 \
+	--text "Entries do not match. Do you want to try again?"
+	
+	if [[ $? = 0 ]] ; then
+		set_user_pass
+	else
+		exec 2>>"$error_log"
+	fi
+}
 
 
 
 # Change/create root password
-if [[ $install = "expert" ]]; then
-    yad title="Change/create root password" --button=Yes:0 --button=No:1 \
-     --text="
- Would you like to change the root password? (Recommended) 
- You'll need to go to the terminal again... 
+set_root_pass () {
+	# Redirect stderr to keep password out of log file.
+	exec 2>&1
+	yad --title="Change/create root password" --text="$rootpasstext" --button=Yes:0 --button=No:1
+	ans="$?"
+    if [[ $ans = 0 ]] || [[ "$set_rootpass" = "force" ]]; then
+		entry=$(yad --form --field "Password:H" --field "Retype Password:H" --separator="@_@" \
+		--title "Password" --image="dialog-password" --text="Enter new root password.")
 
- Note: If your system has no root user, and you want 
- to keep it that way, say No. 
-"
-		ans="$?"
-        if [[ $ans = 0 ]]; then
-            #xterm  -fa monaco -fs 12 -geometry 80x20+0+0 -e chroot /target passwd
-#       # Redirect stderr so we can see the output of dd
-		exec 2>&1
-            chroot /target passwd
-#       # Resume logging errors in file
-        exec 2>>"$error_log"
-        fi 
-fi
-
+		if [ $(echo $entry | awk -F"@_@" '{print $1}') != $(echo $entry | awk -F"@_@" '{print $2}') ] ; then
+			try_again_root
+			return
+		else
+			newpass=$(echo "$entry" | sed 's/@_@/\n/g')
+			if [[ -n "$newpass" ]] ; then
+				echo $newpass | chroot /target passwd
+			fi
+		fi
+    fi
+    # Resume logging errors in file
+    exec 2>>"$error_log"
+}
 
 # Change user password
+set_user_pass () {
+	# Redirect stderr to keep password out of log file.
+	exec 2>&1
+	
+	entry=$(yad --form --field "Password:H" --field "Retype Password:H" --separator="@_@" \
+	  --title "Password" --image="dialog-password" --text="Enter new password for $newname")
+
+	if [ $(echo $entry | awk -F"@_@" '{print $1}') != $(echo $entry | awk -F"@_@" '{print $2}') ] ; then
+		try_again_user
+		return
+	else
+		newpass=$(echo "$entry" | sed 's/@_@/\n/g')
+			if [[ -n "$newpass" ]] ; then
+				echo $newpass | chroot /target passwd "$newname"
+			fi
+	fi
+	# Resume logging errors in file
+	exec 2>>"$error_log"
+}
+
+set_root_pass
+
 if [[ $change_user = "yes" ]]; then
-    yad --title="Change user password" --button=Yes:0 --button=No:1 \
-     --text="Would you like to change the user's password? The new user still has 
-the old user's password. You'll need to go to the terminal again to do this." 
-		ans="$?"
-        if [[ $ans = 0 ]]; then
-            #xterm  -fa monaco -fs 12 -geometry 80x20+0+0 -e chroot /target passwd "$newname"
-#       # Redirect stderr so we can see the output of dd
-		exec 2>&1
-            chroot /target passwd "$newname"
-#       # Resume logging errors in file
-        exec 2>>"$error_log"
-        fi
+	set_user_pass
 fi
 
 
