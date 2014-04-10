@@ -79,15 +79,15 @@ LB_ISO_APPLICATION="Sinfallas"
 
 # $LB_ISO_PREPARER: set iso preparer
 # (Default: Xanadu GNU/Linux; Sinfallas)
-LB_ISO_PREPARER="Xanadu GNU/Linux; Sinfallas"
+LB_ISO_PREPARER="live-build"
 
 # $LB_ISO_PUBLISHER: set iso publisher
 # (Default: Sinfallas; sinfallas@gmail.com)
-LB_ISO_PUBLISHER="Sinfallas; sinfallas@gmail.com"
+LB_ISO_PUBLISHER="sinfallas@gmail.com"
 
 # $LB_ISO_VOLUME: set iso volume (max 32 chars)
 # (Default: Xanadu)
-LB_ISO_VOLUME="Xanadu"
+LB_ISO_VOLUME="xanadu"
 
 # $LB_JFFS2_ERASEBLOCK: set jffs2 eraseblock size
 # (Default: unset)

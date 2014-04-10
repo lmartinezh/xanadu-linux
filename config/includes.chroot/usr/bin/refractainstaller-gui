@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-version="Refracta Installer 9.1.0 (20140324)"
-# Copyright 2011, 2012, 2013, 2014 fsmithred@gmail.com
+version="Refracta Installer 9.0.9beta6 (20131206)"
+# Copyright 2011, 2012, 2013 fsmithred@gmail.com
 # Based on refractainstaller-8.0.3 by Dean Linkous
 # License: GPL-3
 # This is free software with NO WARRANTY. Use at your own risk!
@@ -124,11 +124,6 @@ if [[ $(id -u) -ne 0 ]] ; then
 fi
 
 
-# Make sure the script exits if zenity is not installed.
-[[ -f /usr/bin/zenity ]] || { echo "Zenity is not installed. Use refractainstaller-yad or refractainstaller instead.
-Exiting..." ; exit 1 ; }
-
-
 # function to exit the script if there are errors
 check_exit () {
 if [[ $? -ne 0 ]] ; then
@@ -200,7 +195,7 @@ install=$(zenity --list --title="Installation Mode" \
  based on refractainstaller-8.0.3 by Dean Linkous. 
 " \
      --radiolist --column "Choose" --column "Num" --column "Option" \
-     --width=520 --height=385 --cancel-label=Exit \
+     --width=520 --height=165 --cancel-label=Exit \
   FALSE 01 "Simple installation (one partition, few questions.)" \
   FALSE 02 "Expert install (more options)")
 	if [[ $? = 1 ]] ; then
@@ -399,10 +394,10 @@ partitioning_method () {
 		--text="You need to have at least one partition ready for the installation, plus one for 
 each separate partition that you chose." \
 		--radiolist --column "Choose"   --column "Option" \
-		--width=420 --height=220 --cancel-label=Exit \
+		--width=420 --height=210 --cancel-label=Exit \
   FALSE "Run GParted partitioner now." \
   FALSE "Run cfdisk partitioner in a terminal." \
-  FALSE "No thanks, I already have a partition prepared. Continue.")
+  FALSE "No thanks, I already have a partition prepared. Continue." )
 #  FALSE "I'd like to exit the script now.") 
 	if [[ $? = 1 ]] ; then
 		exit 0
@@ -455,8 +450,8 @@ opt=$(zenity --list --title="Install GRUB bootloader" \
   --text="Choose a location to install the GRUB bootloader. The usual choice 
 is to put it in the master boot record of the first hard drive (/dev/sda).
 " \
-  --radiolist --column ' ' --column '' --separator="" \
-  --height=220 --cancel-label="Exit" \
+  --radiolist --column ' ' --column 'Hard Drives' --separator="" \
+  --height=210 --cancel-label="Exit" \
   FALSE "Install GRUB to MBR of any hard disk." \
   FALSE "Install GRUB to a partition." \
   FALSE	"Proceed without a bootloader.")
@@ -754,9 +749,7 @@ you can use the minus sign (-) as long as it's not at the beginning or end." \
 }
 
 test_hostname () {
-	if [[ $new_hostname =~ [_]|[@]|[~]|[\!]|[\#]|[=]|[+]|[\&]|[\^]|[\:]|[\;]|[\"]|[\']|[\`]|[,]|[.]|[\<]|[\>]|[\?]|[\{]|[\}]|[\[]|[\]]|[/]|[\|]|[\ ] ]]; then
-		fix_hostname
-	elif [[ $new_hostname =~ ["$"]|["%"]|["("]|[")"]|["*"] ]];then
+	if [[ $new_hostname =~ [_]|[@]|[~]|[\!]|[\#]|[=]|[+]|[\&]|[\^]|[\$]|[%]|[\(]|[\)]|[\*]|[\:]|[\;]|[\"]|[\']|[\`]|[,]|[.]|[\<]|[\>]|[\?]|[\{]|[\}]|[\[]|[\]]|[/]|[\|]|[\ ] ]]; then
  		fix_hostname
 	elif [[ $new_hostname = -* ]] || [[ $new_hostname = *- ]]; then
 		fix_hostname
@@ -1091,13 +1084,13 @@ if ! [[ $use_existing_swap = "yes" ]] ; then
 fi
 
 
-# copy the real update-initramfs back in place ### OBSOLETE???
-#if [[ -f /target/usr/sbin/update-initramfs.distrib ]] ; then
-#    cp /target/usr/sbin/update-initramfs.distrib /target/usr/sbin/update-initramfs
-#fi
-#if [[ -f /target/usr/sbin/update-initramfs.debian ]] ; then
-#    cp /target/usr/sbin/update-initramfs.debian /target/usr/sbin/update-initramfs
-#fi
+# copy the real update-initramfs back in place
+if [[ -f /target/usr/sbin/update-initramfs.distrib ]] ; then
+    cp /target/usr/sbin/update-initramfs.distrib /target/usr/sbin/update-initramfs
+fi
+if [[ -f /target/usr/sbin/update-initramfs.debian ]] ; then
+    cp /target/usr/sbin/update-initramfs.debian /target/usr/sbin/update-initramfs
+fi
 
 
 # Disallow mounting of all fixed drives with pmount
@@ -1356,11 +1349,7 @@ error_message=""
 
 # Run update-initramfs to include dm-mod if using encryption
 if [[ $encrypt_os = yes ]] || [[ $encrypt_home = yes ]] ; then
-	if [[ -f /usr/sbin/update-initramfs.orig.initramfs-tools ]] ; then
-		chroot /target /usr/sbin/update-initramfs.orig.initramfs-tools -u >> "$error_log"
-	else
-		chroot /target /usr/sbin/update-initramfs -u >> "$error_log"
-	fi
+    chroot /target /usr/sbin/update-initramfs.orig.initramfs-tools -u >> "$error_log"
 fi
 
 if [[ -n $grub_dev ]] || [[ -n $grub_partition ]] ; then
@@ -1408,90 +1397,68 @@ the trailing commas\).")
 fi
 
 
-## sort sudo
- 
-TITLE="Refracta Installer"
- 
-TEXT="\n\nThis live image uses 'sudo' for root access. No password is required.\n\\nIt is recommended to disable sudo in an installation and use 'su' with a root password \n\nOptionally you may keep sudo if preferred. \n\n\Disable default sudo in the installed system (recommended)?"
- 
-zenity --question --width=460 --height=240 --title="$TITLE" --ok-label="Disable sudo" --cancel-label="Use sudo" --text="$TEXT"
- 
-	if [ "$?" = 1 ]; then
-		SUDOCONFIG=enabled
+# Edit /etc/sudoers
+if [[ $install = "expert" ]]; then
+    zenity --question --title="Edit /etc/sudoers" --ok-label=Yes --cancel-label=No \
+     --text="You may need to edit /etc/sudoers to comment out the line that gives $oldname absolute power, 
+or replace $oldname with $newname. A simple text-editor will open in the terminal if you do this now.
+
+Edit /etc/sudoers now?"
+    if [[ $? = 0 ]]; then
+        edit_sudoers="yes"
+        #xterm  -fa monaco -fs 12 -geometry 80x20+0+0 -e chroot /target visudo
+		chroot /target visudo    
 	fi
- 
-# =>wheezy live-config now uses /etc/sudoers.d
-if [ -e /target/etc/sudoers.d/live ]; then
-	rm -f /target/etc/sudoers.d/live
-fi
-
-# squeeze (or other distro) might have used /etc/sudoers
-if grep -qs $oldname /target/etc/sudoers ; then
-	sed -i "/$oldname/d" /target/etc/sudoers
 fi
 
 
-# find out now if a root password is actually set
-
-rootpass_hash=$(cat /etc/shadow|grep ^root |awk -F ":" '{print $2}')
-if [ "$rootpass_hash" = "*" ] || [ "$rootpass_hash" = "" ]; then
-	rootpass_is_set=false
+# Disable sudo-mode for gksu
+if [[ $edit_sudoers = "yes" ]]; then
+    zenity --question --title="Disable sudo mode for gksu" --ok-label="Yes, I commented out the line." --cancel-label="No, I replaced the old name with the new one." \
+     --text="If you commented out the line in /etc/sudoers in the last step, one more file will be changed for you so that gksu will work properly."
+        if [[ $? = 0 ]]; then
+            if [[ -n $newname ]]; then
+                sed -i~ '/sudo-mode/s/true/false/' /target/home/"$newname"/.gconf/apps/gksu/%gconf.xml
+            else
+                sed -i~ '/sudo-mode/s/true/false/' /target/home/user/.gconf/apps/gksu/%gconf.xml
+            fi
+        fi
 fi
 
-if [ -z "$SUDOCONFIG" ]; then
-
-	# fix gksu in user's home
-	if [ -f /target/home/"$newname"/.gconf/apps/gksu/%gconf.xml ]; then
-		sed -i '/sudo-mode/s/true/false/' /target/home/"$newname"/.gconf/apps/gksu/%gconf.xml
-		
-		# TODO fix kde4 or TDE in user's home
-	fi
-
-	set_rootpass=force
-	rootpasstext="You must set (or reset) the root password. \n\nYou'll need to go to the terminal to do this..\n"
-
-else
-	# $newname will use sudo so add him to sudo group
-	chroot /target usermod -a -G sudo $newname
-
-		# it shoud be already there in =>wheezy.. in case it's not: 
-		if ! grep -qs "^%sudo" /target/etc/sudoers ; then 
-			echo "%sudo ALL=(ALL:ALL) ALL" >> /etc/sudoers
-		fi
-
-		if [ "$rootpass_is_set" = "false" ]; then
-
-			rootpasstext="No root password is set. You should create one now (Recommended). \n\nYou'll need to go to the terminal to do this.. \n\nIf you are sure you don't want a root password set you may choose 'cancel'\n"
-		else
-			set_rootpass=force
-			rootpasstext="You must set (or reset) the root password. \n\nYou'll need to go to the terminal to do this.\n"
-		fi
-fi
 
 
 # Change/create root password
-zenity title="Change/create root password" --text="$rootpasstext"
-	ans="$?"
-    if [[ $ans = 0 ]] || [[ "$set_rootpass" = "force" ]]; then
-#       # Redirect stderr so we can see the output
+if [[ $install = "expert" ]]; then
+    zenity --question --title="Change/create root password" --ok-label=Yes --cancel-label=No \
+     --text="
+Would you like to change the root password? (Recommended)
+You'll need to go to the terminal again...
+
+Note: If your system has no root user, and you want 
+to keep it that way, say No. " 
+        if [[ $? = 0 ]]; then
+            #xterm  -fa monaco -fs 12 -geometry 80x20+0+0 -e chroot /target passwd
+#       # Redirect stderr so we can see the output of dd
 		exec 2>&1
-        chroot /target passwd
+            chroot /target passwd
 #       # Resume logging errors in file
         exec 2>>"$error_log"
-    fi 
-
+        fi 
+fi
 
 
 # Change user password
 if [[ $change_user = "yes" ]]; then
-	userpasstext=" You must set (or reset) the user password. \n\n You'll need to go to the terminal to do this.. \n"
-	zenity --title="Change user password" --text="$userpasstext"
-
-#       # Redirect stderr so we can see the output
+    zenity --question --title="Change user password" --ok-label=Yes --cancel-label=No \
+     --text="Would you like to change the user's password? The new user still has the old user's password. You'll need to go to the terminal again to do this."
+        if [[ $? = 0 ]]; then
+            #xterm  -fa monaco -fs 12 -geometry 80x20+0+0 -e chroot /target passwd "$newname"
+#       # Redirect stderr so we can see the output of dd
 		exec 2>&1
-            chroot /target passwd "$newname"
+			chroot /target passwd "$newname"       
 #       # Resume logging errors in file
         exec 2>>"$error_log"
+		fi
 fi
 
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-version="refractainstaller 9.1.0 (20140324)"
+version="refractainstaller 9.0.9beta6 (20131206)"
 # Copyright 2011, 2012, 2013 fsmithred@gmail.com
 # Based on refractainstaller-8.0.3 by Dean Linkous
 # Licence: GPL-3
@@ -529,9 +529,7 @@ done
 }
 
 test_hostname () {
-	if [[ $new_hostname =~ [_]|[@]|[~]|[\!]|[\#]|[=]|[+]|[\&]|[\^]|[\:]|[\;]|[\"]|[\']|[\`]|[,]|[.]|[\<]|[\>]|[\?]|[\{]|[\}]|[\[]|[\]]|[/]|[\|]|[\ ] ]]; then
-		fix_hostname
-	elif [[ $new_hostname =~ ["$"]|["%"]|["("]|[")"]|["*"] ]];then
+	if [[ $new_hostname =~ [_]|[@]|[~]|[\!]|[\#]|[=]|[+]|[\&]|[\^]|[\$]|[%]|[\(]|[\)]|[\*]|[\:]|[\;]|[\"]|[\']|[\`]|[,]|[.]|[\<]|[\>]|[\?]|[\{]|[\}]|[\[]|[\]]|[/]|[\|]|[\ ] ]]; then
  		fix_hostname
 	elif [[ $new_hostname = -* ]] || [[ $new_hostname = *- ]]; then
 		fix_hostname
@@ -988,74 +986,6 @@ if [[ -n $grub_dev ]]; then
 fi
 
 
-# newname is oldname until I add code to change the username.
-oldname=$(awk -F: '/1000:1000/ { print $1 }' /etc/passwd)
-newname=$(awk -F: '/1000:1000/ { print $1 }' /target/etc/passwd)
-
-while true; do
-		echo "
-	This live image uses 'sudo' for root access. No password is required.
-    It is recommended to disable sudo in an installation and use 'su' 
-    with a root password. Optionally you may keep sudo if preferred. 
-    
-    Disable default sudo in the installed system (recommended)?
-    (yes or no)
-    "
-		read ans
-		case $ans in
-			[Yy]*) break ;;
-			[Nn]*) SUDOCONFIG=enabled ; break ;;
-		esac
-	done
-	
-# =>wheezy live-config now uses /etc/sudoers.d
-if [ -e /target/etc/sudoers.d/live ]; then
-	rm -f /target/etc/sudoers.d/live
-fi
-
-# squeeze (or other distro) might have used /etc/sudoers
-if grep -qs $oldname /target/etc/sudoers ; then
-	sed -i "/$oldname/d" /target/etc/sudoers
-fi
-	
-# find out now if a root password is actually set
-
-rootpass_hash=$(cat /etc/shadow|grep ^root |awk -F ":" '{print $2}')
-if [ "$rootpass_hash" = "*" ] || [ "$rootpass_hash" = "" ]; then
-	rootpass_is_set=false
-fi
-
-if [ -z "$SUDOCONFIG" ]; then
-
-	# fix gksu in user's home
-	if [ -f /target/home/"$newname"/.gconf/apps/gksu/%gconf.xml ]; then
-		sed -i '/sudo-mode/s/true/false/' /target/home/"$newname"/.gconf/apps/gksu/%gconf.xml
-		
-		# TODO fix kde4 or TDE in user's home
-	fi
-
-	set_rootpass=force
-	rootpasstext="You must set (or reset) the root password. \n\nYou'll need to go to the terminal to do this..\n"
-
-else
-	# $newname will use sudo so add him to sudo group
-	chroot /target usermod -a -G sudo $newname
-
-		# it shoud be already there in =>wheezy.. in case it's not: 
-		if ! grep -qs "^%sudo" /target/etc/sudoers ; then 
-			echo "%sudo ALL=(ALL:ALL) ALL" >> /etc/sudoers
-		fi
-
-		if [ "$rootpass_is_set" = "false" ]; then
-
-			rootpasstext="No root password is set. You should create one now (Recommended). \n\nYou'll need to go to the terminal to do this.. \n\nIf you are sure you don't want a root password set you may choose 'cancel'\n"
-		else
-			set_rootpass=force
-			rootpasstext="You must set (or reset) the root password. \n\nYou'll need to go to the terminal to do this.\n"
-		fi
-fi
-
-# $rootpasstext not used at this time.	
 # Change/create root password
 while true; do
 	echo -n "
@@ -1068,13 +998,15 @@ while true; do
 	read ans
 	case $ans in
 	  [Yy]*)
-		# Redirect stderr from the error log to the screen, 
-        # so we can see the prompts from passwd
-        exec 2>&1
-        echo "Change root passowrd"
-        chroot /target passwd
-        # Resume logging errors in file
-        exec 2>>"$error_log"
+        if [[ $? = 0 ]]; then
+#           # Redirect stderr from the error log to the screen, 
+#           # so we can see the prompts from passwd
+            exec 2>&1
+            echo "Change root passowrd"
+            chroot /target passwd
+#           # Resume logging errors in file
+            exec 2>>"$error_log"
+        fi 
 	    break ;;
 	  [Nn]*) break ;;
 	esac

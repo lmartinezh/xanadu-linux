@@ -23,6 +23,6 @@ shopt -s checkwinsize
 alias ls='ls --color'
 export HISTIGNORE="ls:clear"
 alias cp='gcp'
-alias actualizar='apt-get update && apt-get -y dist-upgrade && apt-get -y autoremove'
+alias actualizar='apt update && apt-get -y full-upgrade && apt-get -y autoremove'
 alias rotorar='unrar e -kb -y'
 export EDITOR="nano"

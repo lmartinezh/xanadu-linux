@@ -22,7 +22,7 @@ else
 	echo "Xanadu esta ejecutandose en modo live." >> /tmp/$nombre
 fi
 echo -e "\n""## VIRTUALIZACION ##""\n" >> /tmp/$nombre
-virt-what >> /tmp/$nombre
+systemd-detect-virt >> /tmp/$nombre
 clear
 echo -e "\n""El reporte se ha generado en /tmp/$nombre"
 exit 0
