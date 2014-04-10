@@ -6,8 +6,11 @@ xanadu (0.4.6)
 	* se agrego rfkill al archivo modules
 	* correcciones varias
 	* se desactivo zsync en live-build
-	* nueva version del instalador
 	* se elimina arpon por no funcionar correctamente
+	* se agrego OpenNIC a los marcadores de iceweasel
+	* se agrego Debian documentation a los marcadores de iceweasel
+	* se sustituye virt-what por systemd-detect-virt
+	* cambios en los script referentes al nuevo APT
 
 
 xanadu (0.4.5)
