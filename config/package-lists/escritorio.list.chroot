@@ -20,7 +20,6 @@ x11-session-utils
 menu-l10n
 plymouth
 obconf
-thunar
 thunar-archive-plugin
 thunar-volman
 gksu
@@ -30,8 +29,9 @@ network-manager-gnome
 disk-manager
 clamtk
 synaptic
-gparted
 compton
 xterm
 xzoom
 yad
+nitrogen
+tint2

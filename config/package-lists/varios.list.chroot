@@ -1,11 +1,10 @@
-unrar
-unzip
-p7zip-full
 bash-completion
 fakeroot-ng
 finger
-tmux
-gcp
 fish
-nitrogen
-tint2
+gcp
+p7zip-full
+scrot
+tmux
+unrar
+unzip

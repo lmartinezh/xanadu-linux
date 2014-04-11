@@ -176,7 +176,7 @@
 <keyboard>
   <chainQuitKey>C-g</chainQuitKey>
 
-<!-- Aero Snap for Openbox Begin Code-->
+<!-- Aero Snap inicio-->
     <keybind key="W-Left">        # HalfLeftScreen
       <action name="UnmaximizeFull"/>
       <action name="MoveResizeTo">
@@ -213,15 +213,31 @@
         <height>50%</height>
       </action>
     </keybind>
-<!-- Aero Snap for Openbox End Code-->
+<!-- Aero Snap fin-->
 
-<!-- Zoom in the desktop using xzoom Begin Code-->
+<!-- Zoom inicio-->
     <keybind key="A-z">
       <action name="Execute">
         <command>xzoom -source 250x150 -mag 2</command>
       </action>
     </keybind>
-<!-- Zoom in the desktop using xzoom End Code-->
+<!-- Zoom fin-->
+
+<!-- Imprimir Pantalla inicio -->
+<keybind key="Print">
+<action name="Execute">
+<command>scrot -e 'gpicview $f'</command>
+</action>
+</keybind> 
+<!-- Imprimir Pantalla fin -->
+
+<!-- Iceweasel inicio -->
+<keybind key="W-i">
+<action name="Execute">
+<command>iceweasel</command>
+</action>
+</keybind> 
+<!-- Iceweasel fin -->
 
   <!-- Keybindings for desktop switching -->
   <keybind key="C-A-Left">

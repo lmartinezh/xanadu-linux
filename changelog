@@ -11,6 +11,9 @@ xanadu (0.4.6)
 	* se agrego Debian documentation a los marcadores de iceweasel
 	* se sustituye virt-what por systemd-detect-virt
 	* cambios en los script referentes al nuevo APT
+	* se agrega USB a la lista de hardware mostrado por entorno
+	* se activa la tecla Imprimir Pantalla
+	* se agrega la combinacion de teclas Windows + i para ejecutar iceweasel
 
 
 xanadu (0.4.5)

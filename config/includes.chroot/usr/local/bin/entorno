@@ -9,6 +9,8 @@ echo -e "## CPU ##""\n" > /tmp/$nombre
 lscpu >> /tmp/$nombre
 echo -e "\n""## HARDWARE ##""\n" >> /tmp/$nombre
 lshw -short >> /tmp/$nombre
+echo -e "\n""## USB ##""\n" >> /tmp/$nombre
+lsusb >> /tmp/$nombre
 echo -e "\n""## MEMORIA ##""\n" >> /tmp/$nombre
 free -h >> /tmp/$nombre
 echo -e "\n""## DISCO ##""\n" >> /tmp/$nombre
