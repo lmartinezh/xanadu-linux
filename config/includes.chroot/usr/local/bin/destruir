@@ -3,7 +3,7 @@
 source /usr/local/bin/variables
 mv -f /etc/memlockd.cfg /etc/memlockd.cfg.old
 mv -f /etc/memlockd.cfg.des /etc/memlockd.cfg
-service memlockd start
+systemctl start memlockd
 history -c
 sfill -f $dispositivo &
 sdmem -f &

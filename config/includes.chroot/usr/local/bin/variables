@@ -25,9 +25,9 @@ function seguridad_1 ()
 	modprobe -f iptable_filter
 	modprobe -f iptable_nat
 	modprobe -f ipt_physdev
-	service shorewall start
-	service fail2ban start
-	service psad start
+	systemctl start shorewall
+	systemctl start fail2ban
+	systemctl start psad
 }
 
 function antivirus_1 ()
@@ -41,12 +41,12 @@ function tor_1 ()
 	echo "$(date +%d/%m/%Y-%r)" > $lock
 	mv -f /etc/iceweasel/pref/iceweasel.js /etc/iceweasel/pref/iceweasel.bk
 	mv -f /etc/iceweasel/pref/iceweasel.old /etc/iceweasel/pref/iceweasel.js
-	service tor start
-	service polipo start
-	service privoxy start
-	service dnsmasq restart
+	systemctl start tor
+	systemctl start polipo
+	systemctl start privoxy
+	systemctl restart dnsmasq
 	tsocks -on
-	service memlockd start
+	systemctl start memlockd
 }
 
 function tor_0 ()
@@ -54,12 +54,12 @@ function tor_0 ()
 	rm -f $lock
 	mv -f /etc/iceweasel/pref/iceweasel.js /etc/iceweasel/pref/iceweasel.old
 	mv -f /etc/iceweasel/pref/iceweasel.bk /etc/iceweasel/pref/iceweasel.js
-	service privoxy stop
-	service polipo stop
-	service tor stop
-	service dnsmasq restart
+	systemctl stop privoxy
+	systemctl stop polipo
+	systemctl stop tor
+	systemctl restart dnsmasq
 	tsocks -off
-	service memlockd stop
+	systemctl stop memlockd
 	mv -f /etc/tor/torrc /etc/tor/torrc.obfs
 	mv -f /etc/tor/torrc.old /etc/tor/torrc
 	rm -rf /var/cache/polipo/*
@@ -80,7 +80,7 @@ function i2p_0 ()
 function hora_1 ()
 {
 	hwclock --systohc
-	service ntp restart
+	systemctl restart ntp
 }
 
 function compton_1 ()
@@ -201,7 +201,7 @@ function icedove_1 ()
 
 function apparmor_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install apparmor-profiles systemd-sysv
+	apt-get -q update && apt-get -q -y --force-yes install apparmor-profiles
 }
 
 function limpiar_1 ()

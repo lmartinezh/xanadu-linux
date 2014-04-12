@@ -179,3 +179,19 @@ Pin-Priority: -1
 Package: gvfs-fuse
 Pin: version *
 Pin-Priority: -1
+
+Package: dialog
+Pin: version *
+Pin-Priority: -1
+
+Package: tix
+Pin: version *
+Pin-Priority: -1
+
+Package: tk
+Pin: version *
+Pin-Priority: -1
+
+Package: thunar-volman
+Pin: version *
+Pin-Priority: -1

@@ -25,6 +25,8 @@ else
 fi
 echo -e "\n""## VIRTUALIZACION ##""\n" >> /tmp/$nombre
 systemd-detect-virt >> /tmp/$nombre
+echo -e "\n""## OTROS S.O. ##""\n" >> /tmp/$nombre
+os-prober >> /tmp/$nombre
 clear
 echo -e "\n""El reporte se ha generado en /tmp/$nombre"
 exit 0
