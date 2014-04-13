@@ -2,7 +2,7 @@ xanadu (0.5.0)
 
 	* se sustituye sysvinit por systemd
 	* se agregaron nuevos paquetes a la lista negra
-	* se agrego os-prober al script entorno
+	* se agregaron os-prober y systemd-analyze al script entorno
 	* se modificaron los script para adaptarse al nuevo comando: systemctl
 	* se agrearon parametros en failsafe para tarjetas radeon: radeon.modeset=0 xmodule=vesa
 	* ahora se desactivan algunos servicios durante la construccion y no durante el arranque

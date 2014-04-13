@@ -25,7 +25,6 @@ echo "1" > /sys/fs/cgroup/cpu/notify_on_release
 miswap=$(fdisk -l | grep swap | cut -c 1-9)
 swapon -f $miswap
 rmmod -f ip_tables ip6_tables iptable_filter iptable_mangle iptable_nat iptable_raw bluetooth rfcomm
-systemctl stop avahi-daemon
 service anacron stop
 service cron stop
 service rsyslog stop

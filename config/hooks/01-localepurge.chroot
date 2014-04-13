@@ -114,7 +114,6 @@ hardlink -f -x /sys -t -o /
 echo "## prelink ##"
 prelink -amR
 echo "## servicios ##"
-systemctl disable avahi-daemon
 systemctl disable clamav-freshclam
 systemctl disable fail2ban
 systemctl disable i2p
