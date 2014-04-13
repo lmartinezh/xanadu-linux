@@ -2,6 +2,7 @@ fail2ban
 macchanger
 modemmanager
 network-manager
+network-manager-gnome
 nmap
 ntp
 shorewall

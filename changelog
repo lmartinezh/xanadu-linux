@@ -6,6 +6,7 @@ xanadu (0.5.0)
 	* se modificaron los script para adaptarse al nuevo comando: systemctl
 	* se agrearon parametros en failsafe para tarjetas radeon: radeon.modeset=0 xmodule=vesa
 	* ahora se desactivan algunos servicios durante la construccion y no durante el arranque
+	* /var/cache/polipo y /var/log/polipo se crean en tiempo de arranque
 
 
 xanadu (0.4.6)

@@ -33,7 +33,7 @@ echo "## proteger paquetes ##"
 /bin/echo vainfo hold | /usr/bin/dpkg --set-selections
 /bin/echo systemd-shim hold | /usr/bin/dpkg --set-selections
 echo "## purge ##"
-apt-get -y purge $(deborphan --libdevel) $(deborphan --find-config) bluetooth bluez bluez-alsa bluez-firmware bluez-gstreamer linux-wlan-ng-doc aptitude aptitude-common vim-tiny man-db manpages libc6-dev gcc g++ make dpkg-dev build-essential
+apt-get -y purge $(deborphan --libdevel) $(deborphan --find-config) bluetooth bluez bluez-alsa bluez-firmware bluez-gstreamer linux-wlan-ng-doc aptitude aptitude-common vim-tiny vim-common man-db manpages libc6-dev gcc g++ make dpkg-dev build-essential
 echo "## purge headers ##"
 apt-get -y purge linux-headers-3.13-1-686-pae linux-headers-3.13-1-common linux-headers-686-pae
 echo "## autoremove ##"
@@ -103,6 +103,7 @@ rm -f /usr/share/lxde/wallpapers/lxde_red.jpg
 rm -f /usr/share/xmms2/silence-cellule_snippet.ogg 
 rm -f /var/cache/apt/pkgcache.bin
 rm -f /var/cache/apt/srcpkgcache.bin
+rm -f /etc/xanadu/.vacio
 echo "## limpieza de log ##"
 for FILE in $(find /var/log/ -type f)
 do

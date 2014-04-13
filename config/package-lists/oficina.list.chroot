@@ -1,8 +1,5 @@
-libreoffice
-libreoffice-l10n-es
 dictionaries-common
-myspell-es
-ttf-mscorefonts-installer
+evince
 fonts-droid
 fonts-freefont-ttf
 fonts-liberation
@@ -11,4 +8,7 @@ fonts-opensymbol
 fonts-sil-gentium
 fonts-sil-gentium-basic
 fonts-stix
-evince
+libreoffice
+libreoffice-l10n-es
+myspell-es
+ttf-mscorefonts-installer

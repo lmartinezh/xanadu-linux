@@ -3,7 +3,10 @@ fakeroot-ng
 finger
 fish
 gcp
+htop
+iotop
 p7zip-full
+powertop
 scrot
 tmux
 unrar

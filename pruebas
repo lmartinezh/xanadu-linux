@@ -1,21 +1,21 @@
 LISTA DE PRUEBAS
 
-* Verificar si la version del kernel es la correcta
+* Verificar si la versión del kernel es la correcta
 * Verificar si el hostname es el correcto
 * Verificar si los directorios listados en /etc/fstab se hayan montado correctamente
-* Comprobar la existencia del archivo version en /etc/xanadu
+* Comprobar la existencia del archivo versión en /etc/xanadu
 * Verificar si el procedimiento ubicado en /etc/rc.local se ejecuto correctamente
-* Verificar si los modulos listados en el arvhivo /etc/modules se cargaron correctamente
+* Verificar si los módulos listados en el archivo /etc/modules se cargaron correctamente
 * Verificar si los programas ubicados en el autorun de cada escritorio de ejecutan correctamente
-* Comprobar la existencia de los directorios /var/log/tor y /var/lib/tor
+* Comprobar la existencia de los directorios /var/log/tor | /var/lib/tor | /var/cache/polipo | /var/log/polipo
 * Verificar si la clave de user y de root son correctas
-* Verificar si xzoom y expose funcionan adecuadamente
-* Ejecutar los programas de uso comun para verificar si funcionan adecuadamente y estan en español
+* Verificar si xzoom, expose y demas combinaciones de teclas funcionan adecuadamente
+* Ejecutar los programas de uso común para verificar si funcionan adecuadamente y están en español
 * Verificar si el equipo puede conectarse a la red correctamente
-* Buscar modulos extraños en lsmod
+* Buscar módulos extraños en lsmod
 * Comprobar el correcto funcionamiento de openbox
 * Verificar si cada uno de los script en /usr/local/bin funcionan adecuadamente
 * Verificar si las ultimas correcciones que aparecen en changelog realmente funcionan
 * Verificar si cada una de las opciones de booteo funcionan adecuadamente
 * Verificar si el instalador funciona correctamente
-* Ejecutar la distro desde un pendrive
+* Ejecutar la distribución desde una memoria usb

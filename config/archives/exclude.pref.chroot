@@ -195,3 +195,11 @@ Pin-Priority: -1
 Package: thunar-volman
 Pin: version *
 Pin-Priority: -1
+
+Package: whiptail
+Pin: version *
+Pin-Priority: -1
+
+Package: tk8.6
+Pin: version *
+Pin-Priority: -1

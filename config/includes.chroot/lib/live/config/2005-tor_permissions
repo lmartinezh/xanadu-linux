@@ -4,6 +4,8 @@ set -e
 rm -rf /var/log/tor /var/lib/tor
 mkdir -p /var/log/tor
 mkdir -p /var/lib/tor
+mkdir -p /var/cache/polipo
+mkdir -p /var/log/polipo
 chown debian-tor:debian-tor /var/log/tor /var/lib/tor
 chmod 600 /var/lib/tor /var/log/tor
 chmod u+x /var/lib/tor /var/log/tor
