@@ -12,7 +12,7 @@ case "$1" in
     			tor_1
 			echo="Espere mientras se inicia TOR se le notificara al completarse la tarea."
 			espera
-			echo="Inicio completado. Si utiliza un navegador diferente de Iceweasel, introduzca la siguiente configuración de PROXY en su navegador: localhost (o el ip del servidor) puerto 8118 (9151 para socks) y localhost (o el ip del servidor) puerto 9050 para las otras aplicaciones que usen socks."
+			echo="Inicio completado. Si utiliza un navegador diferente de Iceweasel, introduzca la siguiente configuración de PROXY en su navegador: localhost (o el ip del equipo) puerto 8118 (9151 para socks) y localhost (o el ip del equipo) puerto 9050 para las otras aplicaciones que usen socks."
 		fi
 	;;
 	tor_monitor)

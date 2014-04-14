@@ -20,7 +20,7 @@ elif [ "$file" = "Iniciar Tor" ]; then
     		tor_1
 		zenity --timeout=3 --info --text="Espere mientras se inicia TOR se le notificara al completarse la tarea."
 		espera
-		zenity --timeout=7 --info --text="Inicio completado. Si utiliza un navegador diferente de Iceweasel, introduzca la siguiente configuración de PROXY en su navegador: localhost (o el ip del servidor) puerto 8118 (9151 para socks) y localhost (o el ip del servidor) puerto 9050 para las otras aplicaciones que usen socks."
+		zenity --timeout=10 --info --text="Inicio completado. Si utiliza un navegador diferente de Iceweasel, introduzca la siguiente configuración de PROXY en su navegador: localhost (o el ip del equipo) puerto 8118 (9151 para socks) y localhost (o el ip del equipo) puerto 9050 para las otras aplicaciones que usen socks."
 		iceweasel https://check.torproject.org/
 	fi
 

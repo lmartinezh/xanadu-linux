@@ -1,3 +1,12 @@
+xanadu (0.5.1)
+
+	* pequeños cambios en preferencias de iceweasel
+	* cambios en los script post-instalacion
+	* cambios en el script modo-server
+	* se bloquea el acceso como root desde la red
+	* cambios para mejorar la seguridad
+
+
 xanadu (0.5.0)
 
 	* se sustituye sysvinit por systemd

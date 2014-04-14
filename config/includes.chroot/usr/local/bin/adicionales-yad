@@ -20,7 +20,7 @@ elif [ "$mio" = "Iniciar Tor|" ]; then
     		tor_1
 		yad --timeout=3 --skip-taskbar --button=ACEPTAR:1 --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="Espere mientras se inicia TOR se le notificara al completarse la tarea."
 		espera
-		yad --timeout=7 --skip-taskbar --button=ACEPTAR:1 --title="FINALIZADO" --fixed --center --text-align=fill --borders=6 --text="Inicio completado. Si utiliza un navegador diferente de Iceweasel, introduzca la siguiente configuración de PROXY en su navegador: localhost (o el ip del servidor) puerto 8118 (9151 para socks) y localhost (o el ip del servidor) puerto 9050 para las otras aplicaciones que usen socks."
+		yad --timeout=10 --skip-taskbar --button=ACEPTAR:1 --title="FINALIZADO" --fixed --center --text-align=fill --borders=6 --text="Inicio completado. Si utiliza un navegador diferente de Iceweasel, introduzca la siguiente configuración de PROXY en su navegador: localhost (o el ip del equipo) puerto 8118 (9151 para socks) y localhost (o el ip del equipo) puerto 9050 para las otras aplicaciones que usen socks."
 		iceweasel https://check.torproject.org/
 	fi
 

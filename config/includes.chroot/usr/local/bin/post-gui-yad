@@ -9,12 +9,12 @@ else
 	exit 1
 fi
 
-file=$(yad --sticky --fixed --center --width=360 --height=420 --no-click --list --title="Post-instalación" --column=Acciones "Instalar Apparmor (RECOMENDADO)" "Instalar KDE" "Instalar GNOME" "Instalar XFCE" "Instalar ENLIGHTENMENT" "Instalar CINNAMON" "Instalar WINE" "Instalar XBMC" "Instalar driver ATI" "Instalar driver NVIDIA" "Instalar kernel LIQUORIX" "Instalar ICEDOVE")
+file=$(yad --sticky --fixed --center --width=360 --height=420 --no-click --list --title="Post-instalación" --column=Acciones "Instalar Apparmor" "Instalar KDE" "Instalar GNOME" "Instalar XFCE" "Instalar ENLIGHTENMENT" "Instalar CINNAMON" "Instalar WINE" "Instalar XBMC" "Instalar driver ATI" "Instalar driver NVIDIA" "Instalar kernel LIQUORIX" "Instalar ICEDOVE")
 
 if [ "$file" = "Instalar KDE|" ]; then
 	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?"; then
 		kde_1 | progress_2
-		limpiar_1
+		limpiar_1 | progress_limpiar_2
 	else
 		source $0
 	fi	
@@ -23,7 +23,7 @@ if [ "$file" = "Instalar KDE|" ]; then
 elif [ "$file" = "Instalar GNOME|" ]; then
 	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?"; then
 		gnome_1 | progress_2
-		limpiar_1
+		limpiar_1 | progress_limpiar_2
 	else
 		source $0
 	fi	
@@ -32,7 +32,7 @@ elif [ "$file" = "Instalar GNOME|" ]; then
 elif [ "$file" = "Instalar XFCE|" ]; then
 	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="Debe tener un equipo con 1 Gb de RAM o mas ¿Esta seguro de querer instalar este software?"; then
 		xfce_1 | progress_2
-		limpiar_1
+		limpiar_1 | progress_limpiar_2
 	else
 		source $0
 	fi	
@@ -41,7 +41,7 @@ elif [ "$file" = "Instalar XFCE|" ]; then
 elif [ "$file" = "Instalar ENLIGHTENMENT|" ]; then
 	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="Debe tener un equipo con 1 Gb de RAM o mas ¿Esta seguro de querer instalar este software?"; then
 		e17_1 | progress_2
-		limpiar_1
+		limpiar_1 | progress_limpiar_2
 	else
 		source $0
 	fi	
@@ -50,7 +50,7 @@ elif [ "$file" = "Instalar ENLIGHTENMENT|" ]; then
 elif [ "$file" = "Instalar CINNAMON|" ]; then
 	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?"; then
 		cinnamon_1 | progress_2
-		limpiar_1
+		limpiar_1 | progress_limpiar_2
 	else
 		source $0
 	fi	
@@ -59,7 +59,7 @@ elif [ "$file" = "Instalar CINNAMON|" ]; then
 elif [ "$file" = "Instalar WINE|" ]; then
 	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?"; then
 		wine_1 | progress_2
-		limpiar_1
+		limpiar_1 | progress_limpiar_2
 	else
 		source $0
 	fi	
@@ -68,7 +68,7 @@ elif [ "$file" = "Instalar WINE|" ]; then
 elif [ "$file" = "Instalar XBMC|" ]; then
 	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?"; then
 		xbmc_1 | progress_2
-		limpiar_1
+		limpiar_1 | progress_limpiar_2
 	else
 		source $0
 	fi	
@@ -77,7 +77,7 @@ elif [ "$file" = "Instalar XBMC|" ]; then
 elif [ "$file" = "Instalar driver ATI|" ]; then
 	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="¿Esta seguro de querer instalar este software?"; then
 		ati_1 | progress_2
-		limpiar_1
+		limpiar_1 | progress_limpiar_2
 	else
 		source $0
 	fi	
@@ -86,7 +86,7 @@ elif [ "$file" = "Instalar driver ATI|" ]; then
 elif [ "$file" = "Instalar driver NVIDIA|" ]; then
 	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="¿Esta seguro de querer instalar este software?"; then
 		nvidia_1 | progress_2
-		limpiar_1
+		limpiar_1 | progress_limpiar_2
 	else
 		source $0
 	fi	
@@ -95,7 +95,7 @@ elif [ "$file" = "Instalar driver NVIDIA|" ]; then
 elif [ "$file" = "Instalar kernel LIQUORIX|" ]; then
 	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="¿Esta seguro de querer instalar este software?"; then
 		liquorix_1 | progress_2
-		limpiar_1
+		limpiar_1 | progress_limpiar_2
 	else
 		source $0
 	fi	
@@ -104,7 +104,7 @@ elif [ "$file" = "Instalar kernel LIQUORIX|" ]; then
 elif [ "$file" = "Instalar ICEDOVE|" ]; then
 	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="¿Esta seguro de querer instalar este software?"; then
 		icedove_1 | progress_2
-		limpiar_1
+		limpiar_1 | progress_limpiar_2
 	else
 		source $0
 	fi	
@@ -113,7 +113,7 @@ elif [ "$file" = "Instalar ICEDOVE|" ]; then
 elif [ "$file" = "Instalar Apparmor|" ]; then
 	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="¿Esta seguro de querer instalar este software?"; then
 		apparmor_1 | progress_2
-		limpiar_1
+		limpiar_1 | progress_limpiar_2
 	else
 		source $0
 	fi	

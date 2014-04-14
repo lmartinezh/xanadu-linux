@@ -18,9 +18,6 @@ echo "## dnsmasq - aide ##"
 groupadd -r dnsmasq
 adduser dnsmasq dnsmasq
 aide --config /etc/aide/aide.conf --init
-# echo "## aideinit ##"
-# aideinit -y -f
-# mv -f -v /var/lib/aide/aide.db.new /var/lib/aide/aide.db
 echo "## permisos ##"
 chmod 644 /usr/lib/libvte9/gnome-pty-helper
 chmod 644 /usr/lib/libvte-2.90-9/gnome-pty-helper

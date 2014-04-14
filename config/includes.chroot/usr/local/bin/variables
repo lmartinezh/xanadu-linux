@@ -25,6 +25,7 @@ function seguridad_1 ()
 	modprobe -f iptable_filter
 	modprobe -f iptable_nat
 	modprobe -f ipt_physdev
+	modprobe -f act_police
 	systemctl start shorewall
 	systemctl start fail2ban
 	systemctl start psad
@@ -136,6 +137,8 @@ function optimizacion_1 ()
 		echo "tmpfs /var/spool tmpfs noatime,nodev 0 0" >> /etc/fstab
 		echo "tmpfs /var/tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab
 		echo $miswap2 "none swap sw 0 0" >> /etc/fstab
+		chage -M 183 $quien
+		chage -M 365 root
 		yes "" | sensors-detect
 		echo "$(date +%d/%m/%Y-%r)" > /root/.optimizado		
 		for i in $quien; do
@@ -201,7 +204,8 @@ function icedove_1 ()
 
 function apparmor_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install apparmor-profiles
+	apt-get -q update && apt-get -q -y --force-yes install apparmor-profiles tripwire
+	# tripwire -m i
 }
 
 function limpiar_1 ()
@@ -209,4 +213,14 @@ function limpiar_1 ()
 	apt-get clean
 	apt-get -y --force-yes autoremove
 	apt-get -y purge $(deborphan)
+}
+
+function progress_limpiar_1 ()
+{
+	zenity --progress --pulsate --no-cancel --text "Realizando limpieza" --auto-close
+}
+
+function progress_limpiar_2 ()
+{
+	yad --fixed --progress-text="Realizando limpieza" --progress --pulsate --auto-close --auto-kill --skip-taskbar --center --title="LIMPIEZA"
 }

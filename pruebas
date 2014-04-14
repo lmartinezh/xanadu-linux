@@ -1,5 +1,6 @@
 LISTA DE PRUEBAS
 
+* Verificar si cada una de las opciones de booteo funcionan adecuadamente
 * Verificar si la versión del kernel es la correcta
 * Verificar si el hostname es el correcto
 * Verificar si los directorios listados en /etc/fstab se hayan montado correctamente
@@ -13,9 +14,9 @@ LISTA DE PRUEBAS
 * Ejecutar los programas de uso común para verificar si funcionan adecuadamente y están en español
 * Verificar si el equipo puede conectarse a la red correctamente
 * Buscar módulos extraños en lsmod
+* verificar si el microcode se aplica correctamente
 * Comprobar el correcto funcionamiento de openbox
-* Verificar si cada uno de los script en /usr/local/bin funcionan adecuadamente
 * Verificar si las ultimas correcciones que aparecen en changelog realmente funcionan
-* Verificar si cada una de las opciones de booteo funcionan adecuadamente
 * Verificar si el instalador funciona correctamente
+* Verificar si cada uno de los script en /usr/local/bin funcionan adecuadamente
 * Ejecutar la distribución desde una memoria usb
