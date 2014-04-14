@@ -5,6 +5,10 @@ xanadu (0.5.1)
 	* cambios en el script modo-server
 	* se bloquea el acceso como root desde la red
 	* cambios para mejorar la seguridad
+	* algunas carpetas que se creaban en el arranque ahora se crean durante la construccion
+	* los permisos para tor ahora se cambian en la construccion y no en el arranque
+	* se elimino del constructor el directorio /home por conflicto de permisos
+	* los archivos .bashrc de root y user fueron sustituidos por /etc/bash.bashrc
 
 
 xanadu (0.5.0)

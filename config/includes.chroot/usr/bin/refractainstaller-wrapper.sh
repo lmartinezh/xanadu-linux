@@ -4,6 +4,11 @@
 # Start Refracta Installer using Yad in preference to Zenity. 
 # If neither yad nor zenity is installed, give a warning message.
 
+if ! [[ -d /lib/live/mount/rootfs ]] ; then
+	exit 1
+else
+	echo 1 > /dev/null
+fi
 
 if [[ -f /usr/bin/yad ]]; then
 	yadversion=$(yad --version | cut -d. -f2)

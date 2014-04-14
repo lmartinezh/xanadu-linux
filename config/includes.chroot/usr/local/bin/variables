@@ -109,8 +109,8 @@ function optimizacion_1 ()
 			echo xanadu-$(printf '%02X%02X%02X\n' $((RANDOM%256)) $((RANDOM%256)) $((RANDOM%256))) > /etc/hostname
 			sed -i 's_xanadu_'$(cat /etc/hostname)'_g' /etc/hosts
 		fi		
-		rm -f /home/*/Escritorio/instalar-xanadu.desktop
-		rm -f /home/*/Escritorio/post-instalador.desktop
+		# rm -f /home/*/Escritorio/instalar-xanadu.desktop
+		# rm -f /home/*/Escritorio/post-instalador.desktop
 		rm -f /etc/apt/preferences.d/exclude.pref
 		rm -f /etc/apt/preferences
 		swapoff /swapfile

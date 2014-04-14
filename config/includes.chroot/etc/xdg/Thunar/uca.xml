@@ -51,7 +51,6 @@
 
   </action>
 
-
   <action>
     <icon>utilities-terminal</icon>
     <patterns>*</patterns>

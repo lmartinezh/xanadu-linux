@@ -176,10 +176,6 @@ Package: phython-pyinotify
 Pin: version *
 Pin-Priority: -1
 
-Package: gvfs-fuse
-Pin: version *
-Pin-Priority: -1
-
 Package: dialog
 Pin: version *
 Pin-Priority: -1

@@ -14,9 +14,12 @@ echo "## pci ids ##"
 update-pciids
 echo "## usb ids ##"
 update-usbids
-echo "## dnsmasq - aide ##"
+echo "## usuarios - grupos ##"
 groupadd -r dnsmasq
 adduser dnsmasq dnsmasq
+groupadd -r sambashare
+adduser user sambashare
+echo "## aide ##"
 aide --config /etc/aide/aide.conf --init
 echo "## permisos ##"
 chmod 644 /usr/lib/libvte9/gnome-pty-helper
@@ -101,11 +104,22 @@ rm -f /usr/share/xmms2/silence-cellule_snippet.ogg
 rm -f /var/cache/apt/pkgcache.bin
 rm -f /var/cache/apt/srcpkgcache.bin
 rm -f /etc/xanadu/.vacio
+rm -f /var/cache/polipo/.vacio
+rm -f /var/lib/samba/usershares/.vacio
+rm -f /var/lib/tor/.vacio
+rm -f /var/log/polipo/.vacio
+rm -f /var/log/tor/.vacio
 echo "## limpieza de log ##"
 for FILE in $(find /var/log/ -type f)
 do
 	: > ${FILE}
 done
+echo "## tor ##"
+chown debian-tor:debian-tor /var/log/tor /var/lib/tor
+chmod 600 /var/lib/tor /var/log/tor
+chmod u+x /var/lib/tor /var/log/tor
+chgrp debian-tor /etc/tor/ /etc/tor/*
+chmod g+rw /etc/tor/ /etc/tor/*
 echo "## hardlink ##"
 hardlink -f -x /sys -t -o /
 echo "## prelink ##"
