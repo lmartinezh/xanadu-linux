@@ -13,7 +13,7 @@ case "$1" in
 		apparmor_1
 		apt -y install curl dnsutils fwsnort lynx less portsentry tcpdump
 		limpiar_1
-		echo "## aideinit ##"
+		echo "## aideinit y actualizacion de firmas en psad y rkhunter ##"
 		aideinit -y -f
 		mv -f -v /var/lib/aide/aide.db.new /var/lib/aide/aide.db
 		psad --sig-update

@@ -49,7 +49,7 @@ PermitEmptyPasswords no
 ChallengeResponseAuthentication no
 
 # Change to no to disable tunnelled clear text passwords
-PasswordAuthentication no
+PasswordAuthentication yes
 
 # Kerberos options
 #KerberosAuthentication no
@@ -69,7 +69,7 @@ TCPKeepAlive yes
 #UseLogin no
 
 MaxStartups 10:30:60
-Banner /etc/issue.net
+#Banner /etc/issue.net
 
 # Allow client to pass locale environment variables
 AcceptEnv LANG LC_*
@@ -85,8 +85,7 @@ Subsystem sftp /usr/lib/openssh/sftp-server
 # If you just want the PAM account and session checks to run without
 # PAM authentication, then enable this but set PasswordAuthentication
 # and ChallengeResponseAuthentication to 'no'.
-UsePAM no
-MaxAuthTries 2
+UsePAM yes
 AllowUsers user
 X11UseLocalhost no
 AddressFamily inet

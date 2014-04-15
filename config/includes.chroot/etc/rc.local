@@ -27,5 +27,4 @@ swapon -f $miswap
 rmmod -f ip_tables ip6_tables iptable_filter iptable_mangle iptable_nat iptable_raw bluetooth rfcomm
 service anacron stop
 service cron stop
-service rsyslog stop
 exit 0

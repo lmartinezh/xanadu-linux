@@ -6,7 +6,7 @@ if [[ -f $archiver ]]; then
 	echo 1 > /dev/null
 else
 	mkdir -p /home/user/.config/xarchiver/
-	mv -f /usr/local/bin/xarchiverrc /home/user/.config/xarchiver/xarchiverrc
+	cp /usr/local/bin/xarchiverrc /home/user/.config/xarchiver/xarchiverrc
 fi
 sleep 1s
 pcmanfm -w "$(find /usr/share/images/desktop-base/random -type f | shuf -n1)"

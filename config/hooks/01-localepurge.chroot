@@ -18,7 +18,6 @@ echo "## usuarios - grupos ##"
 groupadd -r dnsmasq
 adduser dnsmasq dnsmasq
 groupadd -r sambashare
-adduser user sambashare
 echo "## aide ##"
 aide --config /etc/aide/aide.conf --init
 echo "## permisos ##"
