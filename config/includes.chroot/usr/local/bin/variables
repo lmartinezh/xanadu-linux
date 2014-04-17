@@ -108,11 +108,11 @@ function optimizacion_1 ()
 		if [[ $(hostname) = xanadu ]]; then
 			echo xanadu-$(printf '%02X%02X%02X\n' $((RANDOM%256)) $((RANDOM%256)) $((RANDOM%256))) > /etc/hostname
 			sed -i 's_xanadu_'$(cat /etc/hostname)'_g' /etc/hosts
-		fi		
+		fi
+		rm -f /etc/apt/preferences.d/exclude.pref
+		rm -f /etc/apt/preferences		
 		# rm -f /home/*/Escritorio/instalar-xanadu.desktop
 		# rm -f /home/*/Escritorio/post-instalador.desktop
-		rm -f /etc/apt/preferences.d/exclude.pref
-		rm -f /etc/apt/preferences
 		swapoff /swapfile
 		rm -f /swapfile
 		sed -i 's_/swapfile_#/swapfile_g' /etc/fstab
@@ -139,6 +139,7 @@ function optimizacion_1 ()
 		echo $miswap2 "none swap sw 0 0" >> /etc/fstab
 		chage -M 183 $quien
 		chage -M 365 root
+		adduser $quien sambashare
 		yes "" | sensors-detect
 		echo "$(date +%d/%m/%Y-%r)" > /root/.optimizado		
 		for i in $quien; do
@@ -159,7 +160,7 @@ function gnome_1 ()
 
 function xfce_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install task-xfce-desktop xfce4
+	apt-get -q update && apt-get -q -y --force-yes install task-xfce-desktop xfce4 xfce4-goodies xfce4-notifyd
 }
 
 function e17_1 ()
@@ -204,7 +205,7 @@ function icedove_1 ()
 
 function apparmor_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install apparmor-profiles tripwire
+	apt-get -q update && apt-get -q -y --force-yes install apparmor-profiles tripwire menulibre mugshot
 	# tripwire -m i
 }
 

@@ -188,10 +188,6 @@ Package: tk
 Pin: version *
 Pin-Priority: -1
 
-Package: thunar-volman
-Pin: version *
-Pin-Priority: -1
-
 Package: whiptail
 Pin: version *
 Pin-Priority: -1

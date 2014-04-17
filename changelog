@@ -1,3 +1,11 @@
+xanadu (0.5.2)
+
+	* se agrega menulibre y mugshot al instalar apparmor
+	* se agrega soporte para mtp con jmtpfs
+	* se agrega el paquete i7z
+	* se sustituyen algunos los wallpapers
+
+
 xanadu (0.5.1)
 
 	* pequeños cambios en preferencias de iceweasel
