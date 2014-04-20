@@ -132,7 +132,6 @@ function optimizacion_1 ()
 		echo "proc /proc proc defaults,hidepid=2 0 0" >> /etc/fstab
 		echo "tmpfs /tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab
 		echo "tmpfs /run tmpfs rw,nosuid,noexec,nodev,noatime,mode=755 0 0" >> /etc/fstab
-		echo "tmpfs /var/cache/apt/archives tmpfs noatime,nodev 0 0" >> /etc/fstab
 		echo "tmpfs /var/cache/samba tmpfs noatime,nodev 0 0" >> /etc/fstab
 		echo "tmpfs /var/spool tmpfs noatime,nodev 0 0" >> /etc/fstab
 		echo "tmpfs /var/tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab

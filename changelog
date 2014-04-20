@@ -1,9 +1,13 @@
 xanadu (0.5.2)
 
 	* se agrega menulibre y mugshot al instalar apparmor
-	* se agrega soporte para mtp con jmtpfs
-	* se agrega el paquete i7z
+	* se agrega soporte para mtp agregando el paquete jmtpfs
+	* se agrega el paquete i7z a la lista varios
 	* se sustituyen algunos los wallpapers
+	* se agregan los paquetes arandr, hardinfo y usbview a la lista escritorio
+	* se elimina la linea "tmpfs /var/cache/apt/archives tmpfs noatime,nodev 0 0" del fstab y el script variables
+	* se amplia la lista de pruebas
+	* se modifico el fondo del grub y syslinux para eliminar los logos de debian y lxde
 
 
 xanadu (0.5.1)

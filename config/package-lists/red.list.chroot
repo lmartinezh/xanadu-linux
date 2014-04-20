@@ -8,6 +8,7 @@ ntp
 shorewall
 ssh
 tcptraceroute
+traceroute
 wireless-tools
 wireshark
 zsync

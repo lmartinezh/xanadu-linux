@@ -4,6 +4,7 @@ LISTA DE PRUEBAS
 * Verificar si la versión del kernel es la correcta
 * Verificar si el hostname es el correcto
 * Verificar si los directorios listados en /etc/fstab se hayan montado correctamente
+* Comprobar la existencia del archivo /etc/os-release y que su contenido sea correcto
 * Comprobar la existencia del archivo versión en /etc/xanadu
 * Verificar si el procedimiento ubicado en /etc/rc.local se ejecuto correctamente
 * Verificar si los módulos listados en el archivo /etc/modules se cargaron correctamente
@@ -20,3 +21,6 @@ LISTA DE PRUEBAS
 * Verificar si el instalador funciona correctamente
 * Verificar si cada uno de los script en /usr/local/bin funcionan adecuadamente
 * Ejecutar la distribución desde una memoria usb
+* comprobar que noautologin funciona correctamente en las tty
+* Comprobar que se detecta todo el hardware
+* Comprobar el escritorio extendido en multiples monitores
