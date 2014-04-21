@@ -6,6 +6,7 @@ LISTA DE PRUEBAS
 * Verificar si los directorios listados en /etc/fstab se hayan montado correctamente
 * Comprobar la existencia del archivo /etc/os-release y que su contenido sea correcto
 * Comprobar la existencia del archivo versión en /etc/xanadu
+* Verificar si los alias estan correctamente definidos
 * Verificar si el procedimiento ubicado en /etc/rc.local se ejecuto correctamente
 * Verificar si los módulos listados en el archivo /etc/modules se cargaron correctamente
 * Verificar si los programas ubicados en el autorun de cada escritorio de ejecutan correctamente
