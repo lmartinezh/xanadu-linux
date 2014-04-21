@@ -28,22 +28,24 @@ Requerimientos mínimos:
 	* BIOS con capacidad de arranque por USB o CDROM
 	* 5 Gb de capacidad de disco para instalar
 
-Desarrolladores:
+Desarrollador:
 
 	* Jesús Palencia
-	* Héctor Mantellini
 
 Colaboradores:
 
-	* Alvaro Hernandez	
+	* Alvaro Hernandez
 	* David Rondon
+	* Héctor Mantellini
 
 
 Dudas, consultas y/o sugerencias por favor enviarlas a: sinfallas@gmail.com
 
+
 Contiene material realizado por:
 
 * Configuraciones realizadas por Jesús Lara para arepalinux-script (https://github.com/phenobarbital/)
+
 
 Paquetes incluidos:
 

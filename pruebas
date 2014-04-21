@@ -6,22 +6,23 @@ LISTA DE PRUEBAS
 * Verificar si los directorios listados en /etc/fstab se hayan montado correctamente
 * Comprobar la existencia del archivo /etc/os-release y que su contenido sea correcto
 * Comprobar la existencia del archivo versión en /etc/xanadu
-* Verificar si los alias estan correctamente definidos
+* Verificar si los alias están correctamente definidos
 * Verificar si el procedimiento ubicado en /etc/rc.local se ejecuto correctamente
 * Verificar si los módulos listados en el archivo /etc/modules se cargaron correctamente
+* Buscar módulos extraños en lsmod
+* Verificar si el microcode se aplica correctamente
 * Verificar si los programas ubicados en el autorun de cada escritorio de ejecutan correctamente
 * Comprobar la existencia de los directorios /var/log/tor | /var/lib/tor | /var/cache/polipo | /var/log/polipo
 * Verificar si la clave de user y de root son correctas
-* Verificar si xzoom, expose y demas combinaciones de teclas funcionan adecuadamente
+* Verificar si xzoom, expose y demás combinaciones de teclas funcionan adecuadamente
 * Ejecutar los programas de uso común para verificar si funcionan adecuadamente y están en español
 * Verificar si el equipo puede conectarse a la red correctamente
-* Buscar módulos extraños en lsmod
-* verificar si el microcode se aplica correctamente
+* Ejecutar apt update y ver que finalice sin errores
 * Comprobar el correcto funcionamiento de openbox
 * Verificar si las ultimas correcciones que aparecen en changelog realmente funcionan
 * Verificar si el instalador funciona correctamente
 * Verificar si cada uno de los script en /usr/local/bin funcionan adecuadamente
 * Ejecutar la distribución desde una memoria usb
-* comprobar que noautologin funciona correctamente en las tty
+* Comprobar que noautologin funciona correctamente en las tty
 * Comprobar que se detecta todo el hardware
-* Comprobar el escritorio extendido en multiples monitores
+* Comprobar el escritorio extendido en múltiples monitores
