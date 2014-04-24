@@ -32,7 +32,8 @@ echo "## proteger paquetes ##"
 /bin/echo vainfo hold | /usr/bin/dpkg --set-selections
 /bin/echo systemd-shim hold | /usr/bin/dpkg --set-selections
 echo "## purge ##"
-apt-get -y purge $(deborphan --libdevel) $(deborphan --find-config) bluetooth bluez bluez-alsa bluez-firmware bluez-gstreamer linux-wlan-ng-doc aptitude aptitude-common vim-tiny vim-common man-db manpages libc6-dev gcc g++ make dpkg-dev build-essential
+apt-get -y purge $(deborphan --libdevel) $(deborphan --find-config) bluetooth bluez bluez-alsa bluez-firmware bluez-gstreamer linux-wlan-ng-doc aptitude aptitude-common vim-tiny vim-common libc6-dev gcc g++ make dpkg-dev build-essential
+# man-db manpages
 echo "## purge headers ##"
 apt-get -y purge linux-headers-3.13-1-686-pae linux-headers-3.13-1-common linux-headers-686-pae
 echo "## autoremove ##"
@@ -48,7 +49,7 @@ rm -rf /usr/share/help/*
 rm -rf /usr/share/info/*
 rm -rf /usr/share/kde4/*
 rm -rf /usr/share/lintian/*
-rm -rf /usr/share/man/*
+# rm -rf /usr/share/man/*
 rm -rf /var/cache/man/*
 rm -rf /tmp/*
 rm -rf /var/tmp/*
@@ -100,14 +101,14 @@ rm -f /usr/share/lxde/wallpapers/lxde_blue.jpg
 rm -f /usr/share/lxde/wallpapers/lxde_green.jpg
 rm -f /usr/share/lxde/wallpapers/lxde_red.jpg
 rm -f /usr/share/xmms2/silence-cellule_snippet.ogg 
-rm -f /var/cache/apt/pkgcache.bin
-rm -f /var/cache/apt/srcpkgcache.bin
-rm -f /etc/xanadu/.vacio
-rm -f /var/cache/polipo/.vacio
-rm -f /var/lib/samba/usershares/.vacio
-rm -f /var/lib/tor/.vacio
-rm -f /var/log/polipo/.vacio
-rm -f /var/log/tor/.vacio
+rm -fv /var/cache/apt/pkgcache.bin
+rm -fv /var/cache/apt/srcpkgcache.bin
+rm -fv /etc/xanadu/.vacio
+rm -fv /var/cache/polipo/.vacio
+rm -fv /var/lib/samba/usershares/.vacio
+rm -fv /var/lib/tor/.vacio
+rm -fv /var/log/polipo/.vacio
+rm -fv /var/log/tor/.vacio
 echo "## limpieza de log ##"
 for FILE in $(find /var/log/ -type f)
 do

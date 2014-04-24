@@ -1,3 +1,11 @@
+xanadu (0.5.3)
+
+	* se cambio en los leeme y el navegador la web de github por el nuevo blog
+	* cambios menores en los archivos leeme
+	* se desactivo la limpieza de los archivos del man
+	* se reintegra testdisk (estaba roto en los repositorios)
+
+
 xanadu (0.5.2)
 
 	* se agrega menulibre y mugshot al instalar apparmor
