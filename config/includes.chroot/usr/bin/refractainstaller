@@ -5,19 +5,9 @@ version="refractainstaller 9.0.9beta6 (20131206)"
 # Licence: GPL-3
 # This is free software with no warrantees. Use at your own risk.
 
-# This script will install a refracta live-cd to a hard drive. It gives
-# you the option to install the entire system to one partition or to
-# install with /home on a separate partition. 
-
 # NOTE: If you try to tee this to an install log, you won't see it
 # when cryptsetup asks you to confirm with YES.
 
-
-
-# If you want to change any defaults, change them in the configfile.
-# Default is /etc/refractainstaller.conf
-# If you want to use a different config file for testing, change this
-# variable. Normally, users should not edit anything in this script.
 configfile="/etc/refractainstaller.conf"
 
 

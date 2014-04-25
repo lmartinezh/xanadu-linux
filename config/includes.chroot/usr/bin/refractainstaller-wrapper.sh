@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 # refractainstaller-wrapper.sh 9.0.9
-#
-# Start Refracta Installer using Yad in preference to Zenity. 
-# If neither yad nor zenity is installed, give a warning message.
 
 if ! [[ -d /lib/live/mount/rootfs ]] ; then
 	exit 1
@@ -22,10 +19,9 @@ elif
 		gksu 'x-terminal-emulator -e /usr/bin/refractainstaller-gui' &
 else
 	xterm -hold -fa monaco -fs 14 -geometry 80x20+0+0 -e echo "
-  Neither Yad nor Zenity is installed, or the version of Yad is too old.
-  You can't run the GUI version of Refracta Installer without one of 
-  those. Instead, you can run 'refractainstaller' from a terminal 
-  or console for the CLI version.
+  Yad y Zenity no estan instalados, o la version de Yad es muy vieja.
+  Puede usar 'refractainstaller' desde un terminal para instalar el
+  sistema con la version CLI.
   " &
 fi
 

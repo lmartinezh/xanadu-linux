@@ -6,7 +6,7 @@ de escritorio, pensada para ser ligera y a la vez util, contiene
 herramientas para rescate de sistemas, analisis forense y navegacion
 anonima, ademas de todo lo necesario para su uso en el escritorio.
 
-Es 100% compatible con Debian así como también con su contrato social
+Es 100% compatible con Debian asi como tambien con su contrato social
 
 El nombre xanadu se ha convertido en una metafora de la opulencia, sobre todo
 gracias al poema Kubla Khan de Samuel Taylor Coleridge, tambien era la capital

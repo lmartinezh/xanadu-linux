@@ -1,0 +1,147 @@
+#!/bin/bash
+#elaborado por sinfallas
+if [[ $USER != root ]]; then
+echo "Ejecutar como root"
+exit 1
+fi
+kernel=3.13-1-686-pae
+name=xanadu
+var1=$(cat /sys/block/zram0/disksize)
+var2=$(cat /sys/kernel/mm/transparent_hugepage/enabled)
+var3=$(cat /sys/kernel/mm/transparent_hugepage/khugepaged/pages_to_scan)
+var4=$(cat /sys/kernel/mm/ksm/run)
+var5=$(cat /sys/kernel/mm/ksm/pages_to_scan)
+var6=$(cat /sys/kernel/mm/ksm/sleep_millisecs)
+var7=$(cat /sys/fs/cgroup/cpu/release_agent)
+var8=$(cat /sys/fs/cgroup/cpu/notify_on_release)
+clear
+
+echo -e "## kernel ##""\n"
+if [[ $kernel = 3.13-1-686-pae ]]; then
+	echo "OK"
+else
+	echo "FAIL"
+fi
+
+echo -e "\n""## hostname ##""\n"
+if [[ $name = xanadu ]]; then
+	echo "OK"
+else
+	echo "FAIL"
+fi
+
+echo -e "\n""## disksize ##""\n"
+if [[ $var1 = 104857600 ]]; then
+	echo "OK"
+else
+	echo "FAIL"
+fi
+
+echo -e "\n""## thp ##""\n"
+echo $var2
+
+echo -e "\n""## thp pages_to_scan ##""\n"
+if [[ $var3 = 20000 ]]; then
+	echo "OK"
+else
+	echo "FAIL"
+fi
+
+echo -e "\n""## ksm run ##""\n"
+if [[ $var4 = 1 ]]; then
+	echo "OK"
+else
+	echo "FAIL"
+fi
+
+echo -e "\n""## ksm pages_to_scan ##""\n"
+if [[ $var5 = 20000 ]]; then
+	echo "OK"
+else
+	echo "FAIL"
+fi
+
+echo -e "\n""## sleep_millisecs ##""\n"
+if [[ $var6 = 200 ]]; then
+	echo "OK"
+else
+	echo "FAIL"
+fi
+
+echo -e "\n""## release_agent ##""\n"
+if [[ $var7 = /usr/local/sbin/cgroup_clean ]]; then
+	echo "OK"
+else
+	echo "FAIL"
+fi
+
+echo -e "\n""## notify_on_release ##""\n"
+if [[ $var8 = 1 ]]; then
+	echo "OK"
+else
+	echo "FAIL"
+fi
+
+echo -e "\n""## tmpfs ##""\n"
+mount -l -t tmpfs
+
+echo -e "\n""## os-release ##""\n"
+cat /etc/os-release
+
+echo -e "\n""## archivo version ##""\n"
+cat /etc/xanadu/version
+
+echo -e "\n""## lista de alias ##""\n"
+echo $(alias)
+
+echo -e "\n""## lista de directorios ##""\n"
+if ! [[ -d /var/cache/polipo ]] ; then
+	echo -e "El directorio /var/cache/polipo NO existe""\n"
+else
+	echo -e "El directorio /var/cache/polipo existe""\n"
+fi
+
+if ! [[ -d /var/lib/tor ]] ; then
+	echo -e "El directorio /var/lib/tor NO existe""\n"
+else
+	echo -e "El directorio /var/lib/tor existe""\n"
+fi
+
+if ! [[ -d /var/log/tor ]] ; then
+	echo -e "El directorio /var/log/tor NO existe""\n"
+else
+	echo -e "El directorio /var/log/tor existe""\n"
+fi
+
+if ! [[ -d /var/log/polipo ]] ; then
+	echo -e "El directorio /var/log/polipo NO existe""\n"
+else
+	echo -e "El directorio /var/log/polipo existe""\n"
+fi
+
+echo -e "\n""## cpuid ##""\n"
+lsmod | grep cpuid
+
+echo -e "\n""## loop ##""\n"
+lsmod | grep loop
+
+echo -e "\n""## rfkill ##""\n"
+lsmod | grep rfkill
+
+echo -e "\n""## microcode ##""\n"
+dmesg | grep microcode
+
+echo -e "\n""## conexion ##""\n"
+ping -c 3 yahoo.com
+
+echo -e "\n""## apt update ##""\n"
+apt -q update
+
+echo -e "\n""## install mesa-utis ##""\n"
+apt -q -y install mesa-utils
+
+echo -e "\n""## 3D ##""\n"
+glxinfo | grep direct
+
+echo "finalizado..."
+exit 0 

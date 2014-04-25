@@ -4,6 +4,10 @@ xanadu (0.5.3)
 	* cambios menores en los archivos leeme
 	* se desactivo la limpieza de los archivos del man
 	* se reintegra testdisk (estaba roto en los repositorios)
+	* se elimina deb-src de los repositorios de kali
+	* se traduce al español refractainstaller-wrapper.sh
+	* se crea el script "revision" para automatizar algunas comprobaciones de la lista de pruebas
+	* se adapta el archivo os-release al formato de systemd
 
 
 xanadu (0.5.2)
