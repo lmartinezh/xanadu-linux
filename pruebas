@@ -2,6 +2,7 @@ LISTA DE PRUEBAS
 
 * Verificar si cada una de las opciones de booteo funcionan adecuadamente
 * Ejecutar el script "revision" para realizar las pruebas automatizadas
+* Verificar si los alias son correctos
 * Buscar módulos extraños en lsmod
 * Verificar si los programas ubicados en el autorun de cada escritorio de ejecutan correctamente
 * Comprobar el correcto funcionamiento de openbox
