@@ -92,7 +92,7 @@ echo -e "\n""## archivo version ##""\n"
 cat /etc/xanadu/version
 
 echo -e "\n""## lista de alias ##""\n"
-echo $(alias)
+echo $(alias 2>&1)
 
 echo -e "\n""## lista de directorios ##""\n"
 if ! [[ -d /var/cache/polipo ]] ; then

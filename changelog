@@ -8,16 +8,15 @@ xanadu (0.5.3)
 	* se traduce al español refractainstaller-wrapper.sh
 	* se crea el script "revision" para automatizar algunas comprobaciones de la lista de pruebas
 	* se adapta el archivo os-release al formato de systemd
+	* se agregan los paquetes how-can-i-help y systemd-ui
 
 
 xanadu (0.5.2)
 
 	* se agrega menulibre y mugshot al instalar apparmor
 	* se agrega soporte para mtp agregando el paquete jmtpfs
-	* se agrega el paquete i7z a la lista varios
 	* se sustituyen algunos los wallpapers (requisito de Debian Derivatives Census)
-	* se agregan los paquetes arandr, hardinfo y usbview a la lista escritorio
-	* se agrega el paquete discover a la lista drivers
+	* se agregan los paquetes arandr, hardinfo, usbview, i7z y discover
 	* se elimina la linea "tmpfs /var/cache/apt/archives tmpfs noatime,nodev 0 0" del fstab y el script variables
 	* se amplia la lista de pruebas
 	* se modifico el fondo del grub y syslinux para eliminar los logos de debian y lxde (requisito de Debian Derivatives Census)
