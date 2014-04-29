@@ -16,4 +16,4 @@ LISTA DE PRUEBAS
 * Comprobar que noautologin funciona correctamente en las tty
 * Comprobar que se detecta todo el hardware
 * Comprobar el escritorio extendido en múltiples monitores
-* Instalar "lynis" para comprobar el nivel de seguridad
+* Ejecutar "lynis" para comprobar el nivel de seguridad

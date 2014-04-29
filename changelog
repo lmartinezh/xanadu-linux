@@ -1,3 +1,9 @@
+xanadu (0.5.4)
+
+	* se modifica la funcion "optimizar" en el script "variables" para aumentar la seguridad
+	* se elimino random-wallpaper en lxde y openbox
+
+
 xanadu (0.5.3)
 
 	* se cambio en los leeme y el navegador la web de github por el nuevo blog

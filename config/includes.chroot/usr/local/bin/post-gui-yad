@@ -9,7 +9,7 @@ else
 	exit 1
 fi
 
-file=$(yad --sticky --fixed --center --width=360 --height=420 --no-click --list --title="Post-instalación" --column=Acciones "Instalar Apparmor" "Instalar KDE" "Instalar GNOME" "Instalar XFCE" "Instalar ENLIGHTENMENT" "Instalar CINNAMON" "Instalar WINE" "Instalar XBMC" "Instalar driver ATI" "Instalar driver NVIDIA" "Instalar kernel LIQUORIX" "Instalar ICEDOVE")
+file=$(yad --sticky --fixed --center --width=360 --height=420 --no-click --list --title="Post-instalación" --column=Acciones "Instalar Recomendados" "Instalar KDE" "Instalar GNOME" "Instalar XFCE" "Instalar ENLIGHTENMENT" "Instalar CINNAMON" "Instalar WINE" "Instalar XBMC" "Instalar driver ATI" "Instalar driver NVIDIA" "Instalar kernel LIQUORIX" "Instalar ICEDOVE")
 
 if [ "$file" = "Instalar KDE|" ]; then
 	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?"; then
@@ -110,7 +110,7 @@ elif [ "$file" = "Instalar ICEDOVE|" ]; then
 	fi	
 	source $0
 
-elif [ "$file" = "Instalar Apparmor|" ]; then
+elif [ "$file" = "Instalar Recomendados|" ]; then
 	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="¿Esta seguro de querer instalar este software?"; then
 		apparmor_1 | progress_2
 		limpiar_1 | progress_limpiar_2

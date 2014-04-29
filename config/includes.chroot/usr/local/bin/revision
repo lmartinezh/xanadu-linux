@@ -4,6 +4,7 @@ if [[ $USER != root ]]; then
 echo "Ejecutar como root"
 exit 1
 fi
+nombre=revision
 kernel=3.13-1-686-pae
 name=xanadu
 var1=$(cat /sys/block/zram0/disksize)
@@ -16,132 +17,128 @@ var7=$(cat /sys/fs/cgroup/cpu/release_agent)
 var8=$(cat /sys/fs/cgroup/cpu/notify_on_release)
 clear
 
-echo -e "## kernel ##""\n"
+echo -e "## kernel ##""\n" > /tmp/$nombre
 if [[ $kernel = 3.13-1-686-pae ]]; then
-	echo "OK"
+	echo "OK" >> /tmp/$nombre
 else
-	echo "FAIL"
+	echo "FAIL" >> /tmp/$nombre
 fi
 
-echo -e "\n""## hostname ##""\n"
+echo -e "\n""## hostname ##""\n" >> /tmp/$nombre
 if [[ $name = xanadu ]]; then
-	echo "OK"
+	echo "OK" >> /tmp/$nombre
 else
-	echo "FAIL"
+	echo "FAIL" >> /tmp/$nombre
 fi
 
-echo -e "\n""## disksize ##""\n"
+echo -e "\n""## disksize ##""\n" >> /tmp/$nombre
 if [[ $var1 = 104857600 ]]; then
-	echo "OK"
+	echo "OK" >> /tmp/$nombre
 else
-	echo "FAIL"
+	echo "FAIL" >> /tmp/$nombre
 fi
 
-echo -e "\n""## thp ##""\n"
-echo $var2
+echo -e "\n""## thp ##""\n" >> /tmp/$nombre
+echo $var2 >> /tmp/$nombre
 
-echo -e "\n""## thp pages_to_scan ##""\n"
+echo -e "\n""## thp pages_to_scan ##""\n" >> /tmp/$nombre
 if [[ $var3 = 20000 ]]; then
-	echo "OK"
+	echo "OK" >> /tmp/$nombre
 else
-	echo "FAIL"
+	echo "FAIL" >> /tmp/$nombre
 fi
 
-echo -e "\n""## ksm run ##""\n"
+echo -e "\n""## ksm run ##""\n" >> /tmp/$nombre
 if [[ $var4 = 1 ]]; then
-	echo "OK"
+	echo "OK" >> /tmp/$nombre
 else
-	echo "FAIL"
+	echo "FAIL" >> /tmp/$nombre
 fi
 
-echo -e "\n""## ksm pages_to_scan ##""\n"
+echo -e "\n""## ksm pages_to_scan ##""\n" >> /tmp/$nombre
 if [[ $var5 = 20000 ]]; then
-	echo "OK"
+	echo "OK" >> /tmp/$nombre
 else
-	echo "FAIL"
+	echo "FAIL" >> /tmp/$nombre
 fi
 
-echo -e "\n""## sleep_millisecs ##""\n"
+echo -e "\n""## sleep_millisecs ##""\n" >> /tmp/$nombre
 if [[ $var6 = 200 ]]; then
-	echo "OK"
+	echo "OK" >> /tmp/$nombre
 else
-	echo "FAIL"
+	echo "FAIL" >> /tmp/$nombre
 fi
 
-echo -e "\n""## release_agent ##""\n"
+echo -e "\n""## release_agent ##""\n" >> /tmp/$nombre
 if [[ $var7 = /usr/local/sbin/cgroup_clean ]]; then
-	echo "OK"
+	echo "OK" >> /tmp/$nombre
 else
-	echo "FAIL"
+	echo "FAIL" >> /tmp/$nombre
 fi
 
-echo -e "\n""## notify_on_release ##""\n"
+echo -e "\n""## notify_on_release ##""\n" >> /tmp/$nombre
 if [[ $var8 = 1 ]]; then
-	echo "OK"
+	echo "OK" >> /tmp/$nombre
 else
-	echo "FAIL"
+	echo "FAIL" >> /tmp/$nombre
 fi
 
-echo -e "\n""## tmpfs ##""\n"
-mount -l -t tmpfs
+echo -e "\n""## tmpfs ##""\n" >> /tmp/$nombre
+mount -l -t tmpfs >> /tmp/$nombre
 
-echo -e "\n""## os-release ##""\n"
-cat /etc/os-release
+echo -e "\n""## os-release ##""\n" >> /tmp/$nombre
+cat /etc/os-release >> /tmp/$nombre
 
-echo -e "\n""## archivo version ##""\n"
-cat /etc/xanadu/version
+echo -e "\n""## archivo version ##""\n" >> /tmp/$nombre
+cat /etc/xanadu/version >> /tmp/$nombre
 
-echo -e "\n""## lista de alias ##""\n"
-echo $(alias 2>&1)
-
-echo -e "\n""## lista de directorios ##""\n"
+echo -e "\n""## lista de directorios ##""\n" >> /tmp/$nombre
 if ! [[ -d /var/cache/polipo ]] ; then
-	echo -e "El directorio /var/cache/polipo NO existe""\n"
+	echo -e "El directorio /var/cache/polipo NO existe""\n" >> /tmp/$nombre
 else
-	echo -e "El directorio /var/cache/polipo existe""\n"
+	echo -e "El directorio /var/cache/polipo existe""\n" >> /tmp/$nombre
 fi
 
 if ! [[ -d /var/lib/tor ]] ; then
-	echo -e "El directorio /var/lib/tor NO existe""\n"
+	echo -e "El directorio /var/lib/tor NO existe""\n" >> /tmp/$nombre
 else
-	echo -e "El directorio /var/lib/tor existe""\n"
+	echo -e "El directorio /var/lib/tor existe""\n" >> /tmp/$nombre
 fi
 
 if ! [[ -d /var/log/tor ]] ; then
-	echo -e "El directorio /var/log/tor NO existe""\n"
+	echo -e "El directorio /var/log/tor NO existe""\n" >> /tmp/$nombre
 else
-	echo -e "El directorio /var/log/tor existe""\n"
+	echo -e "El directorio /var/log/tor existe""\n" >> /tmp/$nombre
 fi
 
 if ! [[ -d /var/log/polipo ]] ; then
-	echo -e "El directorio /var/log/polipo NO existe""\n"
+	echo -e "El directorio /var/log/polipo NO existe""\n" >> /tmp/$nombre
 else
-	echo -e "El directorio /var/log/polipo existe""\n"
+	echo -e "El directorio /var/log/polipo existe""\n" >> /tmp/$nombre
 fi
 
-echo -e "\n""## cpuid ##""\n"
-lsmod | grep cpuid
+echo -e "\n""## cpuid ##""\n" >> /tmp/$nombre
+lsmod | grep cpuid >> /tmp/$nombre
 
-echo -e "\n""## loop ##""\n"
-lsmod | grep loop
+echo -e "\n""## loop ##""\n" >> /tmp/$nombre
+lsmod | grep loop >> /tmp/$nombre
 
-echo -e "\n""## rfkill ##""\n"
-lsmod | grep rfkill
+echo -e "\n""## rfkill ##""\n" >> /tmp/$nombre
+lsmod | grep rfkill >> /tmp/$nombre
 
-echo -e "\n""## microcode ##""\n"
-dmesg | grep microcode
+echo -e "\n""## microcode ##""\n" >> /tmp/$nombre
+dmesg | grep microcode >> /tmp/$nombre
 
-echo -e "\n""## conexion ##""\n"
-ping -c 3 yahoo.com
+echo -e "\n""## conexion ##""\n" >> /tmp/$nombre
+ping -c 3 yahoo.com >> /tmp/$nombre
 
-echo -e "\n""## apt update ##""\n"
 apt -q update
+apt -q -y install mesa-utils lynis
+apt-get clean
 
-echo -e "\n""## install mesa-utis ##""\n"
-apt -q -y install mesa-utils
+echo -e "\n""## 3D ##""\n" >> /tmp/$nombre
+glxinfo | grep direct >> /tmp/$nombre
 
-echo -e "\n""## 3D ##""\n"
-glxinfo | grep direct
-
-echo "finalizado..."
+clear
+echo -e "\n""El reporte se ha generado en /tmp/$nombre"
 exit 0 

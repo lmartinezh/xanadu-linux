@@ -26,9 +26,10 @@ function seguridad_1 ()
 	modprobe -f iptable_nat
 	modprobe -f ipt_physdev
 	modprobe -f act_police
-	systemctl start shorewall
-	systemctl start fail2ban
-	systemctl start psad
+	systemctl enable ntp
+	systemctl enable shorewall
+	systemctl enable fail2ban
+	systemctl enable psad
 }
 
 function antivirus_1 ()
@@ -111,6 +112,7 @@ function optimizacion_1 ()
 		fi
 		rm -f /etc/apt/preferences.d/exclude.pref
 		rm -f /etc/apt/preferences		
+		rm -f /etc/inittab
 		# rm -f /home/*/Escritorio/instalar-xanadu.desktop
 		# rm -f /home/*/Escritorio/post-instalador.desktop
 		swapoff /swapfile
@@ -128,6 +130,10 @@ function optimizacion_1 ()
 		echo "spindown_time = 18" >> /etc/hdparm.conf
 		echo "}" >> /etc/hdparm.conf
 		echo "user ALL=(ALL) ALL" > /etc/sudoers.d/live
+		chmod 600 /etc/sudoers
+		echo "umask 027" >> /etc/profile
+		sed -i 's_umask 022_umask 027_g' /etc/init.d/rc
+		sed -i 's_umask 022_umask 027_g' /etc/login.defs
 		echo "auth required pam_succeed_if.so user != root quiet" >> /etc/pam.d/lightdm
 		echo "proc /proc proc defaults,hidepid=2 0 0" >> /etc/fstab
 		echo "tmpfs /tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab
@@ -204,8 +210,7 @@ function icedove_1 ()
 
 function apparmor_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install apparmor-profiles tripwire menulibre mugshot
-	# tripwire -m i
+	apt-get -q update && apt-get -q -y --force-yes install apparmor-profiles menulibre mugshot ecryptfs-utils auditd passwdqc dnsutils
 }
 
 function limpiar_1 ()

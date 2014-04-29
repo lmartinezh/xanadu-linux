@@ -8,6 +8,4 @@ else
 	mkdir -p /home/user/.config/xarchiver/
 	cp /usr/local/bin/xarchiverrc /home/user/.config/xarchiver/xarchiverrc
 fi
-sleep 1s
-pcmanfm -w "$(find /usr/share/images/desktop-base/random -type f | shuf -n1)"
 exit 0
