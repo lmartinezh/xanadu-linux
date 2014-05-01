@@ -19,7 +19,5 @@ cryptsetup
 memlockd
 grub-pc
 ulatency
-fuseiso
-pmount
 hwinfo
 usbutils
