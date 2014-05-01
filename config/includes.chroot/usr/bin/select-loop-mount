@@ -1,0 +1,184 @@
+#!/usr/bin/env bash
+# 2014-02-21
+TITLE="select_loop_mount"
+
+if [[ $1 = "--debug" ]] ; then
+	set -x
+fi
+
+username=$(cat /tmp/r2u_user)
+error_log="/home/${username}/.refracta2usb/mount_loop.log"
+touch "$error_log"
+chown ${username}:${username} "$error_log"
+exec 2>"$error_log"
+
+source /usr/lib/refracta2usb/functions_r2u
+yad_zenity_compat
+
+
+
+
+device=$(cat /tmp/r2u_device)
+
+
+selection=$(find /dev -mindepth 1 -maxdepth 1  -name "*[sh]d[a-z][1-9]" \
+	| grep $device | sort | awk '{print "\n" $0 }' \
+	| $DIALOG --list --title="Persistent Partition" --text="Select the partition that holds the loopback file." \
+	--multiple --column ' ' --column 'Partitions' --height=380 --width=150  ${RADIOLIST} \
+	--${BUTTON0}="OK"${BUTTON0NUM} --${BUTTON1}="Quit Task"${BUTTON1NUM})
+		if [[ $? = 1 ]] ; then
+			exit 0
+		fi
+
+echo "selection is $selection"
+selected_partition=$(echo $selection | tr -d \|)
+selected_partition_mountpoint="/tmp/${selected_partition##*/}"  # See line 86, select-loop-unmount
+echo "selected_partition is $selected_partition"
+
+if [[ -z "$selected_partition" ]] ; then
+	warning_message="No device was selected."
+	warning_dialog
+	exit 1
+fi
+
+if ! [[ -b "$selected_partition" ]] ; then
+	warning_message="$selected_partition is not a block device."
+	warning_dialog
+	exit 1
+fi
+
+
+# Check to see if we're running a live session
+# Set loopdir so that file-selection opens in the correct directory
+# to select the loopfile.
+if [[ -d /lib/live/mount/rootfs ]] ; then
+	live_session="yes"
+fi
+
+if [[ $live_session = "yes" ]] ; then
+	if $(df | grep -q "$selected_partition" | grep -q "/lib/live/mount/rootfs") ; then
+		loopdir="/lib/live/mount/rootfs/"
+	else
+		loopdir="$selected_partition_mountpoint"
+		if ! $(grep -q "$selected_partition" /proc/mounts) ; then
+			if ! [[ -d "$selected_partition_mountpoint" ]] ; then
+				mkdir "$selected_partition_mountpoint"
+			fi
+			mount "$selected_partition" "$selected_partition_mountpoint"
+		fi
+	fi
+else
+	loopdir="$selected_partition_mountpoint"
+	if ! $(grep -q "$selected_partition" /proc/mounts) ; then
+		if ! [[ -d "$selected_partition_mountpoint" ]] ; then
+			mkdir "$selected_partition_mountpoint"
+		fi
+		mount "$selected_partition" "$selected_partition_mountpoint"
+	fi
+fi
+echo "loopdir is $loopdir"
+
+loopfile=$($DIALOG --file-selection --height=550 --width=650 --title="$TITLE" \
+	--text="\n Select the loopback file you want to mount. \n" --filename="${loopdir}/*" \
+	${OKBUTTON} ${QUITBUTTON})
+	if [[ $? = 1 ]] ; then
+		if $(grep -q "$selected_parition" /proc/mounts) ; then
+			umount "$selected_partition"
+			rmdir "$selected_partition_mountpoint"
+		fi
+		exit 0
+	fi
+
+if ! $(file "$loopfile" | grep -q "filesystem data") ; then
+   if ! $(file "$loopfile" | grep -q "LUKS") ; then
+      warning_message="That does not look like a loopback file. Try again."
+      warning_dialog
+      umount -l "$selected_partition"
+      exit 1
+   fi
+fi
+
+LOOP_FILENAME="${loopfile##*/}"
+echo "LOOP_FILENAME is $LOOP_FILENAME"
+
+losetup -f > /tmp/nextloop ; check_exit
+LOOPDEV=$(cat /tmp/nextloop)
+echo "$LOOPDEV" > /tmp/loopdev."$LOOP_FILENAME"
+
+losetup ${LOOPDEV} "$loopfile"
+
+
+	
+open_luks () {
+	exec 2>/dev/null
+	setpass=$($DIALOG --form --field "Passphrase:H" --title "Open Encrypted Volume" \
+	--text="\n Enter the passphrase for the encrypted volume. \n" --image="dialog-password" --button=OK:0 --button=Cancel:1)
+	if [[ $? = 1 ]] ; then
+		cleanup1
+		exit 0
+	fi
+	passphr=$(echo $setpass | sed 's/|//')
+	if [[ -z $passphr ]] ; then
+		try_again
+		return
+	else
+		echo "$passphr" | cryptsetup luksOpen ${LOOPDEV} ${LOOP_FILENAME}
+	fi
+	exec 2>>"$error_log"
+	
+	LOOP_FS="/dev/mapper/$LOOP_FILENAME"
+	CLOSE_LOOPDEV="cryptsetup luksClose $LOOP_FILENAME && losetup -d $LOOPDEV"
+}
+
+
+try_again () {
+yad --image="gtk-dialog-warning" --title "Error" --button="Try Again":0 --button="Quit Task":1 \
+--text "\n You did not enter a passphrase. Try Again or Quit Task? \n"
+if [[ $? = 0 ]] ; then
+	open_luks
+else
+	cleanup1
+	exit 0
+fi
+}
+
+
+if $(blkid -c /dev/null ${LOOPDEV} | grep -q crypto_LUKS) ; then
+	open_luks
+else
+	LOOP_FS="$LOOPDEV"
+	CLOSE_LOOPDEV="losetup -d $LOOPDEV"
+fi
+
+LOOP_MOUNTPOINT="/tmp/${LOOP_FILENAME}"
+
+
+# These tests need improvement. Maybe give a choice to create new mountpoint.
+# If exit, need to run losetup -d ${LOOPDEV} and maybe cryptsetup luksClose
+mkdir ${LOOP_MOUNTPOINT} || echo "Mountpoint exists"
+
+DIR_FILES=$(ls ${LOOP_MOUNTPOINT}|wc -l)
+if [ "$DIR_FILES" -ne "0" ]; then
+	echo "Error: Mountpoint ${LOOP_MOUNTPOINT} is not empty" 
+	warning_message="Mountpoint ${LOOP_MOUNTPOINT} is not empty.\n ${LOOP_FILENAME} will not be mounted."
+	warning_dialog
+	cleanup1
+	exit 1
+fi
+
+mount ${LOOP_FS} ${LOOP_MOUNTPOINT} ; check_exit
+echo "$selected_partition" > /tmp/selected_partition.${LOOP_FILENAME}
+finished_message="${LOOP_FILENAME} is now mounted at ${LOOP_MOUNTPOINT}  "
+finished_dialog
+
+if [[ -f /tmp/nextloop ]] ; then
+	rm -f /tmp/nextloop
+fi
+
+
+# Open the loop mountpoint in a non-root file manager.
+find_file_manager
+su -c "${file_manager} ${LOOP_MOUNTPOINT}" "$username"
+
+
+exit 0

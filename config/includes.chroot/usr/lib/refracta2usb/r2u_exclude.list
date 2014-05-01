@@ -1,0 +1,41 @@
+# refracta2usb 0.7
+
+
+- *.Trash*
+- *.local/share/Trash/*
+- *.mozilla/*/Cache/*
+- *.mozilla/*/urlclassifier3.sqlite
+- *.adobe
+- *.aptitude
+- *.bash_history
+- *.cache
+- *.dbus
+- *.gksu*
+- *.gvfs
+- *.macromedia
+- *.nano_history
+- *.pulse*
+- *.recently-used
+- *.recently-used.xbel
+- *.local/share/recently-used.xbel
+- *.thumbnails/large/*
+- *.thumbnails/normal/*
+- *.xsession-errors*
+- *.ICEauthority
+- *.Xauthority
+
+
+
+# You might want to comment these out to keep them for your own
+# personal use if you have authorization keys or known hosts.
+- *.gnupg
+- *.ssh
+
+# Examples of things to exclude in order to keep the image small:
+#- *Music/*
+#- *Videos/*
+
+
+# To exclude all hidden files and directories in your home, uncomment
+# the next line. You will lose custom desktop configs if you do.
+#- *.[a-z,A-Z,0-9]*

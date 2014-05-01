@@ -1,0 +1,79 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          lukshome
+# Required-Start:    checkroot
+# Required-Stop:     umountroot
+# Should-Start:      udev devfsd
+# Should-Stop:       udev devfsd
+# X-Start-Before:    cryptdisks
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# X-Interactive: true
+# Short-Description: Setup early encrypted block devices.
+# Description:
+### END INIT INFO
+
+# in cmdline must be (example uuid used):
+# lukshome=UUID="ade5a403-05e2-4a02-9724-46efe69b3b74"
+# or
+# lukshome=UUID=ade5a403-05e2-4a02-9724-46efe69b3b74
+# or
+# lukshome=ade5a403-05e2-4a02-9724-46efe69b3b74
+# or
+# lukshome=/dev/sdb2
+
+case "$1" in
+start)
+   # if 'lukshome=whatever' is not in cmdline, do nothing and exit
+   USELUKSHOME=$(cat /proc/cmdline|grep -o " lukshome=")
+   if [ -z "$USELUKSHOME" ]; then
+   echo " LUKS home setup is not activated"
+   exit 0
+   fi
+
+# get what was acually entered 'lukshome=whatever' without quotes nor UUID= nor lukshome=
+LUKS_HOME_ENTRY=$(cat /proc/cmdline|grep -o "lukshome.*"|sed 's/lukshome=//'|sed 's/UUID=//'|sed 's/ .*//'|sed 's/\"//'g)
+# if it was uuid, translate that into /dev/sdx
+LUKS_HOME_DEV=$(blkid|grep "$LUKS_HOME_ENTRY"|awk -F ":" '{print $1}')
+
+   # check it is actually luks, if not exit now
+   ISLUKS=$(blkid|grep "$LUKS_HOME_ENTRY"|grep -o "crypto_LUKS")
+   if [ -z $ISLUKS ] ; then
+   echo "$LUKS_HOME_DEV is not LUKS"
+   exit 0
+   fi
+	  # check if persist is active, exit now if so
+	  # wheezy/sid uses "persistence" squeeze uses "persistent"
+	  # <grep -o " persist"> (note the space) rules out " nopersistent" but gets " persistent" or " persistence"
+
+	  PERSIST_IS_ON=$(cat /proc/cmdline|grep -o " persist")
+	  if [ -n "$PERSIST_IS_ON" ] ; then
+	  echo " This LUKS home setup cannot be used with persistence"
+	  exit 0
+	  fi
+		 # check it exists?
+		 if [ -n $LUKS_HOME_DEV ]; then
+
+		 # open it (forces prompt for luks passphrase)
+		 cryptsetup luksOpen $LUKS_HOME_DEV home
+		 # rename original /home (current live session only, the iso/squash is RO)
+		 mv /home /home_original
+		 # make a new /home, to use as a mountpoint)
+		 mkdir /home
+		 # mount encrypted home there
+		 mount /dev/mapper/home /home
+
+			# check for mount failure (e.g. because wrong passphrase), if so revert to /home_original
+			NEWHOME_IS_MOUNTED=$(blkid|grep /dev/mapper/home)
+			sleep 1
+			if [ -z $NEWHOME_IS_MOUNTED ]; then
+			umount /home
+			rmdir /home
+			mv /home_original /home
+			fi
+		 else
+		 echo " Error... Luks home partition $LUKS_HOME_DEV not detected (or specified incorrectly) "
+		 fi
+;;
+esac
+exit 0

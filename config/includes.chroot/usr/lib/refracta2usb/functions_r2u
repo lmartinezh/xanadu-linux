@@ -1,0 +1,332 @@
+#!/usr/bin/env bash
+# 2014-02-20
+# common functions:
+# refracta2usb, mkpersist, patch-initrd-gui, mkloopback, select-loop-mount
+
+
+
+cleanup () {
+	
+	if [[ -f /tmp/r2u_device ]] ; then
+		rm -f /tmp/r2u_device
+	fi
+	
+	if [[ -f /tmp/persistence_label ]] ; then
+		rm -f /tmp/persistence_label
+	fi	
+
+	if [[ -f /tmp/boot_menu_text ]] ; then
+		rm -f /tmp/boot_menu_text
+	fi	
+
+	if [[ -f /tmp/r2u_user ]] ; then
+		rm -f /tmp/r2u_user
+	fi
+
+	if [[ -n "$device" ]] && $(grep -q ${device}1 /proc/mounts) ; then
+		pumount ${device}1
+	fi
+}
+
+
+cleanup1 () {
+
+	if [[ -n "$LOOP_FS" ]] && $(grep -q "$LOOP_FS" /proc/mounts) ; then
+		umount "$LOOP_FS"
+	fi
+
+	${CLOSE_LOOPDEV}
+	
+	unset LOOP_FS
+
+	if [[ -f /tmp/nextloop ]] ; then
+		rm -f /tmp/nextloop
+	fi
+
+	if [[ -d /tmp/loopmount ]] ; then
+		error_message="rmdir failed on /tmp/loopmount."
+		rmdir /tmp/loopmount ; check_exit
+	fi
+
+	if [[ -f /tmp/loopdev."$LOOP_FILENAME" ]] ; then
+		rm -f /tmp/loopdev."$LOOP_FILENAME"
+	fi
+			
+	if [[ -n "$selected_partition_mountpoint" ]] && $(grep -q "$selected_partition_mountpoint" /proc/mounts) ; then
+		umount -l "$selected_partition_mountpoint" 
+		rmdir "$selected_partition_mountpoint"
+	fi
+	
+}
+
+
+check_exit () {
+exit_code="$?"
+if [[ $exit_code -ne 0 ]] ; then
+   $DIALOG --question --title="$TITLE error" --window-icon=error  \
+	--${BUTTON0}="Continue"${BUTTON0NUM} --${BUTTON1}="Exit"${BUTTON1NUM} \
+	--text="Error detected: $exit_code  $error_message
+\nSee $error_log for details. Press \"Continue\" to proceed anyway"
+
+   if [[ $? -ne 0 ]] ; then
+   cleanup
+   exit 1
+   fi
+fi
+}
+
+
+finished_dialog () {
+
+	$DIALOG --$INFO --title="$TITLE" --text="$finished_message" --width 240 \
+		--${BUTTON0}="OK"${BUTTON0NUM}
+}
+
+
+warning_dialog () {
+	$DIALOG --$WARNING --title="$TITLE" --text="$warning_message" \
+		--${BUTTON0}="OK"${BUTTON0NUM}
+}
+
+
+
+yad_zenity_compat () {
+# if yad is installed, use in preference
+if [[ -f /usr/bin/yad ]]; then
+	yadversion=$(yad --version | cut -d. -f2)
+	if (( $yadversion >= 17 )); then
+			
+	DIALOG="yad"
+	INFO="image=gtk-dialog-info"
+	QUESTION="image=gtk-dialog-question"
+	WARNING="image=gtk-dialog-warning"
+	ERROR="image=gtk-dialog-error"
+	RADIOLIST=""
+	
+	#buttons
+	BUTTON0="button"
+	BUTTON1="button"
+	BUTTON0NUM=":0"
+	BUTTON1NUM=":1"
+	# Use these for file-selection window.
+	OKBUTTON="--button=OK:0"
+	QUITBUTTON="--button=Quit:1"
+	EXITBUTTON="--button=Exit:1"
+	
+	fi
+#cancel button always returns 1 as $?
+#ok button always returns 0 as $?
+#ok is default (highlighted)
+#buttons in yad dialog window may show reversed from zenity window, e.g.
+#yad: ok -- cancel (0 -- 1)
+#zenity: cancel -- ok (1 -- 0)
+
+elif [[ -f /usr/bin/zenity ]]; then
+
+	# use zenity
+	
+	DIALOG="zenity"
+	INFO="info"
+	QUESTION="question"
+	WARNING="warning"
+	ERROR="error"
+	# zenity requires --radiolist on lists to show selected partition.
+	RADIOLIST="--radiolist"
+	
+	#buttons
+	BUTTON0="ok-label"
+	BUTTON1="cancel-label"
+	BUTTON0NUM=""
+	BUTTON1NUM=""
+	# Zenity doesn't support custom buttons in file-selection window.
+	OKBUTTON=""
+	QUITBUTTON=""
+	EXITBUTTON=""
+
+else
+
+	xterm -fa monaco -fs 12 -hold -e echo "
+  Neither Yad nor Zenity is installed, or the version of Yad is too old.
+  $yad_zen_message"
+    nogui="nogui"
+fi
+}
+
+
+# Default settings
+# These setting will be overridden by choices made in the Options
+# window, including the Cancel button, which will restore defaults
+# from the setup_options function, around line 580.
+refracta2usb_settings () {
+if [[ $0 =~ "refracta2usb" ]] ; then
+	add_hooks="FALSE"
+	save_hooks="TRUE"
+	save_boot="TRUE"
+	save_syslinux="FALSE"
+	copy_syslinux="FALSE"
+	write_to_mbr="FALSE"
+fi
+}
+
+
+loopfile_settings () {
+if [[ $0 =~ mkloopback ]] ; then
+  home_rw="TRUE"
+  live_rw="FALSE"
+  edit_conf="FALSE"
+  luks_enc="FALSE"
+  first_part="FALSE"
+  size1="FALSE"
+  size2="TRUE"
+  size3="FALSE"
+  size4="FALSE"
+  fstype1="FALSE"
+  fstype2="FALSE"
+  fstype3="TRUE"
+  loop_defaults="FALSE"
+fi
+loop_options
+}
+
+
+# Show free space on usb device and size of filesystem to copy to it.
+# (Used by refracta2usb and mkloopback.)
+check_size () {
+
+device_freespace=$(df -h $target_device)
+
+
+TEXT="Make sure you have enough space on the device to hold the image.
+
+Device size:
+
+$device_freespace
+$update_size_message
+
+Image size:\t$image_size
+
+$target_message
+"
+
+
+$DIALOG --$QUESTION --width=680 --height=220 --title="$TITLE" --${BUTTON0}="Continue"${BUTTON0NUM} --${BUTTON1}="Exit"${BUTTON1NUM} --text="$TEXT"
+
+	if [[ $? != 0 ]] ; then
+######  This needs to be cleaned up. ############# See line 257? of mkloopback.
+		echo " Exiting at check_size"
+		pumount ${device}1
+		if [[ -d $image_mountpoint ]] ; then
+			fusermount -u "$image_mountpoint"
+		fi		
+		return 3
+	fi
+}
+
+
+
+find_editor () {
+	if [[ -n "$other_editor" ]] ; then
+		editor="$other_editor"
+		editor_option="$other_editor_option"	
+	elif  [[ -e /usr/bin/geany ]] ; then
+		editor="/usr/bin/geany"
+		editor_option="-i"	
+	elif  [[ -e /usr/bin/gedit ]] ; then
+		editor="/usr/bin/gedit"
+		editor_option=""
+	elif  [[ -e /usr/bin/kate ]] ; then
+		gui_editor="/usr/bin/kate"
+		editor_option=""
+	elif  [[ -e /usr/bin/kwrite ]] ; then
+		editor="/usr/bin/kwrite"
+		editor_option=""
+	elif  [[ -e /usr/bin/leafpad ]] ; then
+		editor="/usr/bin/leafpad"
+		editor_option="--sync"
+	elif  [[ -e /usr/bin/medit ]] ; then
+		editor="/usr/bin/medit"
+		editor_option="-n"
+	elif  [[ -e /usr/bin/mousepad ]] ; then
+		editor="/usr/bin/mousepad"	
+	else
+		echo " No suitable editor found.
+ You must set the other_editor variable in $configfile
+ 
+ Exiting..."
+		exit 0
+	fi
+}
+
+
+find_file_manager () {
+if [[ -n "$other_file_manager" ]] ; then
+	file_manager="$other_file_manager"
+elif [[ $(type -p exo-open) ]] ; then
+	file_manager="$(type -p exo-open)"
+elif [[ $(type -p rox-filer) ]] ; then
+	file_manager="$(type -p rox-filer)"
+elif [[ $(type -p pcmanfm) ]] ; then
+	file_manager="$(type -p pcmanfm)"
+elif [[ $(type -p Thunar) ]] ; then
+	file_manager="$(type -p Thunar)"
+elif [[ $(type -p nautilus) ]] ; then
+	file_manager="$(type -p nautilus)"
+elif [[ $(type -p dolphin) ]] ; then
+	file_manager="$(type -p dolphin)"
+elif [[ $(type -p konqueror) ]] ; then
+	file_manager="$(type -p konqueror)"
+else
+	echo " No suitable file manager found.
+ You must set the other_file_manager variable in $configfile
+ "
+fi
+}
+
+
+select_kernel () {
+		kernel_image=$($DIALOG --file-selection --width=640 --height=640 \
+		--title="Select kernel image" --text="\n Select the kernel image file. (default: /live/vmlinuz) \n" \
+		--filename="${image_source_dir}/*" ${OKBUTTON} ${QUITBUTTON})
+			if [[ $? = 1 ]] ; then
+				fusermount -u "$image_mountpoint"
+				cleanup
+				run_task
+			fi
+
+	if [[ -z "$kernel_image" ]]; then
+#		fusermount -u "$image_mountpoint"  # need to add this to cleanup or somewhere else
+		warning_message="You did not select a kernel image file.  
+If you continue, your boot menu entry 
+will need to be edited manually.  "
+		warning_dialog
+	fi
+
+# $image_source_dir is $usb_mountpoint for patch-initrd and mkloopback. 
+# ${usb_mountpoint}/${target_name}	 for setup_multiboot,
+# and $image_mountpoint for setup_findiso.
+	kernel_name="${kernel_image##*/}"
+	kernel_path="${kernel_image%/*}"
+	local_path="$(echo "$kernel_path" | sed "s:$image_source_dir::")"
+}
+
+
+select_initrd () {	
+	initrd_image=$($DIALOG --file-selection --width=640 --height=640 \
+		--title="Select initrd image" --text="\n Select the initrd image file. (default: /live/initrd.img) \n" \
+		--filename="${image_source_dir}/*" ${OKBUTTON} ${QUITBUTTON})
+			if [[ $? = 1 ]] ; then
+				fusermount -u "$image_mountpoint"
+				cleanup
+				run_task
+			fi
+
+	if [[ -z "$initrd_image" ]]; then # Maybe this test should be moved to each task. Then message will be relevant.
+#		fusermount -u "$image_mountpoint"  # need to add this to cleanup or somewhere else
+		warning_message="You did not select an initrd image file.  
+If you continue, your boot menu entry 
+will need to be edited manually.  "
+		warning_dialog
+	fi
+
+	initrd_name="${initrd_image##*/}"
+}

@@ -1,0 +1,1347 @@
+#!/usr/bin/env bash
+version="refracta2usb 0.9.5 2014-02-21"
+#
+# This script runs in several different modes:
+# - Creates a live-USB from a live-CD image
+# - Creates a live-USB from a running live-CD or live-USB session.
+# - Replaces the live image on a usb stick with a different one from a
+# live-CD .iso file.
+# - Runs the partition editor on the selected device.
+# - Allows user to set some options.
+# - Installs syslinux to partition and optionally to mbr.
+# - Associated scripts for advanced functions:
+# - 	mkusbcrypt - encrypted, persistent home using custom hooks.
+# - 	mkpersist - copies persistence.conf to second partition.
+# -		patch-initrd - allows rw media and encrypted persistence.
+# -		mkloopback - creates loopback files.
+# -		mount/unmount existing loopback files.
+# -		install-alt-bootloader - install-mbr
+# - Allows use of additional iso images for multi-boot usb.
+# - Allows use of intact iso images with findiso boot option.
+
+# Copied from snapshot2usb, David Hare (dzz) June 2011 davidhare77@yahoo.co.uk
+# adapted for Refracta by fsmithred	February 2013 fsmithred@gmail.com
+# Various portions copyright 2011-2014 David Hare or 2011-2014 fsmithred or both
+# License: GPL-3
+TITLE="refracta2usb"
+
+[[ -d "$HOME"/.refracta2usb ]] || mkdir ${HOME}/.refracta2usb
+error_log="${HOME}/.refracta2usb/refracta2usb.log"
+exec 2>"$error_log"
+
+configfile="/etc/refracta2usb.conf"
+source "$configfile"
+source /usr/lib/refracta2usb/functions_r2u
+yad_zenity_compat
+refracta2usb_settings
+
+
+show_help () {
+	printf "$help_text"
+	exit 0
+}
+
+help_text="
+	Usage:  $0  [option]
+	
+	valid options:
+		-h, --help		show this help text
+		-v, --version	display the version information
+		-d. --debug		debug mode
+		
+"
+
+while [[ $1 == -* ]]; do
+	case "$1" in
+	
+		-h|--help)
+			show_help ;;
+		
+		-v|--version)
+			printf "\n$version\n\n" 
+			exit 0 ;;
+			
+		-d|--debug)
+			DEBUG="yes"
+			debug="--debug"
+			break ;;
+		
+		*) 
+			printf "\t invalid option: $1 \n\n"
+			printf "\t Try:  $0 -h for full help. \n\n"
+			exit 1 ;;
+    esac
+done
+
+
+if [[ $DEBUG = "yes" ]] ; then
+	set -x
+fi
+
+# Exit if this is not running in an xsession.
+if ! [[ $DISPLAY ]] ; then
+	echo "This program needs to run from within an xsession."
+	exit 1
+fi
+
+
+# Clear tempfile from previous run
+if [[ -f /tmp/r2u_device ]] ; then
+	rm /tmp/r2u_device
+fi
+
+# Check if we're running a live session. This only gets used in edit_menu now.
+if [[ -d /lib/live/mount/rootfs ]] ; then
+	live_session="yes"
+fi
+
+
+exit_dialog () {
+
+   $DIALOG --question --title="$TITLE error" --window-icon=error  \
+	--${BUTTON0}="Continue"${BUTTON0NUM} --${BUTTON1}="Exit"${BUTTON1NUM} \
+	--text="Error detected:  $exit_message
+\nSee $error_log for details. Press \"Continue\" to proceed anyway"
+
+	if [[ $? -eq 0 ]] ; then
+		cleanup
+		run_task
+	else
+		cleanup
+		exit 1
+	fi
+}
+
+
+# this script must be called from a terminal 
+if ! [ -t 0 ]; then
+echo " Not a terminal"
+$DIALOG --$ERROR --width=400 --height=100 --title="$TITLE" --text="Please run $TITLE from a terminal" 	--${BUTTON0}="OK"${BUTTON0NUM}
+exit 1
+fi
+
+# root should NOT run this script
+if [[ $(id -u) -eq 0 ]]; then
+$DIALOG --$ERROR --width=400 --height=160 --title="$TITLE" --text="$TITLE must be run by normal user, not root" 	--${BUTTON0}="OK"${BUTTON0NUM}
+exit 1
+fi
+
+# user must be member of plugdev group
+if ! [[ $(groups) =~ plugdev ]] ; then
+	plugdev_message="\n   WARNING:\tYou must be a member of the plugdev group to use this program. \n\t\t\tTalk to your system administrator. "
+fi
+
+
+select_device_gui () {
+
+usbdevlist=$(/usr/sbin/hwinfo --usb --short|grep "/dev/sd"|awk '{print $1}')
+usbdevfulllist=$(/usr/sbin/hwinfo --usb --short|grep "/dev/sd"|awk '{print $0}')
+
+if [[ -z "$usbdevfulllist" ]] ; then
+	no_device_message="\n   ###  WARNING: No usb device was detected. Plug it in and Rescan.  ###  "
+	run_task
+fi
+
+echo -e "\n\tLIST OF USB DEVICES\n\n$usbdevfulllist\n"
+device=$($DIALOG --width=400 --height=200 --title="$TITLE" --list --separator="" --column="" --text=$"Detected USB devices:\n\n$usbdevfulllist\n\nPlease select the correct one to use" $usbdevlist \
+	--${BUTTON0}="OK"${BUTTON0NUM} --${BUTTON1}="Exit"${BUTTON1NUM})
+		
+		if [[ $? = 1 ]] ; then
+			exit 0
+		fi
+
+		if [[ -z $device ]] ; then
+			no_device_message="\n  You did not select a usb device. Rescan to select one."
+			warning_message="\n  You did not select a usb device. Rescan to select one."
+			warning_dialog
+		elif ! [[ -b $device ]] ; then 
+			echo "Device $device is not a block device!"
+			no_device_message="\n  You did not select a usb device; rescan to select one."
+			exit_message="Device $device is not a block device."
+			exit_dialog
+		else
+			echo "$device" > /tmp/r2u_device
+		fi
+}
+
+
+check_device () {
+
+#check if is mounted
+if [ "$device" = "" ]; then
+	exit_message="\n No device was selected"
+	exit_dialog
+fi
+
+MOUNTED=$(grep "${device}" /proc/mounts |awk '{print $1}')
+echo "$MOUNTED"
+
+if  [[ -n "$MOUNTED" ]]; then
+	echo "$MOUNTED is mounted"
+	exit_message="\nDevice ${device}1 appears to be mounted."
+	exit_dialog
+fi
+
+# Check that first partition exists (blkid still shows result after zeroing device)
+if ! $(/sbin/fdisk -l | grep -q "${device}1") ; then
+	echo "${device}1 does not exist."
+	exit_message="\nDevice ${device}1 does not exist.
+Maybe you need to format it?"
+	exit_dialog
+fi
+
+#check if part1 is vfat
+ISFAT=$(/sbin/blkid|grep "${device}1"|grep -i fat|grep -o "/dev/sd[a-z][0-9]")
+
+echo $ISFAT
+
+if [ "$ISFAT" = "" ]; then
+	exit_message="Cannot continue!\n\n${device}1 must be FAT formatted."
+	exit_dialog
+fi
+
+}
+
+
+# Rename isolinux to syslinux
+isolinux2syslinux () {
+
+if [[ -d $usb_mountpoint/${target_dir}syslinux ]] ; then
+	mv $usb_mountpoint/${target_dir}syslinux $usb_mountpoint/${target_dir}syslinux-$(date +%m%d%H%M)
+fi
+	echo " Converting isolinux to syslinux..."
+	chmod -R u+w "$usb_mountpoint"/${target_dir}isolinux
+	mv $usb_mountpoint/${target_dir}isolinux $usb_mountpoint/${target_dir}syslinux
+	# no need to rename isolinux.bin.. syslinux doesn't use it
+	mv $usb_mountpoint/${target_dir}syslinux/isolinux.cfg $usb_mountpoint/${target_dir}syslinux/syslinux.cfg
+
+	for i in $usb_mountpoint/${target_dir}syslinux/*.cfg ; do
+		sed -i "s:isolinux:syslinux:"g "$i"
+	done
+}
+
+# Copy system from a mounted iso
+copy_iso () {
+	
+	isofile=$($DIALOG --file-selection --file-filter="*.[iI][sS][oO]" --file-filter="*" \
+	--width=640 --height=640 --title=$"Select Live ISO" --text="Select the CD image file." \
+	--filename="" ${OKBUTTON} ${QUITBUTTON})
+		if [[ $? = 1 ]] ; then
+			cleanup
+			run_task
+		fi
+
+	if [[ -z "$isofile" ]]; then
+		exit_message="\nYou did not select a CD image file."
+		exit_dialog
+	fi
+
+	if ! $(echo $isofile | grep -q .[Ii][Ss][Oo]$); then
+		exit_message="\nYou did not select a CD image file.."
+		exit_dialog
+	fi
+
+	fuseiso -p "$isofile" "$image_mountpoint"
+	image_size=$(du -h "$isofile" )
+	target_device="$usb_mountpoint"
+	check_size
+	if [[ $? = 3 ]] ; then
+		cleanup1
+		cleanup
+		exit 0
+	fi
+
+	rsync -avh --progress "$image_mountpoint"/ "$usb_mountpoint"/${target_dir}
+	if [[ $copy_syslinux = "TRUE" ]] ; then
+		if [[ -e "$usb_mountpoint"/${target_dir}isolinux ]] ; then
+			mv "$usb_mountpoint"/${target_dir}isolinux "$usb_mountpoint"/${target_dir}isolinux-$(date +%m%d%H%M)
+		fi
+			rsync -av /usr/lib/refracta2usb/syslinux "$usb_mountpoint"
+	else
+		isolinux2syslinux
+	fi
+
+	if [[ $add_hooks = "TRUE" ]] ; then
+		echo " Adding Refracta custom hooks..."	
+		rsync -av /usr/lib/refracta2usb/hooks "$usb_mountpoint"/${target_dir}live/
+	fi
+	sleep 2
+	fusermount -u "$image_mountpoint"
+	finished_message="ISO image copied."
+	finished_dialog
+}
+
+
+# Copy system from the running live system
+# If system is running from a custom live-media-path, copy from there.
+copy_livemount () {
+	
+	if [[ $copy_syslinux = "TRUE" ]] && [[ $save_syslinux = "TRUE" ]] ; then
+		conflict_warning
+		return
+	fi
+
+	if [[ $save_syslinux = "TRUE" ]] ; then
+		if ! [[ -e "$usb_mountpoint"/syslinux ]] ; then
+			warning_message="Options are set to save the existing syslinux folder, but there is none. 
+Check the Setup Options and un-check Preserve existing syslinux to use the one from 
+the currently running system."
+			warning_dialog
+			setup_options
+			return
+		fi
+	fi
+
+	live_dir=$(grep -o "live-media-path=.*" /proc/cmdline |sed 's: .*::' |sed 's:live-media-path=/::' |sed 's:/live::')
+	if [[ -z "$live_dir" ]] ; then
+		live_dir="live"
+	fi
+
+	# Don't overwrite an existing /live folder without warning.
+#	if [[ $live_dir = "live" ]] ; then
+		if [[ -e "$usb_mountpoint"/"$live_dir" ]] ; then
+			$DIALOG --$WARNING --title="$TITLE"	--text="A $live_dir folder already exists on the target usb drive. If you Proceed, it will be replaced 
+with the one from the currently running system. If you don't want that, then exit." \
+			--${BUTTON0}="Continue"${BUTTON0NUM} --${BUTTON1}="Exit"${BUTTON1NUM}
+				if [[ $? = 1 ]] ; then
+					cleanup
+					exit 0
+				else
+					rm -rf "$usb_mountpoint"/"$live_dir"
+				fi
+		fi
+#	fi
+
+	image_size=$(du -sh ${image_mountpoint}/${live_dir})
+	target_device="$usb_mountpoint"
+	check_size
+	if [[ $? = 3 ]] ; then
+		cleanup1
+		cleanup
+		exit 0
+	fi
+
+
+	rsync -avh --progress "$image_mountpoint"/${live_dir} "$usb_mountpoint"
+
+	if [[ -e "$image_mountpoint"/isolinux ]] ; then
+		if [[ $save_syslinux = "TRUE" ]] ; then
+			cp -a "$image_mountpoint"/isolinux "$usb_mountpoint"/isolinux-$(date +%m%d%H%M)
+		elif [[ $copy_syslinux = "TRUE" ]] ; then
+			rsync -av "$image_mountpoint"/isolinux "$usb_mountpoint"
+			mv "$usb_mountpoint"/isolinux "$usb_mountpoint"/isolinux-$(date +%m%d%H%M)
+			if [[ -e "$usb_mountpoint"/syslinux ]] ; then
+				mv "$usb_mountpoint"/syslinux "$usb_mountpoint"/syslinux-$(date +%m%d%H%M)
+			fi
+			rsync -av /usr/lib/refracta2usb/syslinux "$usb_mountpoint"	
+		else
+			rsync -av "$image_mountpoint"/isolinux "$usb_mountpoint"
+			isolinux2syslinux
+		fi
+	elif [[ -e "$image_mountpoint"/syslinux ]] ; then
+		if [[ $save_syslinux = "TRUE" ]] ; then
+			cp -a "$image_mountpoint"/syslinux "$usb_mountpoint"/syslinux.new-$(date +%m%d%H%M)
+		elif [[ $copy_syslinux = "TRUE" ]] ; then
+			if [[ -e "$usb_mountpoint"/syslinux ]] ; then
+				mv "$usb_mountpoint"/syslinux "$usb_mountpoint"/syslinux.orig-$(date +%m%d%H%M)
+			fi
+			rsync -av "$image_mountpoint"/syslinux "$usb_mountpoint"
+			mv "$usb_mountpoint"/syslinux "$usb_mountpoint"/syslinux.new-$(date +%m%d%H%M)
+			rsync -av /usr/lib/refracta2usb/syslinux "$usb_mountpoint"
+		else
+			if [[ -e "$usb_mountpoint"/syslinux ]] ; then
+				mv "$usb_mountpoint"/syslinux "$usb_mountpoint"/syslinux.orig-$(date +%m%d%H%M)
+				$DIALOG --$INFO --title="$TITLE" --text="An existing syslinux folder on the target device 
+was saved as syslinux.orig-(date-time). " --${BUTTON0}="OK"${BUTTON0NUM}
+			fi
+			rsync -av "$image_mountpoint"/syslinux "$usb_mountpoint"
+		fi
+	fi		
+
+	if [[ $add_hooks = "TRUE" ]] ; then
+		echo " Adding Refracta custom hooks..."
+		rsync -av /usr/lib/refracta2usb/hooks "$usb_mountpoint"/${live_dir}
+	fi
+	finished_message="Live image copied."
+	finished_dialog
+}
+
+
+# Replace the live folder with one from an iso file.
+replace_live () {
+	
+	if [[ $copy_syslinux = "TRUE" ]] && [[ $save_syslinux = "TRUE" ]] ; then
+		conflict_warning
+		return
+	fi
+
+
+	if [[ $save_syslinux = "FALSE" ]] ; then
+		$DIALOG --$INFO --title="$TITLE" --text="The existing syslinux folder on the target device will be renamed 
+and replaced with the one from the selected iso file. 
+If you want to keep the existing one functional, go to Setup Options 
+and check \"Preserve existing syslinux\". Then run Update again. " \
+	--${BUTTON0}="Continue"${BUTTON0NUM} --${BUTTON1}="Setup Options"${BUTTON1NUM}
+		if [[ $? = 1 ]] ; then
+			cleanup
+			setup_options
+			return
+		fi
+	fi
+
+
+	if [[ $save_syslinux = "TRUE" ]] ; then
+		if [[ -d "$usb_mountpoint/syslinux" ]] ; then
+			echo " Saving syslinux folder..."
+			rsync -av "$usb_mountpoint/syslinux" /tmp/
+		else 
+			warning_message="Options are set to save the existing syslinux folder, but there is none. 
+Check the Setup Options and un-check \"Preserve existing syslinux\" to use the boot menu 
+from the selected iso file."
+			warning_dialog
+			setup_options
+			return
+		fi
+	fi
+
+
+	live_path=$($DIALOG --file-selection --filename="$usb_mountpoint/live" --title="Replace Live Image" \
+	--text="Select the directory that contains the live image you want to replace. 
+The default is $usb_mountpoint/live. 
+
+For a single-boot live-usb device, that's probably correct, and 
+you can just click OK. 
+
+For a multi-boot or custom named system, choose the folder that contains 
+the files for that system. (vmlinuz, initrd and squash file)
+
+(Note: You can't use this function to replace an intact iso file.)
+")
+			if [[ $? = 1 ]] ; then
+				cleanup
+				exit 0
+			fi
+		
+		if [[ $live_path = "$usb_mountpoint"/live ]] ; then
+			target_dir=""
+			live_dir="live"
+		elif [[ -z "$live_path" ]] ; then
+			exit_message="No target directory selected for multiboot. "
+			exit_dialog
+		else
+			live_dir=${live_path##*/}
+			target_path="${live_path%/*}"
+			target_dir="${target_path##*/}/"
+		fi
+	
+	isofile=$($DIALOG --file-selection --file-filter="*.[iI][sS][oO]" --file-filter="*" \
+	--width=640 --height=640 --title=$"Select Live ISO" --text="Select the CD image file."\
+	--filename="" ${OKBUTTON} ${QUITBUTTON})
+		if [[ $? = 1 ]] ; then
+			cleanup
+			run_task
+		fi
+
+	if [[ -z "$isofile" ]] ; then
+		exit_message="\nYou did not select a CD image file."
+		exit_dialog
+	fi
+	
+	if ! $(echo $isofile | grep -q .[Ii][Ss][Oo]$); then
+		exit_message="\nYou did not select a CD image file.."
+		exit_dialog
+	fi
+echo "$isofile"
+	fuseiso -p "$isofile" "$image_mountpoint"
+	old_live_size=$(du -sh ${usb_mountpoint}/${target_dir}${live_dir} | cut -f1)
+	update_size_message="\nUpdate Note: $old_live_size will be added to Available space above
+when the old image is removed."
+	image_size=$(du -h "$isofile" )
+	target_device="$usb_mountpoint"
+	check_size
+	if [[ $? = 3 ]] ; then
+		cleanup1
+		cleanup
+		exit 0
+	fi
+
+	if [[ $save_hooks = "TRUE" ]] ; then
+		if [[ -d "$usb_mountpoint/${target_dir}${live_dir}/hooks" ]] ; then
+			echo " Saving hooks..."
+			rsync -av "$usb_mountpoint/${target_dir}${live_dir}/hooks" /tmp/
+		else
+			save_hooks="FALSE"
+		fi
+	fi
+
+	if [[ $save_boot = "TRUE" ]] ; then
+		if [[ -d "$usb_mountpoint/${target_dir}${live_dir}/boot" ]] ; then
+			echo " Saving /boot folder..."
+			rsync -av "$usb_mountpoint/${target_dir}${live_dir}/boot" /tmp/
+		else
+			save_boot="FALSE"
+		fi
+	fi
+
+
+	rm -rf "$usb_mountpoint"/${target_dir}${live_dir}
+	rm -f "$usb_mountpoint"/${target_dir}Release_Notes
+	rm -rf "$usb_mountpoint"/${target_dir}pkglist*
+	rsync -avh --progress "$image_mountpoint"/ "$usb_mountpoint"/${target_dir}
+
+	if [[ $save_hooks = "TRUE" ]] ; then
+		echo " Copying your hooks back to the usb device..."
+		rsync -av /tmp/hooks "$usb_mountpoint"/${target_dir}${live_dir}/
+		rm -rf /tmp/hooks
+	elif
+		[[ $add_hooks = "TRUE" ]] ; then
+			echo " Adding Refracta custom hooks..."
+			rsync -av /usr/lib/refracta2usb/hooks "$usb_mountpoint"/${target_dir}${live_dir}/
+	fi
+
+	if [[ $save_boot = "TRUE" ]] ; then
+		echo " Copying your /boot folder back to the usb device..."
+		rsync -av /tmp/boot "$usb_mountpoint"/${target_dir}${live_dir}/
+		rm -rf /tmp/boot
+	fi
+
+	if [[ $save_syslinux = "TRUE" ]] ; then
+		echo " Copying your syslinux folder back to the usb device..."
+		mv "$usb_mountpoint"/isolinux "$usb_mountpoint"/isolinux-$(date +%m%d%H%M)
+		rsync -av /tmp/syslinux "$usb_mountpoint/"
+	elif [[ $copy_syslinux = "TRUE" ]] ; then
+		if [[ -e "$usb_mountpoint"/syslinux ]] ; then
+			echo " Moving existing syslinux folder..."
+			mv $usb_mountpoint/syslinux $usb_mountpoint/syslinux-$(date +%m%d%H%M)
+		fi
+		if [[ -e "$usb_mountpoint"/isolinux ]] ; then
+			mv "$usb_mountpoint"/isolinux "$usb_mountpoint"/isolinux-$(date +%m%d%H%M)
+		fi	
+		echo " Copying default refracta syslinux folder..."
+		rsync -av /usr/lib/refracta2usb/syslinux "$usb_mountpoint"
+	else
+		isolinux2syslinux
+	fi
+	
+	echo -e " Replaced image.\n Unmounting image and usb device..."
+	sleep 2
+	fusermount -u "$image_mountpoint"
+	pumount ${device}1
+	echo " Done!
+		"
+	finished_message="Replaced image."
+	finished_dialog
+	exit 0
+}
+
+
+use_label () {
+
+persist_label=$(cat /tmp/persistence_label)
+
+if [[ -n "$persist_label" ]] ; then
+	if [[ $persist_label = "persistence" ]] ; then
+		menu_text="
+label persistence
+	menu label Refracta (persistence)
+    kernel /live/vmlinuz quiet
+    append initrd=/live/initrd.img boot=live ip=frommedia union=aufs persistence 
+"
+	else
+		menu_text="
+label $persist_label
+	menu label Refracta ($persist_label)
+    kernel /live/vmlinuz quiet
+    append initrd=/live/initrd.img boot=live ip=frommedia union=aufs persistence config=openssh-server persistence-label=$persist_label 
+"
+	fi
+
+	if ! $(grep -q persistence-label="$persist_label" "$boot_menu") ; then
+#		echo "$menu_text" >> "$boot_menu"
+		menu_text=""
+	fi
+#	if ! $(grep -q persistence-label="$persist_label" "${usb_mountpoint}/$boot_menu") ; then	
+#		echo "$menu_text" >> "${usb_mountpoint}/$boot_menu"
+#	fi
+fi
+}
+
+
+append_menu () {
+# This will create a lukshome entry with uuid in the boot menu.
+# and open the menu for review/editing in a text editor.
+
+
+
+
+
+# Select the partition for encrypted /home
+# Only up to partition 9, or $home_dev needs to be redefined.
+	selection=$(find /dev -mindepth 1 -maxdepth 1  -name "*[sh]d[a-z][1-9]" \
+	| grep $device | sort | awk '{print "\n" $0 }' \
+	| $DIALOG --list --title="/home partition" --text="Select a partition for the encrypted home." \
+	--multiple --column ' ' --column 'Partitions' --height=380 --width=150 ${RADIOLIST} \
+		--${BUTTON0}="OK"${BUTTON0NUM} 	--${BUTTON1}="Quit Task"${BUTTON1NUM})
+		if [[ $? = 1 ]] ; then
+			run_task
+		fi
+		
+	home_dev=$(echo $selection | tr -d \|)
+	echo "$home_dev"
+
+home_dev_uuid=$(/sbin/blkid -s UUID | grep "$home_dev" | awk '{ print $2 }' | sed 's/\"//g')
+echo "$home_dev_uuid"
+
+
+# sanity checks	
+
+# make sure user didn't select their system partition
+	isfat=$(/sbin/blkid | grep "$home_dev" | grep -i fat)
+	if [[ -n $isfat ]] ; then
+		$DIALOG --$QUESTION --width=680 --height=220 --title="Error" \
+		--${BUTTON0}="Main Menu"${BUTTON0NUM} --${BUTTON1}="Exit"${BUTTON1NUM} \
+		--text="Error! $home_dev is FAT but should be ext for encryption. 
+Are you sure you chose the right partition?
+Return to main menu or exit?"
+		if [[ $? = 0 ]] ; then
+			echo "isfat is $isfat"
+			run_task
+		else
+			pumount ${device}1
+			exit 0
+		fi
+	fi
+
+# make sure the home partition has already been encrypted
+	isluks=$(/sbin/blkid | grep "$home_dev" | grep "crypto_LUKS")
+	if [[ -z $isluks ]] ; then
+		$DIALOG --$QUESTION --width=680 --height=220 --title="Error" \
+		--${BUTTON0}="Main Menu"${BUTTON0NUM} --${BUTTON1}="Exit"${BUTTON1NUM} \
+		--text="Error! $home_dev is not encrypted. 
+Are you sure you chose the right partition?
+
+Before running this option, you must run mkusbcrypt (select Encrypted in
+the Advanced menu.)
+
+Return to main menu or exit?"
+		if [[ $? = 0 ]] ; then
+			echo "isluks is $isluks"
+			run_task
+		else
+			pumount ${device}1
+			exit 0
+		fi
+	fi		
+
+#boot_menu="live.cfg"
+boot_menu=$($DIALOG --file-selection --filename=$usb_mountpoint/syslinux/live.cfg --title="$TITLE" \
+	--text="Select boot menu" --height 400 --width 500)
+echo "boot_menu is $boot_menu"
+
+
+menu_text="label with_hooks
+	menu label Refracta (use hooks)
+    kernel /live/vmlinuz quiet
+    append initrd=/live/initrd.img boot=live ip=frommedia union=aufs config=hooks hooks=file:///lib/live/mount/rootfs/live/hooks/hookscript lukshome=$home_dev_uuid 
+"
+
+
+echo "$menu_text" >> "$boot_menu"
+
+"$editor" ${editor_option} "$boot_menu"
+
+pumount ${device}1
+
+echo "
+ Done!
+"
+$DIALOG --$INFO --title="$TITLE" --text="All finished!" --width 200
+exit 0
+}
+
+
+# Install syslinux to partition and optionally to mbr.
+install_syslinux () {
+
+	if ! [[ -d "$usb_mountpoint"/syslinux ]] ; then
+	$DIALOG --$QUESTION --width=480 --height=320 --title="$TITLE" \
+	--${BUTTON0}="Continue"${BUTTON0NUM} --${BUTTON1}="Exit"${BUTTON1NUM} \
+	--text="There is no syslinux directory, so syslinux cannot be installed.
+Continue to copy the default refracta2usb syslinux folder and finish the 
+installation or Exit and do it manually."
+
+	if [[ $? = 0 ]] ; then
+		rsync -av /usr/lib/refracta2usb/syslinux "$usb_mountpoint"/
+	else
+		exit 0
+	fi
+fi
+
+sleep 3 && pumount ${device}1
+
+syslinux -d syslinux ${device}1
+	if [[ $? != 0 ]] ; then
+		echo "
+ Warning! You may need to run this command as root:
+	syslinux -d syslinux ${device}1
+"
+		warning_message=" Installing syslinux bootloader failed. 
+ You may need to run this command as root:
+	syslinux -d syslinux ${device}1 
+	
+ See $error_log "
+		warning_dialog
+	fi
+
+if [[ $write_to_mbr = "TRUE" ]] ; then
+	if [[ -e "$syslinux_mbr_bin" ]] ; then
+		dd bs=440 count=1 conv=notrunc if=$syslinux_mbr_bin of=${device}
+		echo "syslinux copied to mbr"
+	else
+		exit_message="\nCould not write to mbr. $syslinux_mbr_bin is missing."
+		exit_dialog
+	fi
+fi
+}
+
+
+conflict_warning () {
+
+	$DIALOG --$WARNING --width=500 --height=180 --title="$TITLE" --text=" You chose to both save your old syslinux folder and  
+ copy the default refracta2usb syslinux folder. 
+ You can't do both. Pick one or the other.
+
+ If you copy the default folder, the old one will be saved
+ as	syslinux-(date-time).
+
+ If you save the old one, the default is still available
+ at /usr/share/lib/refracta2usb/syslinux
+ " \
+${BUTTON0NUM} --${BUTTON1}="Options" 
+
+	if [[ $? = "0" ]] ; then
+		setup_options
+	fi
+}
+
+
+egress () {
+	
+	if [[ $do_not_exit = "TRUE" ]] ; then
+		opts=""   # This doesn't clear $opts=Advanced
+		run_task
+	else
+		cleanup
+		echo "really done"
+		exit 0
+	fi
+
+}
+
+
+edit_boot_menu () {
+
+# Check if first partition of selected device is mounted for live system.	
+	if (df |grep "${device}1" | grep "/lib/live/mount/rootfs") ; then
+		usb_mountpoint="/lib/live/mount/rootfs"
+	else
+		usb_mountpoint="/media/${device##*/}1"		
+	fi	
+	
+	if ! $(grep -q ${device}1 /proc/mounts) ; then
+		pmount ${device}1
+	fi
+
+	if [[ -f "${usb_mountpoint}"/syslinux/live.cfg ]] ; then
+		boot_menu="${usb_mountpoint}/syslinux/live.cfg"
+	else
+		boot_menu=$($DIALOG --file-selection --filename="$usb_mountpoint"/ --title="$TITLE" \
+	--text="Select boot menu. Default is syslinux/live.cfg" --height 400 --width 500 ${OKBUTTON} ${EXITBUTTON})
+			if [[ $? = 1 ]] ; then
+				cleanup
+				exit 0
+			fi
+			
+			if ! [[ -f "$boot_menu" ]] ; then
+				warning_message="No boot menu was selected."
+				warning_dialog
+				run_task
+				return
+			fi
+echo "boot_menu is $boot_menu"
+	fi
+
+	menu_text=$(cat /tmp/boot_menu_text)
+	if [[ -n "$menu_text" ]] ; then
+		echo "$menu_text" >> "$boot_menu"
+	fi
+	find_editor
+	"$editor" ${editor_option} "$boot_menu"
+	pumount ${device}1
+}
+
+
+# Need to select kernel and initrd to get their names and use $local_path?
+setup_multiboot () {
+
+	target_name=$($DIALOG --entry --title=$TITLE --text=" For multi-boot live-USB, a CD image will be copied to its own directory on your USB drive.  
+ Enter a name for that directory. The name will also be used in your boot menu. " \
+	--${BUTTON0}="OK"${BUTTON0NUM} --${BUTTON1}="Exit"${BUTTON1NUM})
+		if [[ $? = 1 ]] ; then
+			cleanup
+			exit 0
+		fi
+		
+	if [[ -n $target_name ]] ; then
+		target_dir="${target_name}/"
+		target_message="Target directory:	/$target_name"
+		
+	else
+		target_dir=""
+		exit_message="No target directory selected for multiboot. "
+		exit_dialog
+	fi
+	
+	copy_iso
+	
+#		Select kernel and initrd from target, because iso is unmounted.
+	image_source_dir="${usb_mountpoint}/${target_name}"
+	select_kernel
+	select_initrd
+
+	iso_boot_menu=$($DIALOG --file-selection --filename="${image_source_dir}/*" --file-filter="*.cfg" --title="ISO Boot Menu - For Reference" \
+	--text="Select the boot menu from the iso file. 
+(default: syslinux/live.cfg)
+
+You may need to copy/paste an entry or two into your actual boot menu, which will open in another editor window in a few steps.
+" --height 400 --width 500 ${OKBUTTON})
+
+	$DIALOG --title="ISO Boot Menu - For Reference" --text-info --${BUTTON0}="Close Window"${BUTTON0NUM} --width 780 --height 540 < "$iso_boot_menu" &
+# Use editor in case the first .cfg file you choose is the wrong one.
+#	find_editor
+#	"$editor" ${editor_option} "$iso_boot_menu" &
+	sleep 2
+
+		
+	menu_text="
+label $target_name
+	menu label $target_name
+    kernel /${target_name}${local_path}/${kernel_name}
+    append initrd=/${target_name}${local_path}/${initrd_name} boot=live ip=frommedia union=aufs live-media-path=/${target_name}${local_path} config=openssh-server
+"
+	echo "$menu_text" > /tmp/boot_menu_text
+}
+
+
+# Copy isofile, kernel and initrd to target dir and use findiso boot option.
+# Save isolinux folder as syslinux in target dir.
+# Make sure there's a syslinux folder in the root of the target device.
+setup_findiso () {	
+
+	isofile=$($DIALOG --file-selection --file-filter="*.[iI][sS][oO]" --file-filter="*" \
+	--width=640 --height=640 --title=$"Select Live ISO" --text="Select the CD image file." \
+	--filename="" ${OKBUTTON} ${QUITBUTTON})
+		if [[ $? = 1 ]] ; then
+			cleanup
+			run_task
+		fi
+
+	if [[ -z "$isofile" ]]; then
+		exit_message="\nYou did not select a CD image file."
+		exit_dialog
+	fi
+
+	if ! $(echo $isofile | grep -q .[Ii][Ss][Oo]$); then
+		exit_message="\nYou did not select a CD image file.."
+		exit_dialog
+	fi
+
+	fuseiso -p "$isofile" "$image_mountpoint"
+	image_size=$(du -h "$isofile" )
+	target_device="$usb_mountpoint"
+
+	if [[ $? = 3 ]] ; then
+		fusermount -u "$image_mountpoint"
+		cleanup1
+		cleanup
+		exit 0
+	fi
+
+
+	target_name=$($DIALOG --entry --title=$TITLE --text=" For multi-boot live-USB, a CD image will be copied to its own directory on your USB drive.  
+ Enter a name for that directory. The name will also be used in your boot menu. " \
+		--${BUTTON0}="OK"${BUTTON0NUM} --${BUTTON1}="Exit"${BUTTON1NUM})
+			if [[ $? = 1 ]] ; then
+				fusermount -u "$image_mountpoint"
+				cleanup
+				exit 0
+			fi
+		
+		if [[ -n $target_name ]] ; then
+			target_dir="${target_name}/"
+			target_message="Target directory:	/$target_dir"
+			
+		else
+			target_dir=""
+			exit_message="No target directory selected for iso file. "
+			fusermount -u "$image_mountpoint"
+			exit_dialog
+		fi
+
+#		if ! [[ -d "$target_dir"/live ]] ; then
+#			mkdir -p "$usb_mountpoint"/"$target_dir"/live
+#		fi
+
+	check_size
+
+#	Must select kernel and initrd from source iso before copying them.
+	image_source_dir="$image_mountpoint"		
+	select_kernel
+	select_initrd
+
+
+# Copy stuff to ${target_dir}/live so that menu creation will work correctly.
+# Copy isolinux to ${target_dir} so that isolinux2syslinux will work correctly.
+#	cp "$kernel_image" "$usb_mountpoint"/${target_dir}/live
+#	cp "$initrd_image" "$usb_mountpoint"/${target_dir}/live
+#	cp "$isofile" "$usb_mountpoint"/${target_dir}/live | tee >($DIALOG --title="Copying ISO file..." --progress --pulsate --auto-close --width 300)
+#	cp -a "$image_mountpoint"/isolinux "$usb_mountpoint"/${target_dir}
+#echo "@@@@@ ${usb_mountpoint}/${target_name}${local_path} @@@@@"
+	if ! [[ -d "${usb_mountpoint}/${target_name}" ]] ; then
+		mkdir -p "${usb_mountpoint}/${target_name}"
+	fi
+# There is a hidden directory ".disk" in the linuxmint iso, looks like that needs to be there.
+# Need to use rsync - this should copy everything to $target_dir 
+# - this makes it multiboot, but does not use iso.
+# rsync -av --progress "$image_mountpoint"/ "${usb_mountpoint}/${target_dir}"
+#	cp "$kernel_image" "${usb_mountpoint}/${target_name}${local_path}"
+#	cp "$initrd_image" "${usb_mountpoint}/${target_name}${local_path}"
+#	cp "$isofile" "${usb_mountpoint}/${target_name}${local_path}" | tee >($DIALOG --title="Copying ISO file..." --progress --pulsate --auto-close --width 300)
+#	cp -a "$image_mountpoint"/isolinux "${usb_mountpoint}/${target_dir}"
+# untested hack for linuxmint - need to set $mintu somewhere.
+#	if [[ $mintu = "yes" ]] ; then OR if [[ -d ${usb_mountpoint}/.disk ]]
+#		cp -a ${usb_mountpoint}/.disk ${usb_mountpoint}
+#	fi
+
+	cp "$kernel_image" "${usb_mountpoint}/${target_dir}"
+	cp "$initrd_image" "${usb_mountpoint}/${target_dir}"
+	cp "$isofile" "${usb_mountpoint}/${target_dir}" | tee >($DIALOG --title="Copying ISO file..." --progress --pulsate --auto-close --width 300)
+	cp -a "$image_mountpoint"/isolinux "${usb_mountpoint}/${target_dir}"
+	
+	isolinux2syslinux
+
+	if ! [[ -d "$usb_mountpoint"/syslinux ]] ; then
+		if [[ $copy_syslinux = TRUE ]] ; then
+			rsync -av /usr/lib/refracta2usb/syslinux "$usb_mountpoint"
+			install_syslinux
+		else
+			cp -a $usb_mountpoint/${target_dir}syslinux "$usb_mountpoint"
+			install_syslinux
+		fi
+	fi	
+
+# Open a window with the boot menu from the iso file.
+	iso_boot_menu=$($DIALOG --file-selection --filename="${image_mountpoint}/*" --file-filter="*.cfg" --title="ISO Boot Menu - For Reference" \
+	--text="Select the boot menu from the iso file. You may need to copy/paste an entry or two into your actual boot menu, which will open in another editor window in a few steps." --height 400 --width 500 ${OKBUTTON})
+
+	$DIALOG --title="ISO Boot Menu - For Reference" --text-info --${BUTTON0}="Close Window"${BUTTON0NUM} --width 780 --height 540 < "$iso_boot_menu" &
+# Use editor in case the first .cfg file you choose is the wrong one.
+#	find_editor
+#	"$editor" ${editor_option} "$iso_boot_menu" &
+	sleep 2
+
+
+	fusermount -u "$image_mountpoint"
+
+# Create a menu entry.
+
+	isofile_name="${isofile##*/}"
+		
+	menu_text="
+label $target_name
+	menu label $target_name
+    kernel /${target_name}/${kernel_name} quiet 
+    append initrd=/${target_name}/${initrd_name} boot=live ip=frommedia union=aufs findiso=/${target_name}/${isofile_name}
+"
+	echo "$menu_text" > /tmp/boot_menu_text
+	
+	finished_message="$isofile_name was copied to ${target_name}/${local_path} 
+
+An entry for this will be added to your boot 
+menu, and the menu will be opened in an editor   
+for your review.
+
+"
+	finished_dialog
+}
+
+
+# This is a way to set the options for the current run only.
+setup_options () {
+
+	options=$($DIALOG --list --title="Setup Options" \
+	--${BUTTON0}="OK"${BUTTON0NUM} --${BUTTON1}="Exit"${BUTTON1NUM} \
+     --text=" Change default settings for this run.
+ (Last option will restore program defaults.)
+ Exit to exit the program.
+ 
+ Note: In most cases, you won't need to change any of these.
+ The first time a drive is prepared for live-USB, you will need
+ to select \"Write syslinux/mbr.bin to Master Boot Record\" to 
+ install the boot loader. If you forgot to do this, you can go
+ to the Advanced menu and select one of the bootloader tasks. 
+ "\
+     --checklist --column "Choose" --column "Num" --column "Option" \
+     --width=590 --height=520  \
+  $add_hooks 01 "Add hooks for encrypted /home
+  " \
+  $save_hooks 02 "Preserve an existing hooks folder.
+(for Update only)" \
+  $save_boot 03 "Preserve an existing /boot/grub folder.
+(for Update only)" \
+  $save_syslinux 04 "Preserve an existing syslinux folder.
+(for Update or Live)" \
+  $copy_syslinux 05 "Copy the default refracta2usb syslinux folder.
+  " \
+  $write_to_mbr 06 "Write syslinux/mbr.bin to Master Boot Record.
+  " \
+  FALSE 00 "Restore default settings.
+  ")
+
+	if [[ $? = 1 ]] ; then
+		cleanup
+		exit 0
+	fi
+
+	if [[ $options =~ 01 ]] ; then
+		add_hooks="TRUE"
+	else
+		add_hooks="FALSE"
+	fi
+	
+	if [[ $options =~ 02 ]] ; then
+		save_hooks="TRUE"
+	else
+		save_hooks="FALSE"
+	fi	
+
+	if [[ $options =~ 03 ]] ; then
+		save_boot="TRUE"
+	else
+		save_boot="FALSE"
+	fi
+
+	if [[ $options =~ 04 ]] ; then
+		save_syslinux="TRUE"
+	else
+		save_syslinux="FALSE"
+	fi
+	
+	if [[ $options =~ 05 ]] ; then
+		copy_syslinux="TRUE"
+	else
+		copy_syslinux="FALSE"
+	fi
+
+	if [[ $options =~ 06 ]] ; then
+		write_to_mbr="TRUE"
+	else
+		write_to_mbr="FALSE"
+	fi
+	
+# Moved this test to replace_live function, since save_syslinux is now default.
+#	if [[ $options =~ 04 ]] && [[ $options =~ 05 ]] ; then
+#		conflict_warning
+#	fi
+	
+	if [[ $options =~ 00 ]] ; then
+		echo -e "\n Resetting default values..."
+		refracta2usb_settings
+	fi
+
+
+	
+	run_task
+}
+
+
+advanced_tasks () {
+#	unset adv_opt
+	# Clear $opts from Main Menu - otherwise, we don't go back to it.
+	opts=""
+	adv_opt=""
+	
+	adv_opt=$($DIALOG --list --title="Advanced Menu" \
+     --text="\n See Help for explanations and instructions.\n" \
+     --column "Task" --column "Num" --column "Description"  \
+     --width=625 --height=420  \
+     --${BUTTON0}="OK"${BUTTON0NUM} --${BUTTON1}="Exit"${BUTTON1NUM} \
+  Help 01 " Instructions - Read Me!  " \
+  Bootloader 02 " (Re)install syslinux to partition and to mbr." \
+  Alternate_mbr 03 " Alternate bootloader. (install-mbr)" \
+  Encrypted 04 " Create an encrypted persistent /home. (mkusbcrypt)" \
+  Add_LUKS 05 " Edit boot menu and add lukshome uuid." \
+  Multiboot 06 " Add iso contents for multiboot usb." \
+  Boot_ISO 07 " Add intact iso and use findiso boot option." \
+  Patch_initrd 08 " Rebuild initrd for runtime read/write fat32. (patch-initrd-gui)" \
+  Loopback 09 " Create loopback file. (mkloopback)" \
+  Mount_loop 10 " Mount a loopfile that's not used for persistence. " \
+  Unmount_loop 11 " Unmount a loopfile that's not used for persistence. " \
+  Delete_loop 12 " Delete any leftover loop devices. " \
+  Main_Menu 00 " Return to the Main Task Menu.")
+
+	if [[ $? = 1 ]] ; then
+		if [[ -n "$device" ]] && $(grep -q ${device}1 /proc/mounts) ; then
+			pumount ${device}1
+		fi
+		exit 0
+	fi
+
+
+	if [[ $adv_opt =~ Help ]] ; then
+	$DIALOG --title="${TITLE} Help" --text-info --${BUTTON0}="Close Window"${BUTTON0NUM} --width 780 --height 540 < "$helpfile" &
+		sleep 2
+	fi
+
+
+	if [[ $adv_opt =~ syslinux ]] ; then
+		check_device
+		usb_mountpoint="/media/${device##*/}1"
+		if ! $(grep -q ${device}1 /proc/mounts) ; then
+			pmount ${device}1
+		fi
+		write_to_mbr="TRUE"
+		install_syslinux
+	fi
+
+	
+	if [[ $adv_opt =~ Alternate_mbr ]] ; then
+		echo "$USER" > /tmp/r2u_user
+		gksu  "xterm -e /usr/bin/install_alt_bootloader ${debug}"
+	fi
+
+	
+	if [[ $adv_opt =~ 04 ]] ; then
+		echo "$USER" > /tmp/r2u_user
+		gksu "xterm -e /usr/bin/mkusbcrypt ${debug}"
+		egress
+	fi
+
+
+	if [[ $adv_opt =~ 05 ]] ; then
+		usb_mountpoint="/media/${device##*/}1"
+		if ! $(grep -q ${device}1 /proc/mounts) ; then
+			pmount ${device}1
+		fi
+		find_editor
+		append_menu
+	fi
+
+
+	if [[ $adv_opt =~ Patch_initrd ]] ; then
+		xterm -e "/usr/bin/patch-initrd-gui ${debug}"
+		if [[ -f /tmp/boot_menu_text ]] ; then
+			edit_boot_menu
+			rm -f /tmp/boot_menu_text
+		fi
+		egress
+	fi
+
+	
+	if [[ $adv_opt =~ Loopback ]] ; then
+#		device=$(cat /tmp/r2u_device)
+		echo "$USER" > /tmp/r2u_user
+#		usb_mountpoint="/media/${device##*/}1"
+		if ! $(grep -q ${device}1 /proc/mounts) ; then
+			pmount ${device}1
+		fi
+
+		gksu "xterm -fa mono -fs 12 -geometry 80x20+0+0 -e /usr/bin/mkloopback ${debug}"
+
+		if [[ -f /tmp/boot_menu_text ]] ; then
+			edit_boot_menu
+			rm -f /tmp/boot_menu_text
+		fi
+		egress
+	fi
+
+
+	if [[ $adv_opt =~ Mount_loop ]] ; then
+		echo "$USER" > /tmp/r2u_user
+		gksu "xterm -fa mono -fs 12 -geometry 80x20+0+0 -e /usr/bin/select-loop-mount ${debug}"
+		egress
+	fi
+	
+
+	if [[ $adv_opt =~ Unmount_loop ]] ; then
+		echo "$USER" > /tmp/r2u_user
+		gksu "xterm -fa mono -fs 12 -geometry 80x20+0+0 -e /usr/bin/select-loop-unmount ${debug}"
+		egress
+	fi
+
+
+	if [[ $adv_opt =~ Multiboot ]] ; then
+		image_mountpoint="/tmp/isomount"
+		check_device
+		usb_mountpoint="/media/${device##*/}1"
+		pmount ${device}1
+		setup_multiboot
+#		copy_iso
+#		maybe unset target and target_message
+		finished_message=" An entry for $target_name will be
+ added to your boot menu, and the menu will be
+ opened in a text editor for your review. "
+		finished_dialog
+		if [[ -f /tmp/boot_menu_text ]] ; then
+			edit_boot_menu
+			rm -f /tmp/boot_menu_text
+		fi	
+	fi
+
+
+	if [[ $adv_opt =~ Boot_ISO ]] ; then
+		image_mountpoint="/tmp/isomount"
+		check_device
+		usb_mountpoint="/media/${device##*/}1"
+		pmount ${device}1
+		setup_findiso
+		if [[ -f /tmp/boot_menu_text ]] ; then
+			edit_boot_menu
+			rm -f /tmp/boot_menu_text
+		fi
+	fi
+
+
+	if [[ $adv_opt =~ Delete_loop ]] ; then
+		echo "$USER" > /tmp/r2u_user
+		gksu "xterm -fa mono -fs 12 -geometry 80x20+0+0 -e /usr/bin/killloops ${debug}"
+	fi
+
+
+	if [[ $adv_opt =~ Main_Menu ]] ; then
+			run_task
+	fi
+}
+
+
+run_task () {
+
+	opts=$($DIALOG --list --title="Main Menu" \
+     --text=" Choose a task.
+     
+ To create a live-USB, you'll need a fat32 partition flagged as bootable.
+ If you want a second partition for saving files, you can create it now.
+$no_device_message
+$plugdev_message
+" \
+     --list --column "Task" --column "Num" --column "Description"  \
+     --width=590 --height=465 \
+     --${BUTTON0}="OK"${BUTTON0NUM} --${BUTTON1}="Exit"${BUTTON1NUM} \
+  Help 01 "	Instructions  -  Read Me!   " \
+  Options 02 " Change default settings for this run." \
+  Format 03 " Run the disk partitioner. (gparted)" \
+  ISO 04 " Create Live-USB from a CD image." \
+  Live 05 " Create Live-USB from a running live system." \
+  Update 06 " Replace the live image on USB with a newer one." \
+  Persistent 07 " Create/use a standard persistent partition. (mkpersist)" \
+  Edit 08 " Edit boot menu on completed USB thumb drive." \
+  Rescan 09 " ...after plugging in usb device." \
+  Advanced 00 " Go directly to Advanced Menu." )
+
+
+	if [[ $? = 1 ]] ; then
+		cleanup
+		exit 0
+	fi
+
+if [[ $opts =~ Help ]] ; then
+	$DIALOG --title="${TITLE} Help" --text-info --${BUTTON0}="Close Window"${BUTTON0NUM} --width 780 --height 540 < "$helpfile" &
+	sleep 2
+	egress
+fi
+
+
+if [[ $opts =~ ISO ]] ; then
+	image_mountpoint="/tmp/isomount"
+	check_device
+	usb_mountpoint="/media/${device##*/}1"
+	pmount ${device}1
+	copy_iso
+	install_syslinux
+fi
+
+
+if [[ $opts =~ "running live" ]] ;  then
+	image_mountpoint="/lib/live/mount/rootfs"
+	if ! [[ -d "$image_mountpoint" ]] ; then
+		exit_message="\nNot a live session or wrong version of live-boot."
+		exit_dialog
+	fi
+
+	check_device
+	usb_mountpoint="/media/${device##*/}1"
+	pmount ${device}1
+	copy_livemount
+	install_syslinux
+	cleanup
+fi
+
+
+if [[ $opts =~ Update ]] ; then
+	image_mountpoint="/tmp/isomount"
+	check_device
+	usb_mountpoint="/media/${device##*/}1"
+	pmount ${device}1
+	replace_live
+fi
+
+
+if [[ $opts =~ Format ]] ; then
+	gksu gparted $device
+	egress
+fi
+
+
+if [[ $opts =~ Options ]] ; then
+	setup_options
+fi
+
+
+if [[ $opts =~ Persistent ]] ; then
+		echo "$USER" > /tmp/r2u_user
+		gksu /usr/bin/mkpersist ${debug}
+		if [[ -f /tmp/boot_menu_text ]] ; then
+			edit_boot_menu
+			rm -f /tmp/boot_menu_text
+		fi
+		egress
+fi
+
+
+if [[ $opts =~ Edit ]] ; then
+	edit_boot_menu
+	egress
+fi
+
+
+if [[ $opts =~ Advanced ]] ; then
+	advanced_tasks
+	egress
+fi
+
+
+if [[ $opts =~ Rescan ]] ; then
+	unset no_device_message
+	select_device_gui
+	egress
+fi
+
+echo $opts | awk -F"|" '{ print $1 }'
+}
+
+
+select_device_gui
+run_task
+cleanup
+
+exit 0

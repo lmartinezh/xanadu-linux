@@ -1,0 +1,382 @@
+#!/usr/bin/env bash
+# mkusbcrypt 2013-12-16
+TITLE="mkusbcrypt"
+
+if [[ $1 = "--debug" ]] ; then
+	set -x
+fi
+
+username=$(cat /tmp/r2u_user)
+error_log="/home/${username}/.refracta2usb/mkusbcrypt.log"
+touch "$error_log"
+chown ${username}:${username} "$error_log"
+exec 2>"$error_log"
+
+
+configfile="/etc/refracta2usb.conf"
+source "$configfile"
+source /usr/lib/refracta2usb/functions_r2u
+yad_zen_message="$TITLE can be run from a terminal without a gui."
+yad_zenity_compat	
+
+
+if ! [[ $DISPLAY ]] ; then
+	nogui="nogui"
+fi
+
+# Check to see if we're running a live session
+if [[ -d /lib/live/mount/rootfs ]] ; then
+	live_session="yes"
+fi
+
+# check for root
+[[ $(id -u) -eq 0 ]] || { $DIALOG --title=Error --$ERROR \
+--text="You need to be root\! \n\nCannot continue." ; exit 1 ; }
+
+
+# check for terminal   ######## This doesn't work if r2u is called from terminal and calls mkusbcrypt.
+if ! [ -t 0 ]; then
+echo " Not a terminal"
+$DIALOG --$ERROR --width=400 --height=100 --title="$TITLE" --text=$"Please run $TITLE from a terminal"
+exit 1
+fi
+
+
+usbdevlist=$(/usr/sbin/hwinfo --usb --short|grep "/dev/sd"|awk '{print $1}')
+usbdevfulllist=$(/usr/sbin/hwinfo --usb --short|grep "/dev/sd"|awk '{print $0}')
+
+if [[ -z "$usbdevfulllist" ]] ; then
+	echo " Warning: No USB devices detected. Exiting..."
+	exit 1
+fi
+
+echo -e "\n\tLIST OF USB DEVICES\n\n$usbdevfulllist\n"
+
+
+
+######## FUNCTIONS #########
+
+
+exit_dialog () {
+if [[ $nogui = "nogui" ]] ; then
+	echo -n "
+ Exit due to error or user action.
+ "
+else
+	$DIALOG --info --window-icon=error --title="$TITLE" \
+	--text="$TITLE will now exit due to error or user action
+	$error_message
+	" \
+	--${BUTTON0}="OK"${BUTTON0NUM}
+fi
+# stuff may need to be unmounted
+exit 1
+}
+
+
+select_device_cli () {
+echo -n "
+ Enter the device name for the usb drive you'd like to use.
+ (Example: /dev/sdb)
+ "
+read device
+[[ -b $device ]] || { echo "Device $device is not a block device!" ; exit 1 ; }
+}
+
+
+select_device_gui () {
+device=$($DIALOG --width=400 --height=200 --title="$TITLE" --list --separator="" --column="" --text=$"Detected USB devices:\n\n$usbdevfulllist\n\nPlease select the correct one to use" $usbdevlist)
+echo "$device"
+[[ -b $device ]] || { echo "Device $device is not a block device!" ; exit 1 ; }
+}
+
+
+# Partition a disk
+partition_cli () {
+while true; do
+    echo -n " 
+ You need to have a linux partition ready to create an encrypted volume.
+ If there isn't already a second partition on the usb drive, you can run 
+ the partition editor now and create one. Recommended format is ext2. 
+
+ 
+ Choices (enter number):
+     1. GParted
+     2. cfdisk
+     3. No thanks, I already have a partition prepared. Continue.
+     4. I'd like to exit the script now.
+    "
+    read ans
+    case $ans in
+      1) if ! [[ -f /usr/sbin/gparted ]]; then
+			while true; do
+				echo "
+ GParted is not installed. Would you like to use cfdisk instead?
+				
+	Yes (use cfdisk)
+	No (exit the script)
+"
+				
+				read ans
+				case $ans in
+				  [Yy]*) cfdisk "$device" ; break ;;
+				  [Nn]*) exit 0 ;;
+				esac
+			done
+		 elif ! [[ $DISPLAY ]]; then
+			while true; do
+				echo "
+ GParted requires a graphical environment.
+ Would you like to use cfdisk instead?
+				
+	Yes (use cfdisk)
+	No (exit the script)
+"
+				
+				read ans
+				case $ans in
+				  [Yy]*) cfdisk "$device" ; break ;;
+				  [Nn]*) exit 0 ;;
+				esac
+			done
+		 
+		 else
+			gparted "$device"
+		 fi
+		 break ;;
+      2) cfdisk "$device" ; break ;;
+      3) break ;;
+      4) exit 0 ;;
+    esac
+done
+
+
+
+
+echo -n "
+ Enter the partition number to use for the encrypted /home
+ 
+ (Example: For /dev/sdb2, just enter 2): "
+read N
+
+home_dev="$device$N"
+echo "home_dev is $home_dev"
+}
+
+
+partition_gui () {
+    partitioner=$($DIALOG --list --title=Partitioning \
+		--text=" You need to have a linux partition ready to create an encrypted volume.
+ If there isn't already a second partition on the usb drive, you can run 
+ the partition editor now and create one. Recommended format is ext2." \
+   --column "Option" --separator="" \
+		--width=600 --height=300  \
+	--${BUTTON0}="OK"${BUTTON0NUM} --${BUTTON1}="Quit Task"${BUTTON1NUM} \
+"Run GParted partitioner now." \
+"Run cfdisk partitioner in a terminal." \
+"No thanks, I already have a partition prepared. Continue." \
+"I'd like to quit this task now.")
+
+	if [[ $? = 1 ]] ; then
+		exit 0
+	fi
+	
+	if $(echo $partitioner | grep -q GParted) ; then
+		gparted "$device"
+	fi
+	if $(echo $partitioner | grep -q cfdisk) ; then
+#		xterm  -fa mono -fs 12 -geometry 90x20+0+0 -hold -e cfdisk "$device"
+		cfdisk "$device"
+	fi
+	if $(echo $partitioner | grep -q quit) ; then
+		exit 0
+	fi
+
+
+# Only up to partition 9, or $home_dev needs to be redefined.
+	selection=$(find /dev -mindepth 1 -maxdepth 1  -name "*[sh]d[a-z][1-9]" \
+	| grep $device | sort | awk '{print "\n" $0 }' \
+	| $DIALOG --list --title="/home partition" --text="Select a partition for the encrypted home." \
+	--multiple --column ' ' --column 'Partitions' --height=380 --width=150 ${RADIOLIST})
+
+	home_dev=$(echo $selection | tr -d \|)
+	echo "$home_dev"
+}
+
+
+# Do some sanity checks.
+sanity_checks () {
+	[[ -b $home_dev ]] || { echo "$home_dev does not exist!" ; exit 1 ; }
+
+	if $(df -h | grep $home_dev) ; then
+		echo "
+		Error! $home_dev is mounted.
+		Are you sure you chose the right partition?
+		Exiting... "
+		exit 1
+	fi
+
+	temp_uuid=$(/sbin/blkid -s UUID | grep "$home_dev" | awk '{ print $2 }' | sed 's/\"//g' | sed 's/UUID=//')
+	if $(grep "$temp_uuid" /proc/mounts); then
+		echo "
+		Error! $home_dev is mounted.	
+		Are you sure you chose the right partition?
+		Exiting... "
+		exit 1
+	fi
+
+	isfat=$(/sbin/blkid | grep "$home_dev" | grep -i fat)
+	if [[ -n $isfat ]] ; then
+		echo "
+		Error! $home_dev is FAT.
+		Are you sure you chose the right partition?
+		Exiting... "
+		exit 1
+	fi
+}
+
+
+# Create encrypted volume and filesystem within it. Copy files to it.
+make_crypt () {
+	echo "
+ You will need to create a passphrase.
+ "
+# These would be used if the script didn't run in a terminal.
+#        xterm -fa mono -fs 12 -geometry 80x20+0+0 -e cryptsetup luksFormat "$home_dev"
+#        xterm -fa mono -fs 12 -geometry 80x20+0+0 -e cryptsetup luksOpen "$home_dev" homecrypt
+	cryptsetup luksFormat "$home_dev"
+	echo "Encrypted partition created. Opening it..."
+	cryptsetup luksOpen "$home_dev" homecrypt
+	home_part="/dev/mapper/homecrypt"
+	mke2fs -t $fs_type_home "$home_part"
+	e2label "$home_part" "$disklabel"
+
+	mkdir -p /tmp/disk2
+	mount "$home_part" /tmp/disk2
+}
+
+
+select_iso () {
+	
+	if [[ $nogui = "nogui" ]] ; then
+		while true; do
+			echo -n "
+ Enter the full path to the iso file you like to
+ use as the source of the /home files.
+ "
+		read isofile
+		done
+	else
+		isofile=$($DIALOG --file-selection --width=640 --height=640 \
+		--title="Select Live ISO" --text="	Files need to be copied to your encrypted home directory.
+		Select the CD image file you want to use as the source of the home files.
+		This will probably be the same file you used for the live system.") 
+	fi
+
+	if [[ -z "$isofile" ]]; then
+		exit_dialog
+	fi
+}
+
+
+copy_iso_home () {
+	image_mountpoint="/tmp/isomount"
+	mkdir -p "$image_mountpoint"
+	mount "$isofile" "$image_mountpoint"
+
+	squash_mountpoint="/tmp/squashmount"
+	squashfile="/live/filesystem.squashfs"
+	mkdir -p "$squash_mountpoint"
+	mount "$image_mountpoint"/"$squashfile" "$squash_mountpoint"
+
+	rsync -av "$squash_mountpoint"/home/ /tmp/disk2/
+
+	umount "$squash_mountpoint"
+	umount "$image_mountpoint"
+
+
+	rmdir "$squash_mountpoint"
+	rmdir "$image_mountpoint"
+}
+
+
+copy_live_home () {
+#	excludes_file=/usr/lib/refracta2usb/mkusbcrypt_exclude.list
+	rsync -av --exclude-from="$excludes_file" /home/ /tmp/disk2/
+	### - /home/*/.gvfs
+}
+
+
+########### END OF FUNCTIONS ############
+device=$(cat /tmp/r2u_device)
+
+# Check for cryptsetup
+if ! [[ -f /sbin/cryptsetup ]]; then
+	echo "You need to install the cryptsetup package to use encryption."
+	error_message="You need to install the cryptsetup package to use encryption."
+	exit_dialog
+fi
+
+if [[ $nogui = "nogui" ]] ; then
+	select_device_cli
+	partition_cli
+else
+#	select_device_gui
+	partition_gui
+fi
+
+sanity_checks
+make_crypt
+
+
+# Select the source of the /home files: live session or iso
+if [[ $live_session = "yes" ]] ; then
+	if [[ $nogui = "nogui" ]] ; then
+		while true; do
+			echo -n "
+ Do you want to copy /home from the running live session?
+ 
+ Answer Yes to copy /home from the running live session.
+ Answer No to copy /home from an iso file.
+ "
+		read ans
+			case $ans in
+				[Yy]*)	copy_live_home ; break ;;
+				[Nn]*)	select_iso
+						copy_iso_home
+						break ;;
+			esac
+		done
+	else
+		$DIALOG --$QUESTION --title="" --${BUTTON0}="Live"${BUTTON0NUM} \
+     --${BUTTON1}="ISO"${BUTTON1NUM} --width 600 \
+     --text "Do you want to copy /home from the running live session,
+or from a Live-CD iso file?
+"
+		if [ $? -eq 0 ]; then
+			copy_live_home
+		else
+			select_iso
+			copy_iso_home
+		fi
+	fi
+else
+	select_iso
+	copy_iso_home
+fi
+	
+
+
+echo " Copied /home to $home_dev.
+ Cleaning up...
+ "
+
+umount /tmp/disk2
+rmdir /tmp/disk2
+cryptsetup luksClose homecrypt
+		finished_message="\n Created encrypted /home.\n Run Add_LUKS to create a boot menu entry."
+		finished_dialog
+echo "Done!"
+
+exit 0
+

@@ -4,7 +4,6 @@ laptop-detect
 locales
 mount
 sudo
-lshw
 lm-sensors
 localepurge
 hardlink
@@ -17,7 +16,10 @@ xfsprogs
 btrfs-tools
 ntfs-3g
 cryptsetup
-devio
 memlockd
 grub-pc
 ulatency
+fuseiso
+pmount
+hwinfo
+usbutils

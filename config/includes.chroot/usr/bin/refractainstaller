@@ -3,8 +3,6 @@ version="refractainstaller 9.0.9beta6 (20131206)"
 # Copyright 2011, 2012, 2013 fsmithred@gmail.com
 # Based on refractainstaller-8.0.3 by Dean Linkous
 # Licence: GPL-3
-# This is free software with no warrantees. Use at your own risk.
-
 # NOTE: If you try to tee this to an install log, you won't see it
 # when cryptsetup asks you to confirm with YES.
 

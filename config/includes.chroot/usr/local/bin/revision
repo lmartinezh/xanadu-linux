@@ -5,8 +5,8 @@ echo "Ejecutar como root"
 exit 1
 fi
 nombre=revision
-kernel=3.13-1-686-pae
-name=xanadu
+kernel=$(uname -r)
+name=$(hostname)
 var1=$(cat /sys/block/zram0/disksize)
 var2=$(cat /sys/kernel/mm/transparent_hugepage/enabled)
 var3=$(cat /sys/kernel/mm/transparent_hugepage/khugepaged/pages_to_scan)
@@ -18,7 +18,7 @@ var8=$(cat /sys/fs/cgroup/cpu/notify_on_release)
 clear
 
 echo -e "## kernel ##""\n" > /tmp/$nombre
-if [[ $kernel = 3.13-1-686-pae ]]; then
+if [[ $kernel = 3.14-1-686-pae ]]; then
 	echo "OK" >> /tmp/$nombre
 else
 	echo "FAIL" >> /tmp/$nombre

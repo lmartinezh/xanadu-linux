@@ -1,0 +1,46 @@
+This work was packaged for Debian by:
+
+    fsmithred <fsmithred@gmail.com> on 
+
+
+Upstream Author(s):
+
+	David Hare (dzz) davidhare77@yahoo.co.uk
+    fsmithred <fsmithred@gmail.com>
+
+
+Copyright:
+
+    Copyright (C) 2011-2014 David Hare (dzz) davidhare77@yahoo.co.uk   
+    Copyright (C) 2013-2014 fsmithred <fsmithred@gmail.com>
+    
+
+
+License:
+
+    GPL-3
+
+
+The Debian packaging is:
+
+    Copyright (C)  2013-2014 fsmithred <fsmithred@gmail.com>
+
+    and is licensed under the GPL version 3,
+    see "/usr/share/common-licenses/GPL-3".
+
+
+
+
+syslinux/*  (except live.cfg, splash.png and help files)
+
+    Files from the syslinux package,
+    Copyright: (C) 1994-2010 H. Peter Anvin <hpa@zytor.com>
+    License: GPL-2+
+
+    On Debian systems, the complete text of the GNU General Public License
+    can be found in /usr/share/common-licenses/GPL-2 file. 
+
+
+hooks/*
+
+	Copyright: (C) 2013 David Hare 

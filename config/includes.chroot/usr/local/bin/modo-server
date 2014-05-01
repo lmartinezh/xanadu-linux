@@ -11,7 +11,7 @@ case "$1" in
 	start)
 		apt -y purge task-lxde-desktop lightdm lxde lxappearance lxappearance-obconf lxde-common lxde-core lxde-icon-theme lxinput lxlauncher lxmenu-data lxmusic lxpanel lxrandr lxsession lxshortcut lxtask lxterminal brasero vlc xsane w32codecs iceweasel pidgin filezilla libreoffice xorg x11-session-utils wireshark thunar gksu fdpowermon disk-manager clamtk synaptic gparted compton evince yad plymouth gimp zenity pcmanfm
 		apparmor_1
-		apt -y install curl dnsutils fwsnort lynx less portsentry tcpdump
+		apt -y install curl fwsnort lynx less portsentry tcpdump
 		limpiar_1
 		echo "## aideinit y actualizacion de firmas en psad y rkhunter ##"
 		aideinit -y -f

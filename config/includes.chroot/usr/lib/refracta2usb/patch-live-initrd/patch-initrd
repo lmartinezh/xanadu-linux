@@ -1,0 +1,43 @@
+#!/bin/bash
+
+if [ -d extracted ];then
+	echo -e "\n Cannot create new directory 'extracted'.. it already exists! \n Please rename, move or delete it."
+	exit 1
+fi
+
+echo -e "\nA copy of the original initrd to patch should exist in this directory:"
+ls|egrep "^initrd"
+
+echo -e "\n Please enter the name of the initrd to extract:"
+read ORIGINAL_INITRD
+
+if [ ! -f $ORIGINAL_INITRD ]; then
+	echo -e "\n File not found"
+	exit 1
+fi
+
+extract () {
+	mkdir extracted
+	pushd extracted
+	fakeroot zcat ../$ORIGINAL_INITRD | cpio -i
+	popd
+echo "Initrd is extracted"
+}
+
+copy_files () {
+rm -r extracted/lib/live
+tar xvfz live.tar.gz -C extracted/lib/
+}
+
+rebuild () {
+pushd extracted
+fakeroot find . -print0 | cpio -0 -H newc -o | gzip -c > ../initrd.custom.img
+echo -e "\n Initrd is rebuilt $PWD/initrd.custom.img"
+popd
+}
+
+extract
+copy_files
+rebuild
+
+exit 0

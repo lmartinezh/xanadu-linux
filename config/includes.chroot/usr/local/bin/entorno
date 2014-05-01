@@ -8,7 +8,7 @@ nombre=reporte
 echo -e "## CPU ##""\n" > /tmp/$nombre
 lscpu >> /tmp/$nombre
 echo -e "\n""## HARDWARE ##""\n" >> /tmp/$nombre
-lshw -short >> /tmp/$nombre
+hwinfo --short >> /tmp/$nombre
 echo -e "\n""## USB ##""\n" >> /tmp/$nombre
 lsusb >> /tmp/$nombre
 echo -e "\n""## MEMORIA ##""\n" >> /tmp/$nombre

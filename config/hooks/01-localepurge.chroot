@@ -35,7 +35,7 @@ echo "## purge ##"
 apt-get -y purge $(deborphan --libdevel) $(deborphan --find-config) bluetooth bluez bluez-alsa bluez-firmware bluez-gstreamer linux-wlan-ng-doc aptitude aptitude-common vim-tiny vim-common libc6-dev gcc g++ make dpkg-dev build-essential
 # man-db manpages
 echo "## purge headers ##"
-apt-get -y purge linux-headers-3.13-1-686-pae linux-headers-3.13-1-common linux-headers-686-pae
+apt-get -y purge linux-headers-3.14-1-686-pae linux-headers-3.14-1-common linux-headers-686-pae
 echo "## autoremove ##"
 apt-get -y --force-yes autoremove
 echo "## deborphan ##"

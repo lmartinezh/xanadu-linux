@@ -1,0 +1,536 @@
+#!/bin/bash 
+# scriptname: mkloopfile or maybe it should be mkloopfile-gui
+version="2014-02-21"
+TITLE="mkloopback"
+
+# make a loopback filesystem (luks or not)
+
+# use for live-persistence or whatever else.
+
+
+
+
+# filesystem format
+# will be labelled the same as $LOOP_FILENAME
+#FILESYSTEM="ext2"
+
+# choose "full" or "home".. Ignored if $LOOP_FILENAME is not "persistence"
+# other persistence options: choose either and edit.conf manually
+#PERSISTENCE_TYPE="home"
+
+# mountpoint for the loopback file (script can create it)
+LOOP_MOUNTPOINT="/tmp/loopmount"  ###### same as $persist_dev_mountpoint
+
+
+
+########################################################
+########################################################
+source /etc/refracta2usb.conf
+source /usr/lib/refracta2usb/functions_r2u
+yad_zenity_compat
+
+if [[ $1 = "--debug" ]] ; then
+	set -x
+fi
+
+
+
+username=$(cat /tmp/r2u_user)
+error_log="/home/${username}/.refracta2usb/mkloopback.log"
+touch "$error_log"
+chown ${username}:${username} "$error_log"
+exec 2>"$error_log"
+
+
+# script must be called from a root terminal 
+if ! [ -t 0 ]; then
+echo "Error:  Not a terminal"
+exit 1
+fi
+
+if ! [[ $(id -u) -eq 0 ]]; then
+echo "Error: You are not root"
+exit 1
+fi
+
+
+exit_dialog () {
+	$DIALOG --info --window-icon=error --title="$TITLE" \
+	--text="$TITLE will now exit due to error or user action
+	$exit_message
+	" \
+	--${BUTTON0}="OK"${BUTTON0NUM}
+
+	cleanup1
+	exit 1
+
+}
+
+
+loop_options () {
+
+# To change file sizes listed here, edit /etc/refracta2usb.conf.
+# To change default settings, edit /usr/lib/refracta2usb/functions_r2u.
+	loop_opts=$($DIALOG --list --title="Loopfile Options" \
+	--${BUTTON0}="OK"${BUTTON0NUM} --${BUTTON1}="Quit Task"${BUTTON1NUM} \
+     --text=" Change settings for this run. If conflicting options are selected, the last one for that variable will be used.
+
+ You can create a loopback file to be used with or without persistence and with or without encryption. 
+ If you put the file on the FIRST PARTITION, or if you use ENCRYPTION,  you will need to use a patched 
+ initrd and boot with the live media read/write. PATCH THE INITRD FIRST, THEN CREATE THE LOOPBACK FILE. 
+ That way, the boot menu entry will be generated correctly. 
+ 
+ Default settings do not require a patched initrd.
+ 
+ To change file sizes listed here, edit /etc/refracta2usb.conf.
+ To change default settings, edit /usr/lib/refracta2usb/functions_r2u.
+ 
+ Quit Task to return to the Main Menu.
+ 
+ "\
+     --checklist --column "Choose" --column "Num" --column "Option" \
+     --width=780 --height=620  \
+  $home_rw 01 "Use loopback file for home persistence." \
+  $live_rw 02 "Use loopback file for full persistence." \
+  $edit_conf 03 "Open persistence.conf in text editor." \
+  $luks_enc	04 "Encrypted filesystem (Requires patched initrd.)" \
+  $first_part 05 "Put file on first partition. (Requires patched initrd.)" \
+  $size1 06 "Size of loopback file:	${loopsize1}MB	" \
+  $size2 07 "Size of loopback file:	${loopsize2}MB	" \
+  $size3 08 "Size of loopback file:	${loopsize3}MB	" \
+  $size4 09 "Size of loopback file:	user set " \
+  $fstype1 10 "Use ext4 filesystem." \
+  $fstype2 11 "Use ext3 filesystem." \
+  $fstype3 12 "Use ext2 filesystem." \
+  $loop_defaults 00 "Restore default settings.")
+
+	if [[ $? = 1 ]] ; then
+		cleanup1
+		cleanup
+		exit 0
+	fi
+
+echo "$loop_opts"
+
+	if [[ $loop_opts =~ 01 ]] ; then
+		PERSISTENCE="yes"
+		PERSISTENCE_TYPE="home"
+	fi
+
+	if [[ $loop_opts =~ 02 ]] ; then
+		PERSISTENCE="yes"
+		PERSISTENCE_TYPE="full"
+	fi	
+
+	if [[ $loop_opts =~ 03 ]] ; then
+		PERSISTENCE="yes"
+		PERSISTENCE_TYPE="config"
+	fi
+
+	if [[ $loop_opts =~ 04 ]] ; then
+		if ! [[ -f /sbin/cryptsetup ]]; then
+			echo "You need to install the cryptsetup package to use encryption."
+			exit_message="You need to install the cryptsetup package to use encryption."
+			exit_dialog
+		fi
+		IS_LUKS="yes"
+		use_custom_initrd="yes"
+	custom_initrd_message="
+ ###	You need to use a patched initrd with an encrypted loopfile 	###
+ ###	or with any loopfile that resides on the first partition.		###
+ "
+		cryptsetup_message=" After you enter the name, go to the terminal. You will be
+ asked to enter a passphrase for the encrypted volume. "
+	fi
+
+	if [[ $loop_opts =~ 05 ]] ; then
+		first_partition="yes"
+		use_custom_initrd="yes"
+	custom_initrd_message="
+ ###	You need to use a patched initrd with an encrypted loopfile 	###
+ ###	or with any loopfile that resides on the first partition.		###
+ "
+	fi
+
+	if [[ $loop_opts =~ 06 ]] ; then
+		SIZE="$loopsize1"
+	fi
+	
+	if [[ $loop_opts =~ 07 ]] ; then
+		SIZE="$loopsize2"
+	fi
+
+	if [[ $loop_opts =~ 08 ]] ; then
+		SIZE="$loopsize3"
+	fi
+	
+	if [[ $loop_opts =~ 09 ]] ; then
+  		SIZE=$($DIALOG --entry --title="Loopback File Size" \
+		--text="Enter the size of the loopback file in megabytes.\n" --numeric \
+		--${BUTTON0}="OK"${BUTTON0NUM} 	--${BUTTON1}="Quit Task"${BUTTON1NUM}  | cut -d"." -f1)
+			if [[ $? = 1 ]] ; then
+				cleanup1
+				cleanup
+				exit 0
+			fi
+	fi
+
+	if [[ $loop_opts =~ 10 ]] ; then
+		FILESYSTEM="ext4"
+	fi
+	
+	if [[ $loop_opts =~ 11 ]] ; then
+		FILESYSTEM="ext3"
+	fi
+	
+	if [[ $loop_opts =~ 12 ]] ; then
+		FILESYSTEM="ext2"
+	fi
+
+	if [[ $options =~ 00 ]] ; then
+		echo -e "\n Resetting default loopback values..."
+		loopfile_settings
+	fi
+}
+
+
+# Set $device and $usb_mountpoint before calling the loopfile settings
+# window, so that device freespace can be shown before setting the
+# loopfile size. Test for null $device comes after loopfile settings, so
+# that a user can see the options without having to plug in a usb drive.
+device=$(cat /tmp/r2u_device)
+
+# Check if we're in a live session or not and set the mounpoint
+# for the location of initrd and boot menu.
+if (df |grep "${device}1" | grep "/lib/live/mount/rootfs") ; then
+	usb_mountpoint="/lib/live/mount/rootfs"
+else
+	usb_mountpoint="/media/${device##*/}1"		
+fi	
+
+echo "device is $device @@@@@@@@@@@@@@@"
+echo "usb_mountpoint is $usb_mountpoint"
+
+if [[ -z "$device" ]] ; then
+	exit_message=" No device was selected."
+	exit_dialog
+fi
+
+
+# Set the directory where the file-selection window opens.
+if [[ $first_partition = "yes" ]]; then
+	file_select_dir="$usb_mountpoint"
+else
+	selection=$(find /dev -mindepth 1 -maxdepth 1  -name "*[sh]d[a-z][1-9]" \
+	| grep $device | sort | awk '{print "\n" $0 }' \
+	| $DIALOG --list --title="Persistent Partition" --text="Select a partition to locate the loopback file." \
+	--multiple --column ' ' --column 'Partitions' --height=380 --width=150 ${RADIOLIST} \
+	--${BUTTON0}="OK"${BUTTON0NUM} --${BUTTON1}="Quit Task"${BUTTON1NUM})
+		if [[ $? = 1 ]] ; then
+			cleanup1
+			exit 0
+		fi
+	
+	if [[ -z "$selection" ]] ; then
+		$DIALOG --info --window-icon=error --title=$TITLE --text="No partition was chosen. Quit task." \
+			--${BUTTON0}="OK"${BUTTON0NUM}
+		exit 1
+	fi
+echo "selection is $selection   @@@@@@@@@@@@@@@@@@@@@@@@@@"
+	selected_partition=$(echo $selection | tr -d \|)
+	if [[ $selected_partition = ${device}1 ]] ; then
+		file_select_dir="$usb_mountpoint"
+	else
+		selected_partition_mountpoint="/tmp/${selected_partition##*/}"
+			if ! [[ -d "$selected_partition_mountpoint" ]] ; then
+				mkdir "$selected_partition_mountpoint"
+			fi
+		mount "$selected_partition" "$selected_partition_mountpoint"
+		file_select_dir="$selected_partition_mountpoint"
+	fi
+fi
+
+
+# Check size after setting target device.
+target_device="$file_select_dir"
+image_size="Loopback file size must not exceed device free space. "
+check_size
+if [[ $? = 3 ]] ; then
+	cleanup1
+	cleanup
+	exit 0
+fi
+
+loopfile_settings
+
+if [[ $selected_partition = ${device}1 ]] ; then
+	use_custom_initrd="yes"
+	custom_initrd_message="
+ ###	You need to use a patched initrd with an encrypted loopfile 	###
+ ###	or with any loopfile that resides on the first partition.		###
+ "
+fi
+
+
+work_dir=$($DIALOG --title="$TITLE" --file-selection --directory --filename="${file_select_dir}/*" \
+	--text=" Select the folder to contain the loop file. Normally, this is the root 
+ directory of the device. For a multiboot device, choose the folder 
+ for the system that will use this loop file.
+ " \
+	--width=500 --height=400)
+	if [[ $? = 1 ]] ; then
+		cleanup1
+		exit 0
+	fi
+cd "$work_dir"
+
+
+LOOP_FILENAME=$($DIALOG --title="Loop Filename" --entry --entry-text="persistence" --text=" Enter a name for the loop file, or just ENTER to use \"persistence\". 
+ 
+$cryptsetup_message"  --${BUTTON0}="OK"${BUTTON0NUM} --${BUTTON1}="Quit Task"${BUTTON1NUM})
+	if [[ $? = 1 ]] ; then
+		exit 0
+	fi
+
+	
+
+setup_file () {
+dd if=/dev/zero of=${LOOP_FILENAME} bs=1M count=${SIZE}
+
+	if [ -n "$username" ]; then
+		chown ${username}:${username} ${LOOP_FILENAME}
+	fi
+
+losetup -f > /tmp/nextloop
+LOOPDEV=$(cat /tmp/nextloop)
+
+losetup ${LOOPDEV} ${LOOP_FILENAME}
+
+}
+
+format_file () {
+exec 2>/dev/null
+if [ "$IS_LUKS" = "yes" ]; then
+	setpass=$($DIALOG --form --field "Password:H" --field "Retype Password:H" --separator="@_@" --title "Password" --image="dialog-password" --button=OK:0 --button=Cancel:1)
+	if [[ $? = 1 ]] ; then
+		cleanup1
+		exit 0
+	fi
+	if [[ $(echo $setpass  | awk -F"@_@" '{print $1}') != $(echo $setpass | awk -F"@_@" '{print $2}') ]] ; then
+		try_again
+		return
+	else
+		passphr=$(echo $setpass | awk -F"@_@" '{ print $1 }')
+		echo "$passphr" | cryptsetup luksFormat ${LOOPDEV}
+		echo "$passphr" | cryptsetup luksOpen ${LOOPDEV} ${LOOP_FILENAME}
+	fi
+exec 2>>"$error_log"
+LOOP_FS="/dev/mapper/$LOOP_FILENAME"
+CLOSE_LOOPDEV="cryptsetup luksClose $LOOP_FILENAME && losetup -d $LOOPDEV"
+
+else
+LOOP_FS="$LOOPDEV"
+CLOSE_LOOPDEV="losetup -d $LOOPDEV"
+
+fi
+
+mke2fs -t ext2 -L ${LOOP_FILENAME} ${LOOP_FS}
+/sbin/tune2fs -c 0 ${LOOP_FS}
+
+}
+
+
+try_again () {
+yad --image="gtk-dialog-warning" --title "Error" --button=Yes:0 --button="Quit Task":1 \
+--text "Entries do not match. Do you want to try again?"
+if [[ $? = 0 ]] ; then
+	format_file
+else
+	cleanup1
+	exit 0
+fi
+}
+
+
+mount_fs () {
+# If this function is common to mkloopback and mkpersist, then
+# $persist_dev and $LOOP_FS needs to be unset at end of task (cleanup).
+# $LOOP_FS = $persist_dev or vice versa for writing config file.
+mkdir ${LOOP_MOUNTPOINT} || echo "Mountpoint exists"
+
+	DIR_FILES=$(ls ${LOOP_MOUNTPOINT}|wc -l)
+	if [ "$DIR_FILES" -ne "0" ]; then
+		echo "Error: Mountpoint ${LOOP_MOUNTPOINT} is not empty" 
+		cleanup1
+		exit 1
+	fi
+
+mount ${LOOP_FS} ${LOOP_MOUNTPOINT}
+
+}
+
+write_persistence_conf () {
+
+if [ "$PERSISTENCE" = "yes" ]; then
+
+echo -e "# home persistence example:"  > ${LOOP_MOUNTPOINT}/persistence.conf
+echo -e "# /home bind,source=.\n" >> ${LOOP_MOUNTPOINT}/persistence.conf
+
+echo -e "# full persistence example (entire filesystem writable):"  >> ${LOOP_MOUNTPOINT}/persistence.conf
+echo -e "# / union,source=.\n"  >> ${LOOP_MOUNTPOINT}/persistence.conf
+
+	if [ "$PERSISTENCE_TYPE" = "home" ]; then
+	echo -e "/home union,source=." >> ${LOOP_MOUNTPOINT}/persistence.conf
+	fi
+
+	if [ "$PERSISTENCE_TYPE" = "full" ]; then
+	echo -e "/ union,source=." >> ${LOOP_MOUNTPOINT}/persistence.conf
+	fi
+
+	if [ "$PERSISTENCE_TYPE" = "config" ]; then
+		find_editor
+		"$editor" ${editor_option} ${LOOP_MOUNTPOINT}/persistence.conf
+	fi
+fi
+
+}
+
+
+setup_boot_menu () {
+
+if [ "$PERSISTENCE" = "yes" ]; then
+	
+	image_source_dir="$usb_mountpoint"
+	select_kernel
+	# if $use_custom_initrd is "yes" then text reminder appears in
+	# file-selection window.
+	source_initrd=$($DIALOG --file-selection --height=550 --width=650 --title="$TITLE" \
+	--text=" Select the initrd that will be used with this loopfile. It should be in the live folder.
+ If you have a multi-boot usb, take care to choose the correct live folder.
+	 
+$custom_initrd_message\n" \
+	 --filename="${usb_mountpoint}/*")
+		if [[ $? = 1 ]] ; then
+			cleanup1
+			exit 0
+		fi
+		
+	# Manipulate the path so that we can create a proper
+	# boot menu entry in all situations.
+	live_initrd="${source_initrd##*/}"
+	source_dir="${source_initrd%/*}"
+	system_root_path="${source_dir%/*}"
+	system_root_dir="${system_root_path##*/}"
+	echo "
+	live_initrd is $live_initrd
+	source_dir is $source_dir
+	system_root_path is $system_root_path
+	system_root_dir is $system_root_dir
+	"
+	
+	
+	if [[ $source_dir = "$usb_mountpoint/live" ]] ; then
+#		live_dir="/live"
+		live_path_opt=""
+	else
+#		live_dir="/${system_root_dir}/live"
+		if [[ -n "$(ls ${source_dir}/*.[Ii][Ss][Oo])" ]] ; then
+			isofile=$($DIALOG --file-selection --file-filter="*.[iI][sS][oO]" --file-filter="*" \
+	--width=640 --height=640 --title=$"Select Live ISO" --text="\n Select the CD image file. \n" \
+	--filename="${source_dir}/*" ${OKBUTTON} ${QUITBUTTON})
+			if [[ $? = 1 ]] ; then
+				cleanup
+				run_task
+			fi
+			
+			if [[ -z "$isofile" ]]; then
+				exit_message="\nYou did not select a CD image file."
+				exit_dialog
+			fi
+	
+			if ! $(echo $isofile | grep -q .[Ii][Ss][Oo]$); then
+				exit_message="\nYou did not select a CD image file.."
+				exit_dialog
+			fi
+			
+			isofile_name="${isofile##*/}"
+#			live_path_opt="findiso=${live_dir}/$isofile_name"
+			live_path_opt="findiso=${local_path}/$isofile_name"
+		else
+#			live_path_opt="live-media-path=$live_dir"
+			live_path_opt="live-media-path=$local_path"
+		fi
+	fi
+	
+	if [[ $work_dir = $usb_mountpoint ]] || [[ $work_dir = "$selected_partition_mountpoint" ]] ; then
+		persist_path_opt=""
+	else
+		echo "
+		work_dir is $work_dir
+		usb_mountpoint is $usb_mountpoint
+		selected_partition_mountpoint is $selected_partition_mountpoint"
+		persist_path_opt="persistence-path=/${work_dir##*/}/"
+	fi
+	
+	if [[ $IS_LUKS = "yes" ]] ; then
+		persist_crypt_opt="persistence-encryption=none,luks"
+	else
+		persist_crypt_opt=""
+	fi
+	
+	if [[ $use_custom_initrd = "yes" ]] ; then
+		basemount_opt="basemountmode=rw,noatime,umask=000"
+	else
+		basemount_opt=""
+	fi
+
+
+	finished_message="
+$LOOP_FILENAME is ready for $PERSISTENCE_TYPE persistence. 
+An entry for this file will be added to your boot menu,
+and the menu will be opened in a text editor for your review. "
+	echo "$finished_message"
+
+
+# Should probably use $initrd_name instead of $live_initrd in menu.
+	if [[ $LOOP_FILENAME = "persistence" ]] ; then
+		menu_text="
+label persistence
+	menu label Refracta (persistence)
+    kernel ${local_path}/${kernel_name} quiet
+    append initrd=${local_path}/$live_initrd boot=live ip=frommedia union=aufs config=openssh-server ${basemount_opt} ${live_path_opt} persistence persistence-media=removable-usb ${persist_path_opt} ${persist_crypt_opt}
+"
+	else
+		menu_text="
+label $LOOP_FILENAME
+	menu label Refracta ($LOOP_FILENAME)
+    kernel ${local_path}/${kernel_name} quiet
+    append initrd=${local_path}/$live_initrd boot=live ip=frommedia union=aufs config=openssh-server ${basemount_opt} ${live_path_opt} persistence persistence-media=removable-usb ${persist_path_opt} persistence-label=$LOOP_FILENAME ${persist_crypt_opt} 
+"
+	fi
+	
+	echo "$menu_text" > /tmp/boot_menu_text
+	username=$(cat /tmp/r2u_user)
+	chown ${username}:${username} /tmp/boot_menu_text
+else
+	$DIALOG --$QUESTION --title="$TITLE" --text="You made a loopback file that will not be used for persistence. 
+ Do you want to give $username ownership of the filesystem? " \
+	--${BUTTON0}="Yes"${BUTTON0NUM} --${BUTTON1}="No"${BUTTON1NUM}
+		if [[ $? = 0 ]] ; then
+			chown -R ${username}:${username} ${LOOP_MOUNTPOINT}
+		fi
+	finished_message="
+Loopback file, $LOOP_FILENAME is ready. "
+fi
+}
+
+
+setup_file
+format_file
+mount_fs
+write_persistence_conf
+setup_boot_menu
+finished_dialog
+cleanup1
+
+exit 0

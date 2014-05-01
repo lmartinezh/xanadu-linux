@@ -1,0 +1,255 @@
+#!/usr/bin/env bash
+# patch-initrd-gui
+version="patch-initrd-gui 2014-02-21"
+# This script depends on and must be launched from within refracta2usb.
+TITLE="patch-initrd-gui"
+
+
+error_log="${HOME}/.refracta2usb/patch-initrd.log"
+exec 2>"$error_log"
+
+configfile="/etc/refracta2usb.conf"
+source "$configfile"
+source /usr/lib/refracta2usb/functions_r2u
+yad_zen_message="Fix that or run patch-initrd from the command line."
+yad_zenity_compat
+
+
+show_help () {
+	printf "$help_text"
+	exit 0
+}
+
+help_text="
+	Usage:  This script depends on and must be 
+		launched from within refracta2usb.
+	
+	valid options:
+		-h, --help		show this help text
+		-v, --version	display the version information
+		-d. --debug		debug mode
+		
+"
+
+while [[ $1 == -* ]]; do
+	case "$1" in
+	
+		-h|--help)
+			show_help ;;
+		
+		-v|--version)
+			printf "\n$version\n\n" 
+			exit 0 ;;
+			
+		-d|--debug)
+			DEBUG="yes"
+			break ;;
+		
+		*) 
+			printf "\t invalid option: $1 \n\n"
+			printf "\t Try:  $0 -h for full help. \n\n"
+			exit 1 ;;
+    esac
+done
+
+
+
+if [[ $DEBUG = "yes" ]] ; then
+	set -x
+fi
+
+
+
+# root should NOT run this script
+if [[ $(id -u) -eq 0 ]]; then
+$DIALOG --$ERROR --width=400 --height=160 --title="$TITLE" --text="$TITLE must be run by normal user, not root"
+exit 1
+fi
+
+
+extract () {
+	mkdir extracted
+	pushd extracted
+	fakeroot zcat ../$ORIGINAL_INITRD | cpio -i
+	popd
+echo "Initrd is extracted"
+}
+
+copy_files () {
+rm -r extracted/lib/live
+tar xvfz "$live_tarball" -C extracted/lib/
+}
+
+rebuild () {
+pushd extracted
+fakeroot find . -print0 | cpio -0 -H newc -o | gzip -c > ../"$custom_initrd"
+echo -e "\n Initrd is rebuilt $PWD/$custom_initrd"
+popd
+}
+
+
+
+### The work starts here.
+
+
+# Check for previous work dirs and report space used.
+if [[ -d "$initrd_work_dir" ]] ; then
+    n=1
+    while [[ -d "$initrd_work_dir$n" ]] ; do
+        ((n++))
+	done
+	mv "$initrd_work_dir" "$initrd_work_dir$n"
+	mkdir -p "$initrd_work_dir"
+	warning_message=" You have $n old patch-initrd directories taking up space.  
+ (Lowest number is oldest)
+ 
+$(du -sh ${initrd_work_dir%/*}/patch-initrd?*)
+"
+	warning_dialog
+else
+	mkdir -p "$initrd_work_dir"
+fi
+
+error_message="Fatal error: cp failed to copy ${live_tarball##*/}"
+cp "$live_tarball" "$initrd_work_dir" ; check_exit
+unset error_message
+
+cd "$initrd_work_dir"
+
+device=$(cat /tmp/r2u_device)
+echo "device is  $device"
+
+
+	if $(grep -q "/lib/live/mount/rootfs" /proc/mounts) ; then
+		live_session="yes"
+	fi
+	
+	if ! $(grep -q ${device}1 /proc/mounts) ; then
+		pmount ${device}1
+		sleep 2
+		source_dir="/media/${device##*/}1/"
+		usb_mountpoint="/media/${device##*/}1"
+		image_source_dir="$usb_mountpoint"		
+	else
+		source_dir="/lib/live/mount/rootfs"
+		image_source_dir="/lib/live/mount/rootfs"
+	fi
+		
+	
+	select_kernel
+
+# full path to file		
+source_initrd=$($DIALOG --file-selection --height=550 --width=650 --title="$TITLE" \
+--text="\n Select the initrd to patch. It will be copied to 
+ $initrd_work_dir where it will be patched. \n" \
+ --filename="${source_dir}/*" ${OKBUTTON} ${QUITBUTTON})
+	if [[ $? -ne 0 ]] ; then
+		cleanup
+		exit 0
+	fi
+
+	if [[ -z "$source_initrd" ]] ; then
+		cleanup
+		warning_message="You did not select an initrd image file.  "
+		warning_dialog
+		exit 1
+	fi
+
+echo "source_initrd is $source_initrd"
+# path without the filename
+source_dir="${source_initrd%/*}"
+echo "source_dir is now $source_dir"
+system_root_path="${source_dir%/*}"
+system_root_dir="${system_root_path##*/}"
+
+[[ -f "${initrd_work_dir}/${source_initrd##*/}" ]] || cp $source_initrd $initrd_work_dir
+
+initrd_copy="${initrd_work_dir}/${source_initrd##*/}"
+echo initrd_copy is $initrd_copy
+
+cd "$initrd_work_dir"
+
+ORIGINAL_INITRD="${initrd_copy##*/}"
+echo "ORIGINAL_INITRD is $ORIGINAL_INITRD"
+
+if [[ -z $ORIGINAL_INITRD ]] ; then
+	echo "ORIGINAL_INITRD is null.
+Exiting..."
+	exit 1
+fi
+
+# choose filename for custom initrd
+custom_initrd=$($DIALOG --title="$TITLE" --entry --entry-text="initrd.custom.img" --text="Enter a name for the custom initrd,
+or just ENTER to use \"initrd.custom.img\"."  --filename="$source_dir"/ --${BUTTON0}="OK"${BUTTON0NUM} --${BUTTON1}="Quit Task"${BUTTON1NUM})
+	if [[ $? = 1 ]] ; then
+		exit 0
+	fi
+
+
+extract
+copy_files
+rebuild
+
+if [[ $source_dir = "/media/${device##*/}1/live" ]] ; then
+	live_dir="/live"
+	live_path_opt=""
+else
+	live_dir="/${system_root_dir}/live"
+	if [[ -n "$(ls ${source_dir}/*.[Ii][Ss][Oo])" ]] ; then
+			isofile=$($DIALOG --file-selection --file-filter="*.[iI][sS][oO]" --file-filter="*" \
+	--width=640 --height=640 --title=$"Select Live ISO" --text="Select the CD image file." \
+	--filename="${source_dir}/*" ${OKBUTTON} ${QUITBUTTON})
+			if [[ $? = 1 ]] ; then
+				cleanup
+				run_task
+			fi
+			
+			if [[ -z "$isofile" ]]; then
+				exit_message="\nYou did not select a CD image file."
+				exit_dialog
+			fi
+	
+			if ! $(echo $isofile | grep -q .[Ii][Ss][Oo]$); then
+				exit_message="\nYou did not select a CD image file.."
+				exit_dialog
+			fi
+			
+			isofile_name="${isofile##*/}"
+#			live_path_opt="findiso=${live_dir}/$isofile_name"
+			live_path_opt="findiso=${local_path}/$isofile_name"
+		else
+#			live_path_opt="live-media-path=$live_dir"
+			live_path_opt="live-media-path=$local_path"
+		fi
+fi
+
+
+if [[ live_session != "yes" ]] ; then
+	$DIALOG --$QUESTION --title="$TITLE" --text=" Copy $custom_initrd to selected usb thumb drive? 
+ An entry for this initrd will be added to your boot menu,
+ and the menu will be opened in a text editor for your review. 
+ " 	--${BUTTON0}="OK"${BUTTON0NUM} --${BUTTON1}="Quit Task"${BUTTON1NUM}
+		if [[ $? = 0 ]] ; then
+#			cp $custom_initrd /media/${device##*/}1/live/
+			cp "$custom_initrd" "$source_dir"
+
+# Use ${target_dir}
+			menu_text="
+label $custom_initrd
+	menu label Refracta ($custom_initrd)
+    kernel ${local_path}/${kernel_name} quiet
+    append initrd=${local_path}/$custom_initrd boot=live ip=frommedia union=aufs config=openssh-server basemountmode=rw,noatime,umask=000 ${live_path_opt}
+"
+		echo "$menu_text" > /tmp/boot_menu_text
+		fi
+#		finished_message="Task complete."  # This is confusing; it comes right after message about boot menu.
+#		finished_dialog
+else
+	finished_message="Task complete. You seem to be running in
+a live session. You will need to copy $custom_initrd to the 
+/live folder of your media and edit the boot menu to use the
+new initrd image."
+	finished_dialog
+fi
+
+exit 0

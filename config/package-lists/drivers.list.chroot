@@ -26,5 +26,4 @@ system-config-printer
 system-config-printer-udev
 printer-driver-all
 printer-driver-all-enforce
-usb-modeswitch
 discover

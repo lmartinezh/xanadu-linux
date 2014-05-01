@@ -1,7 +1,16 @@
 xanadu (0.5.4)
 
-	* se modifica la funcion "optimizar" en el script "variables" para aumentar la seguridad
+	* se modifica la funcion optimizar en el script variables para aumentar la seguridad
 	* se elimino random-wallpaper en lxde y openbox
+	* se sustituye lshw por hwinfo
+	* se agregan los paquetes fuseiso y pmount
+	* se agrega script para instalacion a usb
+	* se traduce el instalador principal
+	* nuevas replicas de algunos repositorios
+	* se actualizan algunos ppa a trusty
+	* se elimina el paquete devio
+	* se agregan paquetes a la lista exclude.pref.chroot
+	* se corrige un error en el script modo-server
 
 
 xanadu (0.5.3)
