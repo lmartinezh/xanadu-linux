@@ -57,7 +57,7 @@ Paquetes incluidos:
 
 * Kernel
 
-3.13.1.686-pae
+3.14.1.686-pae
 
 * Escritorio
 
