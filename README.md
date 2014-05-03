@@ -9,7 +9,7 @@ Se construye usando Live-build, la imagen .ISO y sus configuraciones para crearl
 
 ##### DESCARGA XANADU #####
 
-http://www.mediafire.com/download/ktiwh3c1dabx0bk/xanadu-0.5.2-i386.zip
+https://xanadulinux.wordpress.com/descarga/
 
 
 El nombre xanadu se ha considerado como sinónimo de opulencia y misterio, sobre todo gracias al poema Kubla Khan de Samuel Taylor Coleridge, también era la capital de verano del imperio Mongol de Kublai Jan y además fue el nombre seleccionado por Theodore Holm Nelson (Ted Nelson) para su idea de "concebir un documento global y único (docuverse), que cubra todo lo escrito en el mundo, mediante una gran cantidad de ordenadores interconectados, que contenga todo el conocimiento existente o, mejor dicho, información en forma de hipertexto."
