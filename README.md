@@ -14,7 +14,7 @@ https://xanadulinux.wordpress.com/descarga/
 
 El nombre xanadu se ha considerado como sinónimo de opulencia y misterio, sobre todo gracias al poema Kubla Khan de Samuel Taylor Coleridge, también era la capital de verano del imperio Mongol de Kublai Jan y además fue el nombre seleccionado por Theodore Holm Nelson (Ted Nelson) para su idea de "concebir un documento global y único (docuverse), que cubra todo lo escrito en el mundo, mediante una gran cantidad de ordenadores interconectados, que contenga todo el conocimiento existente o, mejor dicho, información en forma de hipertexto."
 
-Para copiar el contenido de la imagen ISO a una memoria USB puede utilizar unetbootin o el comando bb de la siguiente forma: dd if=nombre.iso of=/dev/sdx oflag=direct bs=1048576
+Para copiar el contenido de la imagen ISO a una memoria USB puede utilizar unetbootin o el comando dd de la siguiente forma: dd if=nombre.iso of=/dev/sdx oflag=direct bs=1048576
 
 --------------------------
 
@@ -28,8 +28,8 @@ La clave de ROOT es:	enfilade
 
 Requerimientos mínimos:
 
-	* 384 Mb RAM (1 Gb RAM para tor)
-	* CPU a 800 Mhz o superior (1.0 Ghz para tor)
+	* 384 Mb RAM (1 Gb RAM recomendado)
+	* CPU a 800 Mhz o superior (1.0 Ghz recomendado)
 	* Tarjeta de video a 800x600, 16 Mb vídeo RAM
 	* BIOS con capacidad de arranque por USB o CDROM
 	* 5 Gb de capacidad de disco para instalar

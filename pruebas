@@ -1,7 +1,6 @@
 LISTA DE PRUEBAS
 
 * Verificar si cada una de las opciones de booteo funcionan adecuadamente
-* Ejecutar el script "revision" para realizar las pruebas automatizadas
 * Verificar si los alias son correctos
 * Buscar módulos extraños en lsmod
 * Verificar si los programas ubicados en el autorun de cada escritorio de ejecutan correctamente
@@ -13,6 +12,7 @@ LISTA DE PRUEBAS
 * Verificar si el instalador funciona correctamente
 * Verificar si cada uno de los script en /usr/local/bin funcionan adecuadamente
 * Ejecutar la distribución desde una memoria usb
+* Ejecutar el script "revision" para realizar las pruebas automatizadas
 * Comprobar que noautologin funciona correctamente en las tty
 * Comprobar que se detecta todo el hardware
 * Comprobar el escritorio extendido en múltiples monitores

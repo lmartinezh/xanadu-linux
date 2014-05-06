@@ -1,3 +1,10 @@
+xanadu (0.5.5)
+
+	* se corrige error en el repositorio de jupiter
+	* se agrega funcion a los script para crear archivo .pid en /run
+	* correcciones menores en los archivos leeme y de copyright
+
+
 xanadu (0.5.4)
 
 	* se modifica la funcion optimizar en el script variables para aumentar la seguridad
