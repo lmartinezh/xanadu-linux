@@ -1,6 +1,7 @@
 #!/bin/bash
 # elaborado por sinfallas
 source /usr/local/bin/variables
+echo $BASHPID > /run/$0.pid
 mv -f /etc/memlockd.cfg /etc/memlockd.cfg.old
 mv -f /etc/memlockd.cfg.des /etc/memlockd.cfg
 systemctl start memlockd
@@ -8,4 +9,5 @@ history -c
 sfill -f $dispositivo &
 sdmem -f &
 sswap -f $miswap
+rm -f /run/$0.pid
 exit 0

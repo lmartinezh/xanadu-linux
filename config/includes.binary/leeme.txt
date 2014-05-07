@@ -10,7 +10,7 @@ Se construye usando Live-build, la imagen .ISO y sus configuraciones para crearl
 
 https://xanadulinux.wordpress.com/
 
-Para copiar el contenido de la imagen ISO a una memoria USB puede utilizar unetbootin o el comando bb de la siguiente forma: dd if=nombre.iso of=/dev/sdx oflag=direct bs=1048576
+Para copiar el contenido de la imagen ISO a una memoria USB puede utilizar unetbootin o el comando dd de la siguiente forma: dd if=nombre.iso of=/dev/sdx oflag=direct bs=1048576
 
 --------------------------
 
@@ -22,8 +22,8 @@ La clave de ROOT es:	enfilade
 
 Requerimientos mínimos:
 
-	* 384 Mb RAM (1 Gb RAM para tor)
-	* CPU de 800 Mhz o superior (1.0 Ghz para tor)
+	* 384 Mb RAM (1 Gb RAM recomendado)
+	* CPU de 800 Mhz o superior (1.0 Ghz recomendado)
 	* Resolución 800x600, 16 Mb vídeo RAM
 	* BIOS con capacidad de arranque por USB o CDROM
 	* 5 Gb de capacidad de disco para instalar

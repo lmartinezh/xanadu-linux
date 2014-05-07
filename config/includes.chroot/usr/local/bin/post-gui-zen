@@ -1,6 +1,7 @@
 #!/bin/bash
 #elaborado por sinfallas
 source /usr/local/bin/variables
+echo $BASHPID > /run/$0.pid
 
 if ! [[ -d /lib/live/mount/rootfs ]] ; then
 	optimizacion_1
@@ -9,10 +10,10 @@ else
 	exit 1
 fi
 
-file=$(zenity --width=360 --height=420 --list --title Post-instalacion --column Acciones "Instalar Recomendados" "Instalar KDE" "Instalar GNOME" "Instalar XFCE" "Instalar ENLIGHTENMENT" "Instalar CINNAMON" "Instalar WINE" "Instalar XBMC" "Instalar driver ATI" "Instalar driver NVIDIA" "Instalar kernel LIQUORIX" "Instalar ICEDOVE")
+file=$(zenity --width=360 --height=420 --list --title Post-instalacion --column Acciones "Instalar Recomendados" "Instalar KDE" "Instalar GNOME" "Instalar XFCE" "Instalar ENLIGHTENMENT" "Instalar CINNAMON" "Instalar WINE" "Instalar XBMC" "Instalar driver ATI" "Instalar driver NVIDIA" "Instalar kernel LIQUORIX" "Instalar ICEDOVE" & echo "$!" > /run/post.pid)
 
 if [ "$file" = "Instalar KDE" ]; then
-	if zenity --question --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?"; then
+	if zenity --question --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
 		kde_1 | progress_1
 		limpiar_1 | progress_limpiar_1
 	else
@@ -21,7 +22,7 @@ if [ "$file" = "Instalar KDE" ]; then
 	source $0
 
 elif [ "$file" = "Instalar GNOME" ]; then
-	if zenity --question --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?"; then
+	if zenity --question --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
 		gnome_1 | progress_1
 		limpiar_1 | progress_limpiar_1
 	else
@@ -30,7 +31,7 @@ elif [ "$file" = "Instalar GNOME" ]; then
 	source $0
 
 elif [ "$file" = "Instalar XFCE" ]; then
-	if zenity --question --text="Debe tener un equipo con 1 Gb de RAM o mas ¿Esta seguro de querer instalar este software?"; then
+	if zenity --question --text="Debe tener un equipo con 1 Gb de RAM o mas ¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
 		xfce_1 | progress_1
 		limpiar_1 | progress_limpiar_1
 	else
@@ -39,7 +40,7 @@ elif [ "$file" = "Instalar XFCE" ]; then
 	source $0
 
 elif [ "$file" = "Instalar ENLIGHTENMENT" ]; then
-	if zenity --question --text="Debe tener un equipo con 1 Gb de RAM o mas ¿Esta seguro de querer instalar este software?"; then
+	if zenity --question --text="Debe tener un equipo con 1 Gb de RAM o mas ¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
 		e17_1 | progress_1
 		limpiar_1 | progress_limpiar_1
 	else
@@ -48,7 +49,7 @@ elif [ "$file" = "Instalar ENLIGHTENMENT" ]; then
 	source $0
 
 elif [ "$file" = "Instalar CINNAMON" ]; then
-	if zenity --question --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?"; then
+	if zenity --question --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
 		cinnamon_1 | progress_1
 		limpiar_1 | progress_limpiar_1
 	else
@@ -57,7 +58,7 @@ elif [ "$file" = "Instalar CINNAMON" ]; then
 	source $0
 
 elif [ "$file" = "Instalar WINE" ]; then
-	if zenity --question --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?"; then
+	if zenity --question --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
 		wine_1 | progress_1
 		limpiar_1 | progress_limpiar_1
 	else
@@ -66,7 +67,7 @@ elif [ "$file" = "Instalar WINE" ]; then
 	source $0
 
 elif [ "$file" = "Instalar XBMC" ]; then
-	if zenity --question --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?"; then
+	if zenity --question --text="Debe tener un equipo con 2 Gb de RAM o mas ¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
 		xbmc_1 | progress_1
 		limpiar_1 | progress_limpiar_1
 	else
@@ -75,7 +76,7 @@ elif [ "$file" = "Instalar XBMC" ]; then
 	source $0
 
 elif [ "$file" = "Instalar driver ATI" ]; then
-	if zenity --question --text="¿Esta seguro de querer instalar este software?"; then
+	if zenity --question --text="¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
 		ati_1 | progress_1
 		limpiar_1 | progress_limpiar_1
 	else
@@ -84,7 +85,7 @@ elif [ "$file" = "Instalar driver ATI" ]; then
 	source $0	
 
 elif [ "$file" = "Instalar driver NVIDIA" ]; then
-	if zenity --question --text="¿Esta seguro de querer instalar este software?"; then
+	if zenity --question --text="¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
 		nvidia_1 | progress_1
 		limpiar_1 | progress_limpiar_1
 	else
@@ -93,7 +94,7 @@ elif [ "$file" = "Instalar driver NVIDIA" ]; then
 	source $0	
 
 elif [ "$file" = "Instalar kernel LIQUORIX" ]; then
-	if zenity --question --text="¿Esta seguro de querer instalar este software?"; then
+	if zenity --question --text="¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
 		liquorix_1 | progress_1
 		limpiar_1 | progress_limpiar_1
 	else
@@ -102,7 +103,7 @@ elif [ "$file" = "Instalar kernel LIQUORIX" ]; then
 	source $0	
 
 elif [ "$file" = "Instalar ICEDOVE" ]; then
-	if zenity --question --text="¿Esta seguro de querer instalar este software?"; then
+	if zenity --question --text="¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
 		icedove_1 | progress_1
 		limpiar_1 | progress_limpiar_1
 	else
@@ -111,7 +112,7 @@ elif [ "$file" = "Instalar ICEDOVE" ]; then
 	source $0	
 
 elif [ "$file" = "Instalar Recomendados" ]; then
-	if zenity --question --text="¿Esta seguro de querer instalar este software?"; then
+	if zenity --question --text="¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
 		apparmor_1 | progress_1
 		limpiar_1 | progress_limpiar_1
 	else
@@ -120,7 +121,13 @@ elif [ "$file" = "Instalar Recomendados" ]; then
 	source $0	
 
 else
+rm -f /run/post-sub.pid
+rm -f /run/post.pid
+rm -f /run/$0.pid
 exit 0
 
 fi
+rm -f /run/post-sub.pid
+rm -f /run/post.pid
+rm -f /run/$0.pid
 exit 0

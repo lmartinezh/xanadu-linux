@@ -13,7 +13,7 @@ Si ya existe la particion, coloca la etiqueta correspondiente
 
 NOTA: Cualquiera de los medios anteriormente creados necesita de un
 fichero de configuracion (persistence.conf) ubicado en su respectiva 
-raiz, para crearlo puede seguir estos ejemplos:
+raiz, para crearlo puede seguir este ejemplo:
 
 # mount -t ext4 /dev/sdb1 /mnt
 # echo "/home union" >> /mnt/persistence.conf

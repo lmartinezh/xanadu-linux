@@ -1,2 +1,2 @@
-deb http://ppa.launchpad.net/webupd8team/jupiter/ubuntu precise main
-deb-src http://ppa.launchpad.net/webupd8team/jupiter/ubuntu precise main
+deb http://ppa.launchpad.net/jolicloud-team/ppa/ubuntu precise main 
+deb-src http://ppa.launchpad.net/jolicloud-team/ppa/ubuntu precise main

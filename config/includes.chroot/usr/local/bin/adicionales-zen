@@ -1,26 +1,27 @@
 #!/bin/bash
 #elaborado por sinfallas
 source /usr/local/bin/variables
-file=$(zenity --width=360 --height=420 --list --title Adicionales --column Acciones "Activar Seguridad" "Antivirus" "Iniciar Tor" "Monitor Tor" "Detener Tor" "Iniciar i2p" "Detener i2p" "Como activar la persistencia" "Reparar Hora" "Iniciar Compton")
+echo $BASHPID > /run/$0.pid
+file=$(zenity --width=360 --height=420 --list --title Adicionales --column Acciones "Activar Seguridad" "Antivirus" "Iniciar Tor" "Monitor Tor" "Detener Tor" "Iniciar i2p" "Detener i2p" "Como activar la persistencia" "Reparar Hora" "Iniciar Compton" & echo "$!" > /run/adicionales-menu.pid)
 
 if [ "$file" = "Activar Seguridad" ]; then
 	seguridad_1
-	zenity --timeout=7 --info --text="Los servicios: shorewall, fail2ban y psad se activaran durante el arranque con sus configuraciones por defecto (aumentara dramáticamente el consumo de recursos en su equipo,), es necesario que el usuario las modifique de acuerdo a sus necesidades, presione aceptar para continuar."
+	zenity --timeout=7 --info --text="Los servicios: shorewall, fail2ban y psad se activaran durante el arranque con sus configuraciones por defecto (aumentara dramáticamente el consumo de recursos en su equipo,), es necesario que el usuario las modifique de acuerdo a sus necesidades, presione aceptar para continuar." & echo "$!" > /run/adicionales-sub.pid
 	source $0
 
 elif [ "$file" = "Antivirus" ]; then
-	zenity --timeout=5 --info --text="La actualización de base de firmas de virus retardara el inicio, por favor espere, presione aceptar para continuar."
+	zenity --timeout=5 --info --text="La actualización de base de firmas de virus retardara el inicio, por favor espere, presione aceptar para continuar." & echo "$!" > /run/adicionales-sub.pid
 	antivirus_1
 
 elif [ "$file" = "Iniciar Tor" ]; then
 	if [[ -f $lock ]]; then
-		zenity --timeout=3 --error --text="Tor ya se esta ejecutando."
+		zenity --timeout=3 --error --text="Tor ya se esta ejecutando." & echo "$!" > /run/adicionales-sub.pid
 		source $0
 	else
     		tor_1
-		zenity --timeout=3 --info --text="Espere mientras se inicia TOR se le notificara al completarse la tarea."
+		zenity --timeout=3 --info --text="Espere mientras se inicia TOR se le notificara al completarse la tarea." & echo "$!" > /run/adicionales-sub.pid
 		espera
-		zenity --timeout=10 --info --text="Inicio completado. Si utiliza un navegador diferente de Iceweasel, introduzca la siguiente configuración de PROXY en su navegador: localhost (o el ip del equipo) puerto 8118 (9151 para socks) y localhost (o el ip del equipo) puerto 9050 para las otras aplicaciones que usen socks."
+		zenity --timeout=10 --info --text="Inicio completado. Si utiliza un navegador diferente de Iceweasel, introduzca la siguiente configuración de PROXY en su navegador: localhost (o el ip del equipo) puerto 8118 (9151 para socks) y localhost (o el ip del equipo) puerto 9050 para las otras aplicaciones que usen socks." & echo "$!" > /run/adicionales-sub.pid
 		iceweasel https://check.torproject.org/
 	fi
 
@@ -31,20 +32,20 @@ elif [ "$file" = "Monitor Tor" ]; then
 elif [ "$file" = "Detener Tor" ]; then
 	if [[ -f $lock ]]; then
 		tor_0
-		zenity --timeout=3 --info --text="Servicio finalizado exitosamente."
+		zenity --timeout=3 --info --text="Servicio finalizado exitosamente." & echo "$!" > /run/adicionales-sub.pid
 	else
-		zenity --timeout=3 --error --text="Tor no se esta ejecutando."
+		zenity --timeout=3 --error --text="Tor no se esta ejecutando." & echo "$!" > /run/adicionales-sub.pid
 		source $0
 	fi
 
 elif [ "$file" = "Iniciar i2p" ]; then
-	zenity --timeout=3 --warning --text="Esta función es experimental y no se garantiza su correcto funcionamiento."
+	zenity --timeout=3 --warning --text="Esta función es experimental y no se garantiza su correcto funcionamiento." & echo "$!" > /run/adicionales-sub.pid
 	if [[ -f $lock ]]; then
-		zenity --timeout=3 --error --text="I2p no puede ejecutarse conjuntamente con tor."
+		zenity --timeout=3 --error --text="I2p no puede ejecutarse conjuntamente con tor." & echo "$!" > /run/adicionales-sub.pid
 		source $0
 	else
 		if [[ -f $lock2 ]]; then
-			zenity --timeout=3 --error --text="I2p ya se esta ejecutando."
+			zenity --timeout=3 --error --text="I2p ya se esta ejecutando." & echo "$!" > /run/adicionales-sub.pid
 			source $0
 		else
     			i2p_1
@@ -54,9 +55,9 @@ elif [ "$file" = "Iniciar i2p" ]; then
 elif [ "$file" = "Detener i2p" ]; then
 	if [[ -f $lock2 ]]; then
 		i2p_0
-		zenity --timeout=3 --info --text="Servicio finalizado exitosamente."
+		zenity --timeout=3 --info --text="Servicio finalizado exitosamente." & echo "$!" > /run/adicionales-sub.pid
 	else
-		zenity --timeout=3 --error --text="I2p no se esta ejecutando."
+		zenity --timeout=3 --error --text="I2p no se esta ejecutando." & echo "$!" > /run/adicionales-sub.pid
 		source $0
 	fi
 
@@ -65,19 +66,25 @@ elif [ "$file" = "Como activar la persistencia" ]; then
 	source $0
 
 elif [ "$file" = "Reparar Hora" ]; then
-	zenity --info --text="Esta opción tratara de reparar la forma en la que se muestra la hora en su ordenador."
+	zenity --info --text="Esta opción tratara de reparar la forma en la que se muestra la hora en su ordenador." & echo "$!" > /run/adicionales-sub.pid
 	hora_1
 	source $0
 
 elif [ "$file" = "Iniciar Compton" ]; then
-	if zenity --question --text="Esta opción activara el gestor de composición compton aumentando dramáticamente el consumo de recursos en su equipo, ¿desea continuar?."; then
+	if zenity --question --text="Esta opción activara el gestor de composición compton aumentando dramáticamente el consumo de recursos en su equipo, ¿desea continuar?." & echo "$!" > /run/adicionales-sub.pid; then
 		compton_1
 	else
 		source $0
 	fi	
 	
 else
+rm -f /run/adicionales-sub.pid
+rm -f /run/adicionales-menu.pid
+rm -f /run/$0.pid
 exit 0
 
 fi
+rm -f /run/adicionales-sub.pid
+rm -f /run/adicionales-menu.pid
+rm -f /run/$0.pid
 exit 0

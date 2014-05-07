@@ -1,4 +1,5 @@
 #!/bin/bash
+echo $BASHPID > /run/$0.pid
 WALLPAPERS="/usr/share/images/desktop-base/random"
 ALIST=( `ls -w1 $WALLPAPERS` )
 RANGE=${#ALIST[@]}
@@ -7,4 +8,5 @@ let LASTNUM="`cat $WALLPAPERS/.last` + $number"
 let "number = $LASTNUM % $RANGE"
 echo $number > $WALLPAPERS/.last
 nitrogen --set-scaled --save $WALLPAPERS/${ALIST[$number]}
+rm -f /run/$0.pid
 exit 0

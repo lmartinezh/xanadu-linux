@@ -1,7 +1,7 @@
 #!/bin/bash
 #elaborado por sinfallas
 if [[ $USER != root ]]; then
-echo "Ejecutar como root"
+echo -e "\e[00;31mERROR: DEBES SER ROOT\e[00m"
 exit 1
 fi
 lock="/run/tor.lock"
@@ -92,12 +92,12 @@ function compton_1 ()
 
 function progress_1 ()
 {
-	zenity --progress --pulsate --no-cancel --text "Instalando Software, esto proceso puede tomar varios minutos, por favor espere" --auto-close
+	zenity --progress --pulsate --no-cancel --text "Instalando Software, esto proceso puede tomar varios minutos, por favor espere" --auto-close & echo "$!" > /run/post-sub.pid
 }
 
 function progress_2 ()
 {
-	yad --fixed --progress-text="Instalando Software, esto proceso puede tomar varios minutos, por favor espere" --progress --pulsate --auto-close --auto-kill --skip-taskbar --center --title="INSTALANDO"
+	yad --fixed --progress-text="Instalando Software, esto proceso puede tomar varios minutos, por favor espere" --progress --pulsate --auto-close --auto-kill --skip-taskbar --center --title="INSTALANDO" & echo "$!" > /run/post-sub.pid
 }
 
 function optimizacion_1 ()
@@ -222,10 +222,11 @@ function limpiar_1 ()
 
 function progress_limpiar_1 ()
 {
-	zenity --progress --pulsate --no-cancel --text "Realizando limpieza" --auto-close
+	zenity --progress --pulsate --no-cancel --text "Realizando limpieza" --auto-close & echo "$!" > /run/post-sub.pid
 }
 
 function progress_limpiar_2 ()
 {
-	yad --fixed --progress-text="Realizando limpieza" --progress --pulsate --auto-close --auto-kill --skip-taskbar --center --title="LIMPIEZA"
+	yad --fixed --progress-text="Realizando limpieza" --progress --pulsate --auto-close --auto-kill --skip-taskbar --center --title="LIMPIEZA" & echo "$!" > /run/post-sub.pid
 }
+exit 0
