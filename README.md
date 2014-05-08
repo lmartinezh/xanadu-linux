@@ -28,7 +28,7 @@ La clave de ROOT es:	enfilade
 
 Requerimientos mínimos:
 
-	* 384 Mb RAM (1 Gb RAM recomendado)
+	* 512 Mb RAM (1 Gb RAM recomendado)
 	* CPU a 800 Mhz o superior (1.0 Ghz recomendado)
 	* Tarjeta de video a 800x600, 16 Mb vídeo RAM
 	* BIOS con capacidad de arranque por USB o CDROM
