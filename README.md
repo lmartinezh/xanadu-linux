@@ -48,11 +48,6 @@ Colaboradores:
 Dudas, consultas y/o sugerencias por favor enviarlas a: sinfallas@gmail.com
 
 
-Contiene material realizado por:
-
-* Configuraciones realizadas por Jesús Lara para arepalinux-script (https://github.com/phenobarbital/)
-
-
 Paquetes incluidos:
 
 * Kernel

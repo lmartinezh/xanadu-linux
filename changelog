@@ -1,3 +1,11 @@
+xanadu (0.5.6)
+
+	* se agrega el buscador shodan a los marcadores de iceweasel
+	* ahora, durante el post-instalador los directorios /var/cache/apt/archives y /home/*/.cache se agregan al fstab solo si el equipo tiene mas de 4 Gb de ram
+	* desde ahora el post-instalador solo permite instalar algunos escritorios si el equipo posee mas de 2 Gb de ram
+	* se modifica el readme para eliminar informacion innecesaria
+
+
 xanadu (0.5.5)
 
 	* se corrige error en el repositorio de jupiter
