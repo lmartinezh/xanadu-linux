@@ -7,8 +7,8 @@ fi
 lock="/run/tor.lock"
 lock2="/run/i2p.lock"
 persistencia="/usr/local/bin/persistencia"
-dispositivo2=$(df / --output=source | tail -n1 | cut -c 19-54)
 dispositivo=$(blkid -U $dispositivo2 | cut -c 1-8)
+dispositivo2=$(df / --output=source | tail -n1 | cut -c 19-54)
 miswap=$(fdisk -l | grep swap | cut -c 1-9)
 miswap2=$(blkid -o export $miswap | grep UUID)
 quien=$(who | cut -d' ' -f1 | sort | uniq)
@@ -114,11 +114,10 @@ function optimizacion_1 ()
 		rm -f /etc/apt/preferences.d/exclude.pref
 		rm -f /etc/apt/preferences		
 		rm -f /etc/inittab
-		# rm -f /home/*/Escritorio/instalar-xanadu.desktop
-		# rm -f /home/*/Escritorio/post-instalador.desktop
 		swapoff /swapfile
 		rm -f /swapfile
 		sed -i 's_/swapfile_#/swapfile_g' /etc/fstab
+		sed -i 's_proc /proc_#proc /proc_g' /etc/fstab
 		sed -i 's_miswap_#miswap_g' /etc/rc.local
 		sed -i 's_swapon -f_#swapon -f_g' /etc/rc.local
 		sed -i 's/autologin-user=user/#autologin-user=user/g' /etc/lightdm/lightdm.conf
@@ -148,7 +147,18 @@ function optimizacion_1 ()
 		adduser $quien sambashare
 		yes "" | sensors-detect
 		if [ -n "$(lspci | grep -E 'VGA|Display' | head -n1 | cut -d ':' -f3 | grep -F 'Intel')" ]; then
-			echo -e 'Section "Device"'"\n"' Identifier "intel"'"\n"' Driver "intel"'"\n"' BusID  "PCI:0:2:0"'"\n"' Option "AccelMethod" "SNA"'"\n"' Option "SwapbuffersWait" "false"'"\n"' Option "Tiling" "true"'"\n"' Option "BackingStore" "True"'"\n"' Option "XvMC" "on"'"\n"' Option "TripleBuffer" "true"'"\n"' Option "DRI" "true"'"\n"'EndSection' >> /etc/X11/xorg.conf
+			echo 'Section "Device"' > /etc/X11/xorg.conf
+			echo ' Identifier "intel"' >> /etc/X11/xorg.conf
+			echo ' Driver "intel"' >> /etc/X11/xorg.conf
+			echo ' BusID  "PCI:0:2:0"' >> /etc/X11/xorg.conf
+			echo ' Option "AccelMethod" "SNA"' >> /etc/X11/xorg.conf
+			echo ' Option "SwapbuffersWait" "false"' >> /etc/X11/xorg.conf
+			echo ' Option "Tiling" "true"' >> /etc/X11/xorg.conf
+			echo ' Option "BackingStore" "True"' >> /etc/X11/xorg.conf
+			echo ' Option "XvMC" "on"' >> /etc/X11/xorg.conf
+			echo ' Option "TripleBuffer" "true"' >> /etc/X11/xorg.conf
+			echo ' Option "DRI" "true"' >> /etc/X11/xorg.conf
+			echo 'EndSection' >> /etc/X11/xorg.conf
 		fi
 		echo "$(date +%d/%m/%Y-%r)" > /root/.optimizado
 		if [[ $memoria > 4096000 ]]; then
