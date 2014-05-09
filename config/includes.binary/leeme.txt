@@ -22,7 +22,7 @@ La clave de ROOT es:	enfilade
 
 Requerimientos mínimos:
 
-	* 384 Mb RAM (1 Gb RAM recomendado)
+	* 512 Mb RAM (1 Gb RAM recomendado)
 	* CPU de 800 Mhz o superior (1.0 Ghz recomendado)
 	* Resolución 800x600, 16 Mb vídeo RAM
 	* BIOS con capacidad de arranque por USB o CDROM
@@ -40,8 +40,3 @@ Colaboradores:
 
 
 Dudas, consultas y/o sugerencias por favor enviarlas a: sinfallas@gmail.com
-
-
-Contiene material realizado por:
-
-* Configuraciones realizadas por Jesús Lara para arepalinux-script (https://github.com/phenobarbital/)

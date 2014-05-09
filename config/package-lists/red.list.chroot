@@ -7,6 +7,7 @@ nmap
 ntp
 shorewall
 ssh
+sshfs
 tcptraceroute
 traceroute
 wireless-tools

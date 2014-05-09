@@ -2,7 +2,7 @@
 
 
 
-384 Mb RAM (1 Gb RAM recomendado)
+512 Mb RAM (1 Gb RAM recomendado)
 CPU de 800 Mhz o superior (1.0 Ghz recomendado)
 Resolucion 800x600, 16 Mb video RAM
 BIOS con capacidad de arranque por USB o CDROM

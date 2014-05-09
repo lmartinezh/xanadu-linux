@@ -12,6 +12,7 @@ dispositivo=$(blkid -U $dispositivo2 | cut -c 1-8)
 miswap=$(fdisk -l | grep swap | cut -c 1-9)
 miswap2=$(blkid -o export $miswap | grep UUID)
 quien=$(who | cut -d' ' -f1 | sort | uniq)
+memoria=$(grep MemTotal /proc/meminfo | awk '{print $2}')
 
 function espera ()
 {
@@ -146,10 +147,17 @@ function optimizacion_1 ()
 		chage -M 365 root
 		adduser $quien sambashare
 		yes "" | sensors-detect
-		echo "$(date +%d/%m/%Y-%r)" > /root/.optimizado		
-		for i in $quien; do
-			echo "tmpfs /home/$i/.cache  tmpfs noatime,nodev,rw 0 0" >> /etc/fstab
-		done
+		if [ -n "$(lspci | grep -E 'VGA|Display' | head -n1 | cut -d ':' -f3 | grep -F 'Intel')" ]; then
+			echo -e 'Section "Device"'"\n"' Identifier "intel"'"\n"' Driver "intel"'"\n"' BusID  "PCI:0:2:0"'"\n"' Option "AccelMethod" "SNA"'"\n"' Option "SwapbuffersWait" "false"'"\n"' Option "Tiling" "true"'"\n"' Option "BackingStore" "True"'"\n"' Option "XvMC" "on"'"\n"' Option "TripleBuffer" "true"'"\n"' Option "DRI" "true"'"\n"'EndSection' >> /etc/X11/xorg.conf
+		fi
+		echo "$(date +%d/%m/%Y-%r)" > /root/.optimizado
+		if [[ $memoria > 4096000 ]]; then
+			echo "vm.swappiness = 10" >> /etc/sysctl.conf
+			echo "tmpfs /var/cache/apt/archives tmpfs noatime,nodev 0 0" >> /etc/fstab
+			for i in $quien; do
+				echo "tmpfs /home/$i/.cache  tmpfs noatime,nodev,rw 0 0" >> /etc/fstab
+			done
+		fi
 	fi
 }
 
