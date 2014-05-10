@@ -4,7 +4,7 @@ if [[ $USER != root ]]; then
 echo -e "\e[00;31mERROR: DEBES SER ROOT\e[00m"
 exit 1
 fi
-echo $BASHPID > /run/$0.pid
+echo $BASHPID > /run/revision.pid
 nombre=revision
 kernel=$(uname -r)
 name=$(hostname)
@@ -142,5 +142,5 @@ glxinfo | grep direct >> /tmp/$nombre
 
 clear
 echo -e "\n""El reporte se ha generado en /tmp/$nombre"
-rm -f /run/$0.pid
+rm -f /run/revision.pid
 exit 0 

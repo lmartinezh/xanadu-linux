@@ -4,7 +4,7 @@ if [[ $USER != root ]]; then
 echo -e "\e[00;31mERROR: DEBES SER ROOT\e[00m"
 exit 1
 fi
-echo $BASHPID > /run/$0.pid
+echo $BASHPID > /run/entorno.pid
 nombre=reporte
 echo -e "## CPU ##""\n" > /tmp/$nombre
 lscpu >> /tmp/$nombre
@@ -32,5 +32,5 @@ echo -e "\n""## OTROS S.O. ##""\n" >> /tmp/$nombre
 os-prober >> /tmp/$nombre
 clear
 echo -e "\n""El reporte se ha generado en /tmp/$nombre"
-rm -f /run/$0.pid
+rm -f /run/entorno.pid
 exit 0

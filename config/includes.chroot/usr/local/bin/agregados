@@ -1,7 +1,7 @@
 #!/bin/bash
 #elaborado por sinfallas
 source /usr/local/bin/variables
-echo $BASHPID > /run/$0.pid
+echo $BASHPID > /run/agregados.pid
 case "$1" in
 	seguridad)
 	    	seguridad_1
@@ -54,5 +54,5 @@ case "$1" in
             	echo "USO: $0 {seguridad|tor_on|tor_monitor|tor_off|i2p_on|i2p_off|hora}"
 	;;
 esac
-rm -f /run/$0.pid
+rm -f /run/agregados.pid
 exit 0

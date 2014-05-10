@@ -111,10 +111,10 @@ function optimizacion_1 ()
 			echo xanadu-$(printf '%02X%02X%02X\n' $((RANDOM%256)) $((RANDOM%256)) $((RANDOM%256))) > /etc/hostname
 			sed -i 's_xanadu_'$(cat /etc/hostname)'_g' /etc/hosts
 		fi
+		swapoff /swapfile
 		rm -f /etc/apt/preferences.d/exclude.pref
 		rm -f /etc/apt/preferences		
 		rm -f /etc/inittab
-		swapoff /swapfile
 		rm -f /swapfile
 		sed -i 's_/swapfile_#/swapfile_g' /etc/fstab
 		sed -i 's_proc /proc_#proc /proc_g' /etc/fstab
@@ -122,6 +122,8 @@ function optimizacion_1 ()
 		sed -i 's_swapon -f_#swapon -f_g' /etc/rc.local
 		sed -i 's/autologin-user=user/#autologin-user=user/g' /etc/lightdm/lightdm.conf
 		sed -i 's/autologin-user-timeout=0/#autologin-user-timeout=0/g' /etc/lightdm/lightdm.conf
+		sed -i 's_umask 022_umask 027_g' /etc/init.d/rc
+		sed -i 's_umask 022_umask 027_g' /etc/login.defs
 		sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="quiet"/GRUB_CMDLINE_LINUX_DEFAULT="swapaccount=1 cgroup_enable=memory disable=1 disable_ipv6=1 security=apparmor panic=10 quiet splash"/g' /etc/default/grub
 		update-grub2
 		echo $dispositivo { >> /etc/hdparm.conf
@@ -130,10 +132,7 @@ function optimizacion_1 ()
 		echo "spindown_time = 18" >> /etc/hdparm.conf
 		echo "}" >> /etc/hdparm.conf
 		echo "user ALL=(ALL) ALL" > /etc/sudoers.d/live
-		chmod 600 /etc/sudoers
 		echo "umask 027" >> /etc/profile
-		sed -i 's_umask 022_umask 027_g' /etc/init.d/rc
-		sed -i 's_umask 022_umask 027_g' /etc/login.defs
 		echo "auth required pam_succeed_if.so user != root quiet" >> /etc/pam.d/lightdm
 		echo "proc /proc proc defaults,hidepid=2 0 0" >> /etc/fstab
 		echo "tmpfs /tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab
@@ -142,6 +141,7 @@ function optimizacion_1 ()
 		echo "tmpfs /var/spool tmpfs noatime,nodev 0 0" >> /etc/fstab
 		echo "tmpfs /var/tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab
 		echo $miswap2 "none swap sw 0 0" >> /etc/fstab
+		chmod 600 /etc/sudoers
 		chage -M 183 $quien
 		chage -M 365 root
 		adduser $quien sambashare
