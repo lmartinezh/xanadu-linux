@@ -1,7 +1,7 @@
 #!/bin/bash
 #elaborado por sinfallas
-source /usr/local/bin/variables
 echo $BASHPID > /run/adicionales-yad.pid
+source /usr/local/bin/variables
 mio=$(yad --sticky --fixed --center --width=360 --height=420 --no-click --list --title="Adicionales" --column=Acciones "Activar Seguridad" "Antivirus" "Iniciar Tor" "Monitor Tor" "Detener Tor" "Iniciar i2p" "Detener i2p" "Como activar la persistencia" "Reparar Hora" "Iniciar Compton" & echo "$!" > /run/adicionales-menu.pid)
 
 if [ "$mio" = "Activar Seguridad|" ]; then

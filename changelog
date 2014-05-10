@@ -7,6 +7,7 @@ xanadu (0.5.6)
 	* se agrega "echo vm.swappiness = 10 >> /etc/sysctl.conf" a la comprobacion de memoria en la funcion "optimizar" en "variables"
 	* se agrega el paquete sshfs
 	* en la funcion "optimizar" en "variables", se agregan mejoras para las tarjetas de video intel
+	* se eliminan variables mal ubicadas en los script
 
 
 xanadu (0.5.5)

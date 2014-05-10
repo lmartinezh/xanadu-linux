@@ -7,11 +7,6 @@ fi
 lock="/run/tor.lock"
 lock2="/run/i2p.lock"
 persistencia="/usr/local/bin/persistencia"
-dispositivo=$(blkid -U $dispositivo2 | cut -c 1-8)
-dispositivo2=$(df / --output=source | tail -n1 | cut -c 19-54)
-miswap=$(fdisk -l | grep swap | cut -c 1-9)
-miswap2=$(blkid -o export $miswap | grep UUID)
-quien=$(who | cut -d' ' -f1 | sort | uniq)
 memoria=$(grep MemTotal /proc/meminfo | awk '{print $2}')
 
 function espera ()
@@ -103,6 +98,11 @@ function progress_2 ()
 
 function optimizacion_1 ()
 {
+	dispositivo2=$(df / --output=source | tail -n1 | cut -c 19-54)
+	dispositivo=$(blkid -U $dispositivo2 | cut -c 1-8)
+	miswap=$(fdisk -l | grep swap | cut -c 1-9)
+	miswap2=$(blkid -o export $miswap | grep UUID)
+	quien=$(who | cut -d' ' -f1 | sort | uniq)
 	if [[ -f /root/.optimizado ]]; then
 		echo 1 > /dev/null
 	else
@@ -247,4 +247,3 @@ function progress_limpiar_2 ()
 {
 	yad --fixed --progress-text="Realizando limpieza" --progress --pulsate --auto-close --auto-kill --skip-taskbar --center --title="LIMPIEZA" & echo "$!" > /run/post-sub.pid
 }
-exit 0
