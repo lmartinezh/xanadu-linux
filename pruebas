@@ -9,10 +9,10 @@ LISTA DE PRUEBAS
 * Verificar si xzoom, expose y demás combinaciones de teclas funcionan adecuadamente
 * Ejecutar los programas de uso común para verificar si funcionan adecuadamente y están en español
 * Verificar si las ultimas correcciones que aparecen en changelog realmente funcionan
+* Ejecutar el script "revision" para realizar las pruebas automatizadas
 * Verificar si el instalador funciona correctamente
 * Verificar si cada uno de los script en /usr/local/bin funcionan adecuadamente
 * Ejecutar la distribución desde una memoria usb
-* Ejecutar el script "revision" para realizar las pruebas automatizadas
 * Comprobar que noautologin funciona correctamente en las tty
 * Comprobar que se detecta todo el hardware
 * Comprobar el escritorio extendido en múltiples monitores

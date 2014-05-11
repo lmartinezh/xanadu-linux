@@ -1,6 +1,5 @@
 #!/bin/bash
 #elaborado por sinfallas
-echo $BASHPID > /run/post-gui-zen.pid
 source /usr/local/bin/variables
 
 if ! [[ -d /lib/live/mount/rootfs ]] ; then
@@ -9,11 +8,11 @@ else
 	zenity --timeout=3 --error --text="Este programa no se puede ejecutar en modo live."
 	exit 1
 fi
-
+echo $BASHPID > /run/post-gui-zen.pid
 file=$(zenity --width=360 --height=420 --list --title Post-instalacion --column Acciones "Instalar Recomendados" "Instalar KDE" "Instalar GNOME" "Instalar XFCE" "Instalar ENLIGHTENMENT" "Instalar CINNAMON" "Instalar WINE" "Instalar XBMC" "Instalar driver ATI" "Instalar driver NVIDIA" "Instalar kernel LIQUORIX" "Instalar ICEDOVE" & echo "$!" > /run/post.pid)
 
 if [ "$file" = "Instalar KDE" ]; then
-	if [[ $memoria > 2048000 ]]; then
+	if (( $memoria > 2048000 )); then
 		if zenity --question --text="¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
 			kde_1 | progress_1
 			limpiar_1 | progress_limpiar_1
@@ -26,7 +25,7 @@ if [ "$file" = "Instalar KDE" ]; then
 	source $0
 
 elif [ "$file" = "Instalar GNOME" ]; then
-	if [[ $memoria > 2048000 ]]; then
+	if (( $memoria > 2048000 )); then
 		if zenity --question --text="¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
 			gnome_1 | progress_1
 			limpiar_1 | progress_limpiar_1
@@ -57,7 +56,7 @@ elif [ "$file" = "Instalar ENLIGHTENMENT" ]; then
 	source $0
 
 elif [ "$file" = "Instalar CINNAMON" ]; then
-	if [[ $memoria > 2048000 ]]; then
+	if (( $memoria > 2048000 )); then
 		if zenity --question --text="¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
 			cinnamon_1 | progress_1
 			limpiar_1 | progress_limpiar_1
@@ -70,7 +69,7 @@ elif [ "$file" = "Instalar CINNAMON" ]; then
 	source $0
 
 elif [ "$file" = "Instalar WINE" ]; then
-	if [[ $memoria > 2048000 ]]; then
+	if (( $memoria > 2048000 )); then
 		if zenity --question --text="¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
 			wine_1 | progress_1
 			limpiar_1 | progress_limpiar_1
@@ -83,7 +82,7 @@ elif [ "$file" = "Instalar WINE" ]; then
 	source $0
 
 elif [ "$file" = "Instalar XBMC" ]; then
-	if [[ $memoria > 2048000 ]]; then
+	if (( $memoria > 2048000 )); then
 		if zenity --question --text="¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
 			xbmc_1 | progress_1
 			limpiar_1 | progress_limpiar_1

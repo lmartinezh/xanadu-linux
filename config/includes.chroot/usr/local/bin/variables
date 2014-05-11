@@ -7,6 +7,7 @@ fi
 lock="/run/tor.lock"
 lock2="/run/i2p.lock"
 persistencia="/usr/local/bin/persistencia"
+aptcmd="apt-get -q update && apt-get -q -y --force-yes install"
 memoria=$(grep MemTotal /proc/meminfo | awk '{print $2}')
 
 function espera ()
@@ -161,7 +162,7 @@ function optimizacion_1 ()
 			echo 'EndSection' >> /etc/X11/xorg.conf
 		fi
 		echo "$(date +%d/%m/%Y-%r)" > /root/.optimizado
-		if [[ $memoria > 4096000 ]]; then
+		if (( $memoria > 4096000 )); then
 			echo "vm.swappiness = 10" >> /etc/sysctl.conf
 			echo "tmpfs /var/cache/apt/archives tmpfs noatime,nodev 0 0" >> /etc/fstab
 			for i in $quien; do
@@ -173,62 +174,62 @@ function optimizacion_1 ()
 
 function kde_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install task-kde-desktop kde-full
+	$aptcmd task-kde-desktop kde-full
 }
 
 function gnome_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install task-gnome-desktop gnome-session-fallback gnome-shell gnome-tweak-tool gnome
+	$aptcmd task-gnome-desktop gnome-session-fallback gnome-shell gnome-tweak-tool gnome
 }
 
 function xfce_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install task-xfce-desktop xfce4 xfce4-goodies xfce4-notifyd
+	$aptcmd task-xfce-desktop xfce4 xfce4-goodies xfce4-notifyd
 }
 
 function e17_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install e17
+	$aptcmd e17
 }
 
 function cinnamon_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install cinnamon
+	$aptcmd cinnamon
 }
 
 function wine_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install playonlinux
+	$aptcmd playonlinux
 }
 
 function xbmc_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install xbmc python-software-properties pkg-config software-properties-common
+	$aptcmd xbmc python-software-properties pkg-config software-properties-common
 }
 
 function ati_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install fglrx-atieventsd fglrx-control fglrx-driver fglrx-modules-dkms radeontool
+	$aptcmd fglrx-atieventsd fglrx-control fglrx-driver fglrx-modules-dkms radeontool
 }
 
 function nvidia_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install nvclock nvidia-alternative nvidia-glx nvidia-installer-cleanup nvidia-kernel-common nvidia-kernel-dkms nvidia-settings nvidia-support nvidia-vdpau-driver nvidia-xconfig
+	$aptcmd nvclock nvidia-alternative nvidia-glx nvidia-installer-cleanup nvidia-kernel-common nvidia-kernel-dkms nvidia-settings nvidia-support nvidia-vdpau-driver nvidia-xconfig
 }
 
 function liquorix_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install linux-image-liquorix-686 linux-headers-liquorix-686
+	$aptcmd linux-image-liquorix-686 linux-headers-liquorix-686
 }
 
 function icedove_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install icedove
+	$aptcmd icedove
 }
 
 function apparmor_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install apparmor-profiles menulibre mugshot ecryptfs-utils auditd passwdqc dnsutils
+	$aptcmd apparmor-profiles menulibre mugshot ecryptfs-utils auditd passwdqc dnsutils
 }
 
 function limpiar_1 ()

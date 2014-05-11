@@ -6,5 +6,8 @@ if [[ -f /usr/bin/yad ]]; then
 elif [[ -f /usr/bin/zenity ]]; then
 	source adicionales-zen
 
+else
+	echo "ERROR: Los siguientes programas NO se encuentrar instalados: Yad, Zenity" > /var/log/adicionales.log
+
 fi
 exit 0

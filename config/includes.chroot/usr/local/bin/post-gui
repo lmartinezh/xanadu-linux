@@ -6,5 +6,8 @@ if [[ -f /usr/bin/yad ]]; then
 elif [[ -f /usr/bin/zenity ]]; then
 	source post-gui-zen
 
+else
+	echo "ERROR: Los siguientes programas NO se encuentrar instalados: Yad, Zenity" > /var/log/post-gui.log
+
 fi
 exit 0

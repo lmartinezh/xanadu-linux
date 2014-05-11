@@ -1,7 +1,7 @@
 #!/bin/bash
 #elaborado por sinfallas
-echo $BASHPID > /run/adicionales-zen.pid
 source /usr/local/bin/variables
+echo $BASHPID > /run/adicionales-zen.pid
 file=$(zenity --width=360 --height=420 --list --title Adicionales --column Acciones "Activar Seguridad" "Antivirus" "Iniciar Tor" "Monitor Tor" "Detener Tor" "Iniciar i2p" "Detener i2p" "Como activar la persistencia" "Reparar Hora" "Iniciar Compton" & echo "$!" > /run/adicionales-menu.pid)
 
 if [ "$file" = "Activar Seguridad" ]; then
