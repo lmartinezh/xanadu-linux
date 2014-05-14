@@ -1,3 +1,11 @@
+xanadu (0.5.7)
+
+	* se agrega el repositorio de xanadu
+	* se eliminan repositorios redundantes
+	* se simplifican las listas de paquetes
+	* se cambia la prioridad de las particiones swap
+
+
 xanadu (0.5.6)
 
 	* se agrega el buscador shodan a los marcadores de iceweasel
@@ -5,7 +13,6 @@ xanadu (0.5.6)
 	* desde ahora el post-instalador solo permite instalar algunos escritorios si el equipo posee mas de 2 Gb de ram
 	* se modifica el readme para eliminar informacion innecesaria
 	* se agrega "echo vm.swappiness = 10 >> /etc/sysctl.conf" a la comprobacion de memoria en la funcion "optimizar" en "variables"
-	* se agrega el paquete sshfs
 	* en la funcion "optimizar" en "variables", se agregan mejoras para las tarjetas de video intel
 	* se eliminan variables mal ubicadas en los script
 
@@ -14,7 +21,6 @@ xanadu (0.5.5)
 
 	* se corrige error en el repositorio de jupiter
 	* se agrega funcion a los script para crear archivo .pid en /run
-	* se agrega funcion a los script para crear archivo .pid de algunos sub-procesos en /run
 	* correcciones menores en los archivos leeme y de copyright
 
 

@@ -9,11 +9,11 @@ else
 	exit 1
 fi
 echo $BASHPID > /run/post-gui-zen.pid
-file=$(zenity --width=360 --height=420 --list --title Post-instalacion --column Acciones "Instalar Recomendados" "Instalar KDE" "Instalar GNOME" "Instalar XFCE" "Instalar ENLIGHTENMENT" "Instalar CINNAMON" "Instalar WINE" "Instalar XBMC" "Instalar driver ATI" "Instalar driver NVIDIA" "Instalar kernel LIQUORIX" "Instalar ICEDOVE" & echo "$!" > /run/post.pid)
+file=$(zenity --width=360 --height=420 --list --title Post-instalacion --column Acciones "Instalar Recomendados" "Instalar KDE" "Instalar GNOME" "Instalar XFCE" "Instalar ENLIGHTENMENT" "Instalar CINNAMON" "Instalar WINE" "Instalar XBMC" "Instalar driver ATI" "Instalar driver NVIDIA" "Instalar kernel LIQUORIX" "Instalar ICEDOVE")
 
 if [ "$file" = "Instalar KDE" ]; then
 	if (( $memoria > 2048000 )); then
-		if zenity --question --text="¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
+		if zenity --question --text="¿Esta seguro de querer instalar este software?"; then
 			kde_1 | progress_1
 			limpiar_1 | progress_limpiar_1
 		else
@@ -26,7 +26,7 @@ if [ "$file" = "Instalar KDE" ]; then
 
 elif [ "$file" = "Instalar GNOME" ]; then
 	if (( $memoria > 2048000 )); then
-		if zenity --question --text="¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
+		if zenity --question --text="¿Esta seguro de querer instalar este software?"; then
 			gnome_1 | progress_1
 			limpiar_1 | progress_limpiar_1
 		else
@@ -38,7 +38,7 @@ elif [ "$file" = "Instalar GNOME" ]; then
 	source $0
 
 elif [ "$file" = "Instalar XFCE" ]; then
-	if zenity --question --text="¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
+	if zenity --question --text="¿Esta seguro de querer instalar este software?"; then
 		xfce_1 | progress_1
 		limpiar_1 | progress_limpiar_1
 	else
@@ -47,7 +47,7 @@ elif [ "$file" = "Instalar XFCE" ]; then
 	source $0
 
 elif [ "$file" = "Instalar ENLIGHTENMENT" ]; then
-	if zenity --question --text="¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
+	if zenity --question --text="¿Esta seguro de querer instalar este software?"; then
 		e17_1 | progress_1
 		limpiar_1 | progress_limpiar_1
 	else
@@ -57,7 +57,7 @@ elif [ "$file" = "Instalar ENLIGHTENMENT" ]; then
 
 elif [ "$file" = "Instalar CINNAMON" ]; then
 	if (( $memoria > 2048000 )); then
-		if zenity --question --text="¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
+		if zenity --question --text="¿Esta seguro de querer instalar este software?"; then
 			cinnamon_1 | progress_1
 			limpiar_1 | progress_limpiar_1
 		else
@@ -70,7 +70,7 @@ elif [ "$file" = "Instalar CINNAMON" ]; then
 
 elif [ "$file" = "Instalar WINE" ]; then
 	if (( $memoria > 2048000 )); then
-		if zenity --question --text="¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
+		if zenity --question --text="¿Esta seguro de querer instalar este software?"; then
 			wine_1 | progress_1
 			limpiar_1 | progress_limpiar_1
 		else
@@ -83,7 +83,7 @@ elif [ "$file" = "Instalar WINE" ]; then
 
 elif [ "$file" = "Instalar XBMC" ]; then
 	if (( $memoria > 2048000 )); then
-		if zenity --question --text="¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
+		if zenity --question --text="¿Esta seguro de querer instalar este software?"; then
 			xbmc_1 | progress_1
 			limpiar_1 | progress_limpiar_1
 		else
@@ -95,7 +95,7 @@ elif [ "$file" = "Instalar XBMC" ]; then
 	source $0
 
 elif [ "$file" = "Instalar driver ATI" ]; then
-	if zenity --question --text="¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
+	if zenity --question --text="¿Esta seguro de querer instalar este software?"; then
 		ati_1 | progress_1
 		limpiar_1 | progress_limpiar_1
 	else
@@ -104,7 +104,7 @@ elif [ "$file" = "Instalar driver ATI" ]; then
 	source $0	
 
 elif [ "$file" = "Instalar driver NVIDIA" ]; then
-	if zenity --question --text="¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
+	if zenity --question --text="¿Esta seguro de querer instalar este software?"; then
 		nvidia_1 | progress_1
 		limpiar_1 | progress_limpiar_1
 	else
@@ -113,7 +113,7 @@ elif [ "$file" = "Instalar driver NVIDIA" ]; then
 	source $0	
 
 elif [ "$file" = "Instalar kernel LIQUORIX" ]; then
-	if zenity --question --text="¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
+	if zenity --question --text="¿Esta seguro de querer instalar este software?"; then
 		liquorix_1 | progress_1
 		limpiar_1 | progress_limpiar_1
 	else
@@ -122,7 +122,7 @@ elif [ "$file" = "Instalar kernel LIQUORIX" ]; then
 	source $0	
 
 elif [ "$file" = "Instalar ICEDOVE" ]; then
-	if zenity --question --text="¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
+	if zenity --question --text="¿Esta seguro de querer instalar este software?"; then
 		icedove_1 | progress_1
 		limpiar_1 | progress_limpiar_1
 	else
@@ -131,7 +131,7 @@ elif [ "$file" = "Instalar ICEDOVE" ]; then
 	source $0	
 
 elif [ "$file" = "Instalar Recomendados" ]; then
-	if zenity --question --text="¿Esta seguro de querer instalar este software?" & echo "$!" > /run/post-sub.pid; then
+	if zenity --question --text="¿Esta seguro de querer instalar este software?"; then
 		apparmor_1 | progress_1
 		limpiar_1 | progress_limpiar_1
 	else
@@ -140,13 +140,9 @@ elif [ "$file" = "Instalar Recomendados" ]; then
 	source $0	
 
 else
-rm -f /run/post-sub.pid
-rm -f /run/post.pid
 rm -f /run/post-gui-zen.pid
 exit 0
 
 fi
-rm -f /run/post-sub.pid
-rm -f /run/post.pid
 rm -f /run/post-gui-zen.pid
 exit 0

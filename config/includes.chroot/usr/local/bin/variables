@@ -7,7 +7,6 @@ fi
 lock="/run/tor.lock"
 lock2="/run/i2p.lock"
 persistencia="/usr/local/bin/persistencia"
-aptcmd="apt-get -q update && apt-get -q -y --force-yes install"
 memoria=$(grep MemTotal /proc/meminfo | awk '{print $2}')
 
 function espera ()
@@ -89,12 +88,12 @@ function compton_1 ()
 
 function progress_1 ()
 {
-	zenity --progress --pulsate --no-cancel --text "Instalando Software, esto proceso puede tomar varios minutos, por favor espere" --auto-close & echo "$!" > /run/post-sub.pid
+	zenity --progress --pulsate --no-cancel --text "Instalando Software, esto proceso puede tomar varios minutos, por favor espere" --auto-close
 }
 
 function progress_2 ()
 {
-	yad --fixed --progress-text="Instalando Software, esto proceso puede tomar varios minutos, por favor espere" --progress --pulsate --auto-close --auto-kill --skip-taskbar --center --title="INSTALANDO" & echo "$!" > /run/post-sub.pid
+	yad --fixed --progress-text="Instalando Software, esto proceso puede tomar varios minutos, por favor espere" --progress --pulsate --auto-close --auto-kill --skip-taskbar --center --title="INSTALANDO"
 }
 
 function optimizacion_1 ()
@@ -118,7 +117,7 @@ function optimizacion_1 ()
 		rm -f /etc/inittab
 		rm -f /swapfile
 		sed -i 's_/swapfile_#/swapfile_g' /etc/fstab
-		sed -i 's_proc /proc_#proc /proc_g' /etc/fstab
+		sed -i 's_proc_#proc_g' /etc/fstab
 		sed -i 's_miswap_#miswap_g' /etc/rc.local
 		sed -i 's_swapon -f_#swapon -f_g' /etc/rc.local
 		sed -i 's/autologin-user=user/#autologin-user=user/g' /etc/lightdm/lightdm.conf
@@ -174,62 +173,62 @@ function optimizacion_1 ()
 
 function kde_1 ()
 {
-	$aptcmd task-kde-desktop kde-full
+	apt-get -q update && apt-get -q -y --force-yes install task-kde-desktop kde-full
 }
 
 function gnome_1 ()
 {
-	$aptcmd task-gnome-desktop gnome-session-fallback gnome-shell gnome-tweak-tool gnome
+	apt-get -q update && apt-get -q -y --force-yes install task-gnome-desktop gnome-session-fallback gnome-shell gnome-tweak-tool gnome
 }
 
 function xfce_1 ()
 {
-	$aptcmd task-xfce-desktop xfce4 xfce4-goodies xfce4-notifyd
+	apt-get -q update && apt-get -q -y --force-yes install task-xfce-desktop xfce4 xfce4-goodies xfce4-notifyd
 }
 
 function e17_1 ()
 {
-	$aptcmd e17
+	apt-get -q update && apt-get -q -y --force-yes install e17
 }
 
 function cinnamon_1 ()
 {
-	$aptcmd cinnamon
+	apt-get -q update && apt-get -q -y --force-yes install cinnamon
 }
 
 function wine_1 ()
 {
-	$aptcmd playonlinux
+	apt-get -q update && apt-get -q -y --force-yes install playonlinux
 }
 
 function xbmc_1 ()
 {
-	$aptcmd xbmc python-software-properties pkg-config software-properties-common
+	apt-get -q update && apt-get -q -y --force-yes install xbmc python-software-properties pkg-config software-properties-common
 }
 
 function ati_1 ()
 {
-	$aptcmd fglrx-atieventsd fglrx-control fglrx-driver fglrx-modules-dkms radeontool
+	apt-get -q update && apt-get -q -y --force-yes install fglrx-atieventsd fglrx-control fglrx-driver fglrx-modules-dkms radeontool
 }
 
 function nvidia_1 ()
 {
-	$aptcmd nvclock nvidia-alternative nvidia-glx nvidia-installer-cleanup nvidia-kernel-common nvidia-kernel-dkms nvidia-settings nvidia-support nvidia-vdpau-driver nvidia-xconfig
+	apt-get -q update && apt-get -q -y --force-yes install nvclock nvidia-alternative nvidia-glx nvidia-installer-cleanup nvidia-kernel-common nvidia-kernel-dkms nvidia-settings nvidia-support nvidia-vdpau-driver nvidia-xconfig
 }
 
 function liquorix_1 ()
 {
-	$aptcmd linux-image-liquorix-686 linux-headers-liquorix-686
+	apt-get -q update && apt-get -q -y --force-yes install linux-image-liquorix-686 linux-headers-liquorix-686
 }
 
 function icedove_1 ()
 {
-	$aptcmd icedove
+	apt-get -q update && apt-get -q -y --force-yes install icedove
 }
 
 function apparmor_1 ()
 {
-	$aptcmd apparmor-profiles menulibre mugshot ecryptfs-utils auditd passwdqc dnsutils
+	apt-get -q update && apt-get -q -y --force-yes install apparmor-profiles menulibre mugshot ecryptfs-utils auditd passwdqc dnsutils
 }
 
 function limpiar_1 ()
@@ -241,10 +240,10 @@ function limpiar_1 ()
 
 function progress_limpiar_1 ()
 {
-	zenity --progress --pulsate --no-cancel --text "Realizando limpieza" --auto-close & echo "$!" > /run/post-sub.pid
+	zenity --progress --pulsate --no-cancel --text "Realizando limpieza" --auto-close
 }
 
 function progress_limpiar_2 ()
 {
-	yad --fixed --progress-text="Realizando limpieza" --progress --pulsate --auto-close --auto-kill --skip-taskbar --center --title="LIMPIEZA" & echo "$!" > /run/post-sub.pid
+	yad --fixed --progress-text="Realizando limpieza" --progress --pulsate --auto-close --auto-kill --skip-taskbar --center --title="LIMPIEZA"
 }

@@ -130,6 +130,9 @@ lsmod | grep rfkill >> /tmp/$nombre
 echo -e "\n""## microcode ##""\n" >> /tmp/$nombre
 dmesg | grep microcode >> /tmp/$nombre
 
+echo -e "\n""## ulatency ##""\n" >> /tmp/$nombre
+ulatency tree >> /tmp/$nombre
+
 echo -e "\n""## conexion ##""\n" >> /tmp/$nombre
 ping -c 3 yahoo.com >> /tmp/$nombre
 

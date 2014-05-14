@@ -10,8 +10,7 @@
 # bits.
 #
 # By default this script does nothing.
-num_cpus=$(grep -c processor /proc/cpuinfo)
-modprobe zram zram_num_devices=$num_cpus
+modprobe zram
 echo $((100*1024*1024)) > /sys/block/zram0/disksize
 mkswap /dev/zram0
 swapon -p 50 /dev/zram0
@@ -23,7 +22,7 @@ echo "200" > /sys/kernel/mm/ksm/sleep_millisecs
 echo "/usr/local/sbin/cgroup_clean" > /sys/fs/cgroup/cpu/release_agent
 echo "1" > /sys/fs/cgroup/cpu/notify_on_release
 miswap=$(fdisk -l | grep swap | cut -c 1-9)
-swapon -f $miswap
+swapon -p 25 -f $miswap
 rmmod -f ip_tables ip6_tables iptable_filter iptable_mangle iptable_nat iptable_raw bluetooth rfcomm
 service anacron stop
 service cron stop

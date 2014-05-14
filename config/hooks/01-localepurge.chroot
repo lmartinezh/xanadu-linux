@@ -1,5 +1,6 @@
 #!/bin/bash
 #elaborado por sinfallas
+echo "## localepurge ##"
 localepurge
 echo "## version ##"
 echo "live-boot: `dpkg-query -W -f='${Version}\n' live-boot`" > /etc/xanadu/version
