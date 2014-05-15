@@ -1,184 +1,670 @@
-xanadu (0.5.7)
+commit 666c5bcdd199951fb4fe0242518abe842bfb93a7 (HEAD, tag: v0.5.7, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Tue May 13 22:32:16 2014 -0430
 
-	* se agrega el repositorio de xanadu
-	* se eliminan repositorios redundantes
-	* se simplifican las listas de paquetes
-	* se cambia la prioridad de las particiones swap
+    * se agrega el repositorio de xanadu
+    * se eliminan repositorios redundantes
+    * se simplifican las listas de paquetes
+    * se cambia la prioridad de las particiones swap
 
+commit cc33c94ef42a1c37316d621e1c7116cab42d60f6
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat May 10 22:48:12 2014 -0430
 
-xanadu (0.5.6)
+    * se corrige la funcion de comprobacion de memoria
+    * se cambia la ubicacion de la gestion de los archivos .pid
 
-	* se agrega el buscador shodan a los marcadores de iceweasel
-	* ahora, durante el post-instalador los directorios /var/cache/apt/archives y /home/*/.cache se agregan al fstab solo si el equipo tiene mas de 4 Gb de ram
-	* desde ahora el post-instalador solo permite instalar algunos escritorios si el equipo posee mas de 2 Gb de ram
-	* se modifica el readme para eliminar informacion innecesaria
-	* se agrega "echo vm.swappiness = 10 >> /etc/sysctl.conf" a la comprobacion de memoria en la funcion "optimizar" en "variables"
-	* en la funcion "optimizar" en "variables", se agregan mejoras para las tarjetas de video intel
-	* se eliminan variables mal ubicadas en los script
+commit 57f751cf6a952da4f582190ff7516efed3cd67e1
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat May 10 01:04:39 2014 -0430
 
+    * se eliminan variables mal ubicadas en los script
 
-xanadu (0.5.5)
+commit 56dd987359f9a99331a78f84b974566cff3d816d
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Fri May 9 21:24:40 2014 -0430
 
-	* se corrige error en el repositorio de jupiter
-	* se agrega funcion a los script para crear archivo .pid en /run
-	* correcciones menores en los archivos leeme y de copyright
+    * se corrige la funcion de crear archivos .pid en los script
 
+commit 461accce84360e2fe26039941163435ef2dca792
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Fri May 9 17:46:06 2014 -0430
 
-xanadu (0.5.4)
+    * correccion de errores
 
-	* se modifica la funcion optimizar en el script variables para aumentar la seguridad
-	* se elimino random-wallpaper en lxde y openbox
-	* se sustituye lshw por hwinfo
-	* se traduce el instalador principal
-	* nuevas replicas de algunos repositorios
-	* se actualizan algunos ppa a trusty
-	* se elimina el paquete devio
-	* se agregan paquetes a la lista exclude.pref.chroot
-	* se corrige un error en el script modo-server
+commit a69e4ae1b5f697d0b3dcbde890416bafb422a339 (tag: v0.5.6)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu May 8 22:17:26 2014 -0430
 
+    * se agrega el paquete sshfs
+    * en la funcion "optimizar" en "variables", se agregan mejoras para las tarjetas de video intel
+    * se agrega "vm.swappiness = 10" a la comprobacion de memoria en la funcion "optimizar" en "variables"
+    * se modifica el readme para eliminar informacion innecesaria
+    * se agrega el buscador shodan a los marcadores de iceweasel
+    * desde ahora el post-instalador solo permite instalar algunos escritorios si el equipo posee mas de 2 Gb de ram
 
-xanadu (0.5.3)
+commit aecdfb592fb50399a15d54126064e0b8cedd5017
+Author: Sinfallas <sinfallas@users.noreply.github.com>
+Date:   Thu May 8 17:43:11 2014 -0430
 
-	* se cambio en los leeme y el navegador la web de github por el nuevo blog
-	* cambios menores en los archivos leeme
-	* se desactivo la limpieza de los archivos del man
-	* se reintegra testdisk (estaba roto en los repositorios)
-	* se elimina deb-src de los repositorios de kali
-	* se traduce al español refractainstaller-wrapper.sh
-	* se crea el script "revision" para automatizar algunas comprobaciones de la lista de pruebas
-	* se adapta el archivo os-release al formato de systemd
-	* se agregan los paquetes how-can-i-help y systemd-ui
+    Update README.md
 
+commit a2e40f61ed4d65b87b1933cb18861bfcfac0ee0c
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu May 8 10:52:50 2014 -0430
 
-xanadu (0.5.2)
+    * cambios en readme
 
-	* se agrega menulibre y mugshot al instalar apparmor
-	* se agrega soporte para mtp agregando el paquete jmtpfs
-	* se sustituyen algunos los wallpapers (requisito de Debian Derivatives Census)
-	* se agregan los paquetes arandr, hardinfo, usbview, i7z y discover
-	* se elimina la linea "tmpfs /var/cache/apt/archives tmpfs noatime,nodev 0 0" del fstab y el script variables
-	* se amplia la lista de pruebas
-	* se modifico el fondo del grub y syslinux para eliminar los logos de debian y lxde (requisito de Debian Derivatives Census)
-	* se colocaron las entradas deb-src correspondientes a cada repositorio (requisito de Debian Derivatives Census)
-	* se modifica el archivo /usr/share/base-files/motd (requisito de Debian Derivatives Census)
-	* se agregaron algunos modulos al blacklist
+commit ac44225513987d9fb5914ea726ec01ca320345da
+Author: Sinfallas <sinfallas@users.noreply.github.com>
+Date:   Wed May 7 23:27:41 2014 -0430
 
+    Update README.md
 
-xanadu (0.5.1)
+commit f608629065abe15a3996ce91f14f4ab1909b1b0b
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Tue May 6 21:07:22 2014 -0430
 
-	* pequeños cambios en preferencias de iceweasel
-	* cambios en los script post-instalacion
-	* cambios en el script modo-server
-	* se bloquea el acceso como root desde la red
-	* cambios para mejorar la seguridad
-	* algunas carpetas que se creaban en el arranque ahora se crean durante la construccion
-	* los permisos para tor ahora se cambian en la construccion y no en el arranque
-	* se elimino del constructor el directorio /home por conflicto de permisos
-	* los archivos .bashrc de root y user fueron sustituidos por /etc/bash.bashrc
-	* se cambia la configuracion de rsyslog para trabajar en conjunto con journald
+    * se agrega funcion a los script para crear archivo .pid en /run
+    * se agrega funcion a los script para crear archivo .pid de algunos sub-procesos en /run
+    * correcciones menores en los archivos leeme y de copyright
+    * se corrige error en el repositorio de jupiter
 
+commit 39621058aa22abca149a2e922b0cd242af277481 (tag: v0.5.5)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon May 5 23:07:11 2014 -0430
 
-xanadu (0.5.0)
+    * cambios menores en los archivos de informacion
 
-	* se sustituye sysvinit por systemd
-	* se agregaron nuevos paquetes a la lista negra
-	* se agregaron os-prober y systemd-analyze al script entorno
-	* se modificaron los script para adaptarse al nuevo comando: systemctl
-	* se agrearon parametros en failsafe para tarjetas radeon: radeon.modeset=0 xmodule=vesa
-	* ahora se desactivan algunos servicios durante la construccion y no durante el arranque
-	* /var/cache/polipo y /var/log/polipo se crean en tiempo de arranque
+commit 0464b8840f71ee6047245a5fc802405910273a91
+Author: Sinfallas <sinfallas@users.noreply.github.com>
+Date:   Fri May 2 22:22:36 2014 -0430
 
+    Update README.md
 
-xanadu (0.4.6)
+commit 3f8ea021e32287c7495af70539766eeb27738234
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu May 1 19:17:47 2014 -0430
 
-	* se desactivaron modulos innecesarios
-	* se corrigen errores en iceweasel
-	* cambios en el .bashrc de user y root
-	* se agrego rfkill al archivo modules
-	* correcciones varias
-	* se desactivo zsync en live-build
-	* se elimina arpon por no funcionar correctamente
-	* se agrego OpenNIC a los marcadores de iceweasel
-	* se agrego Debian documentation a los marcadores de iceweasel
-	* se sustituye virt-what por systemd-detect-virt
-	* cambios en los script referentes al nuevo APT
-	* se agrega USB a la lista de hardware mostrado por entorno
-	* se activa la tecla Imprimir Pantalla
-	* se agrega la combinacion de teclas Windows + i para ejecutar iceweasel
+    * se elimina el instalador a usb
 
+commit e5633b88371c472cc3c5efacaebb30f9c89001d7
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu May 1 15:48:01 2014 -0430
 
-xanadu (0.4.5)
+    * se actualiza readme.md
 
-	* modificaciones en hook
-	* se coloco timeout a las advertencias de los script
-	* se agrego la funcion limpiar_1 a variables
-	* se crea una lista de pruebas a realizar antes del lanzamiento de cada version
-	* se corrigen errores en el instalador
-	* se corrige el error verificacion de modo de ejecucion (live) en varios scripts
+commit 33634ab651a7733db1b5f66b16a3945a683616af
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu May 1 14:55:48 2014 -0430
 
+    * nuevas replicas de repositorios
+    * se elimina el paquete devio
+    * se agregan paquetes a la lista exclude.pref.chroot
+    * se corrige un error en el script modo-server
+    * se actualizan algunos ppa a trusty
+    * se agrega script para instalacion usb
+    * se sustituye lshw por hwinfo
+    * se agregan los paquetes fuseiso y pmount
 
-xanadu (0.4.4)
+commit cda49c6c180f32f43c75162bd379a4127d1f8507 (tag: v0.5.4)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Apr 28 21:02:32 2014 -0430
 
-	* se modifica la forma de montar cgroup para adaptarse a ulatency
-	* se agrega el paquete ulatency
-	* se adapta el script variables para la nueva configuracion de cgroup
-	* mejoras a zram
-	* se elimina cgroup-bin por conflicto con ulatency
-	* se eliminan paquetes innecesarios
+    * se elimina el random wallpaper
+    * se hacen multiples modificaciones para mejorar la seguridad
 
+commit e296671264f1ac5cecd558c3e4b868eba0c58fa0
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Apr 26 13:39:24 2014 -0430
 
-xanadu (0.4.3)
+    * se modifica la lista de pruebas
 
-	* se revierte la desactivacion de sudo por presentar problemas con los script
-	* se desactiva el acceso grafico al root
-	* se agrega el paquete ssh con modificaciones en la configuracion por defecto
-	* se agrega el paquete systemd-shim para corregir el error que no permitia cerrar sesion
-	* se agrega el paquete systemd-sysv para corregir el error de conexion a dbus
-	* se crea lista de paquetes llamada systemd para ubicar los paquetes relacionados con ese sistema
-	* se elimina el icono "adicionales" del escritorio, solo estara accesible desde su correspondiente menu
-	* se eliminan funciones redundantes en los script
-	* se modificaron algunas configuraciones a openbox
-	* se eliminaron archivos innecesarios en includes.chroot
+commit b5643c6156aed1dd5d3f0cc2ff00387823777772
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Fri Apr 25 23:12:21 2014 -0430
 
+    * se agregagon los paquetes how-can-i-help y systemd-ui
 
-xanadu (0.4.2)
+commit 3399414e991ced738977fe49a777348d4d79c377
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Fri Apr 25 18:06:51 2014 -0430
 
-	* nuevos repos (aptosid y siduction)
-	* se desactivo sudo en el post-instalador
-	* se corrigieron errores en el script entorno
-	* se cambio la clave de root a enfilade
-	* se agrega icono de la papelera
-	* nuevo estilo de numeracion mas acorde con lo sugerido por debian
-	* se cambio el archivo chroot para que apuntara a linux-image en lugar de linux-image-3.13
+    * se elimina deb-src de los repositorios de kali
+    * se traduce al espanol refractainstaller-wrapper.sh
+    * se crea el script "revision" para automatizar algunas comprobaciones de la lista pruebas
+    * se adapta el archivo os-release al formato de systemd
 
+commit aff3a591c21797ddbed4e45a9ad5e402b67afffc (tag: v0.5.3)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Apr 23 22:57:08 2014 -0430
 
-xanadu (0.4) beta 1
+    * cambios en los archivos leeme
+    * se agrego la direccion del blog a los marcadores de iceweasel
+    * se desactivo la limpieza de los archivos del man
+    * se reintegra testing (estaba roto en los repositorios)
 
-	* se modificaron las opciones por defecto en iceweasel para activar spdy
-	* se agregaron algunos modulos al blacklist
-	* se agregaron acciones personalizada a thunar
-	* se modifico post-gui para optimizar el sistema recien instalado
-	* correccion de errores en modo-server
-	* se cambio el repositorio de i2p por presentar problemas
-	* se actualizaron los repositorios
-	* se creo un script llamado "entorno" para generar un reporte sobre las caracteristicas del pc
-	* se corrigio la falla en microcode
-	* nuevos drivers para intel
-	* se eliminaron paquetes innecesarios
-	* se agrego fish shell 
+commit e5780b82afa4ba096c5c85f9ec9224e0bfdaf8f6
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Apr 23 11:16:57 2014 -0430
 
+    * cambios en el readme
 
-xanadu (0.3) beta 8
+commit c57e96df9dc74aa60aa1f5b38f1074aa7e38600b
+Author: Sinfallas <sinfallas@users.noreply.github.com>
+Date:   Tue Apr 22 07:51:38 2014 -0430
 
-	* se corrige comportamiento de cgroup
-	* se agrega verificacion de modo de ejecucion (live) en post-instalacion
-	* se instala apparmor al entrar por primera vez en post-instalacion
-	* se agregan varios comandos a la configuracion por defecto de grub al entrar por primera vez en post-instalacion
-	* si el usuario no cambio el hostname al momento de instalar el sistema se generara uno de forma aleatoria al entrar por primera vez en post-instalacion
-	* se elimina turpial
-	* al ejecutar post-instalador se crea en /etc/fstab una entrada para colocar el directorio .cache del usuario en tmpfs
-	* se agrego la funcion optimizar al modo server
-	* se simplificaron las listas de paquetes
-	* se cambio el comando de arranque en syslinux
-	* se modificaron valores por defecto en iceweasel
-	* se cambio el menu de arranque para mayor facilidad de uso
+    Update README.md
+
+commit a919c6a10623fb7d03222c1f79eb06ee2af14500
+Author: Sinfallas <sinfallas@users.noreply.github.com>
+Date:   Tue Apr 22 07:47:42 2014 -0430
+
+    Update README.md
+
+commit e7c94dda8617234a90a6f056ecc52bab36555b78
+Author: Sinfallas <sinfallas@users.noreply.github.com>
+Date:   Tue Apr 22 07:46:42 2014 -0430
+
+    Update README.md
+
+commit 0bdc24724afcd7e006a23d3e0ba08a7b1cdced45
+Author: Sinfallas <sinfallas@users.noreply.github.com>
+Date:   Tue Apr 22 07:43:49 2014 -0430
+
+    Update README.md
+
+commit 79572cec7a9bec17e74c7728ea17bd74bd6120c0
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Apr 21 18:56:59 2014 -0430
+
+    * se colocaron las entradas deb-src correspondientes a cada repositorio
+    * se modifica el archivo /usr/share/base-files/motd
+    * se agrego ssb al blacklist de modulos
+
+commit 91e5872d1ddf38af2dab9c84b76416262e1f27f5
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Apr 20 22:17:28 2014 -0430
+
+    * se elimina el archivo inittab
+    * se agrega el paquete discover a la lista drivers
+    * se amplia la lista de pruebas
+
+commit e63881b3fad0eea5234702cb2fcb806a493739fa
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Apr 20 17:22:04 2014 -0430
+
+    * se agrean los paquetes arandr, hardinfo y usbview a la lista escritorio
+    * se elimina /var/cache/apt/archives del fstab y el script variables
+    * se amplia la lista de pruebas
+    * se modifico el fondo del grub y syslinux para eliminar los logos de debian y lxde
+
+commit a02a70702d0123dd1e87b8eceb75b811933e01e4 (tag: v0.5.2)
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Thu Apr 17 16:20:58 2014 -0430
+
+    * se sustituyen algunos wallpapers
+    * se simplican las listas de paquetes
+
+commit 8f004c72782920d0be19241e5b6b4c1e8edc0048
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Tue Apr 15 16:26:00 2014 -0430
+
+    * se cambio la configuracion de rsyslog para trabajar en conjunto con journald
+
+commit 3a30e4d7977e9de39ec60bf3adba62c9d5392ee7
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Mon Apr 14 16:44:48 2014 -0430
+
+    * cambios en las preferencias de iceweasel
+    * algunas carpetas que se creaban en el arranque ahora se crean en la construccion
+    * los permisos para tor ahora se cambian en la construccion y no en el arranque
+    * se elimino del constructor el directorio /home por conflicto de permisos
+    * los archivos .bashrc de root y user fueron sustituidos por /etc/bash.bashrc
+
+commit 0bab55b6cd42454f7eff38777a04294307ba5ff2
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Sun Apr 13 20:01:16 2014 -0430
+
+    * cambios en las preferencias de iceweasel
+    * se desactivo el cierre de sesion en el modo servidor con ctrl-alt-del
+    * se cambio el periodo de vencimiento de las claves y el cambio de claves
+    * se bloquea el acceso como root desde la red
+    * cambios menores a la configuracion de ssh
+    * se agregan parametros a sysctl
+    * cambios esteticos en los script adicionales
+    * se instalan nuevos paquetes y se mejora la seguridad en script modo-server
+    * correccion de errores y cambios esteticos en los script post
+    * se agregan funciones nuevas para complementar los demas script en el archivo variables
+    * se agregan nuevos campos a la lista de pruebas
+
+commit c59f88aaa908e373cd61774ce9167715f6e1b9bc
+Author: Sinfallas <sinfallas@users.noreply.github.com>
+Date:   Sun Apr 13 10:22:14 2014 -0430
+
+    Update README.md
+
+commit b912aa99c77d5b2c4c084cf38af4ae45297b4626 (tag: v0.5)
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Sun Apr 13 00:37:51 2014 -0430
+
+    * cambios menores
+
+commit 6e29b6ba5543fcdeb3146a5456b9a8e7cc0b67de
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Sat Apr 12 21:39:35 2014 -0430
+
+    * se simplican las listas
+    * correccion de errores
+
+commit 6edd9828978b01c10da1f252bb5d57bed8f1e560
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Sat Apr 12 16:57:41 2014 -0430
+
+    * se sustituye sysvinit por systemd
+    * se agregaron nuevos paquetes a la lista negra
+    * se agrego os-prober al script entorno
+    * se modificaron los script para adaptarse al nuevo comando: systemctl
+    * se agregaron parametros en failsafe para tarjetas radeon: radeon.modeset=0 xmodule=vesa
+    * ahora se desactivan algunos servicios durante la construccion y no durante el arranque
+
+commit 44f74a04f63d0812b4c1278030cfe02cbd8fae26 (tag: v0.4.6)
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Fri Apr 11 15:23:28 2014 -0430
+
+    * correccion de errores
+
+commit 09eb7db92232b3011054828026c2b697fd8e76f1
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Thu Apr 10 23:25:22 2014 -0430
+
+    * se activo la tecla imprimir pantalla
+    * se agrego la combinacion de teclas W + i para lanzar iceweasel
+    * se agrega USB a la lista de hardware mostrado en entorno
+    * se simplifican aun mas las listas de paquetes para live-build
+
+commit fb42a167260d77634361fc386db4c7f17ae6f704
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Thu Apr 10 16:48:23 2014 -0430
+
+    * cambios en los metadatos de la iso
+    * cambios en los archivos leema incluidos en la iso (se elimino la lista de paquetes)
+    * se agregaron los siguientes sitios a marcadores de iceweasel: opennic y debian doc
+    * se sustituyo virt-what por systemd-detect-virt
+    * cambios a los script para adaptarse al nuevo apt
+
+commit 3232811a1232a3a4ddd326440a6ad7e2e89328ee
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Wed Apr 9 23:06:11 2014 -0430
+
+    * cambios al readme.md
+
+commit f17932e54684e5c5e015b0d92a5f5d3a1b77286a
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Tue Apr 8 20:25:58 2014 -0430
+
+    * cambios en auto/build
+    * se agrego gvfs-fuse a la lista de excluidos
+    * se cambio el parametro locales en binary
+    * se elimino arpon por presentar problemas
+    * se creo el enlace simbolico mtab
+    * nueva version del instalador
+
+commit 4b8063d6a379a0c83b68c65112b7e393561791e9
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Mon Apr 7 16:20:00 2014 -0430
+
+    * se desactivan modulos innecesarios
+    * se corrige error en iceweasel
+    * cambios .bashrc de user y root
+    * se agrego rfkill al archivo modules
+    * correcciones varias
+    * se desactivo zsync en live-build
+    * se amplio la lista de pruebas
+
+commit bb8fe9420dd3c6589ddf62d770244a800d438c6f
+Merge: bb64694 8ef9b34
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Sat Apr 5 18:21:21 2014 -0430
+
+    Merge branch 'master' of github.com:sinfallas/xanadu-linux
+
+commit bb6469490487f1a6578036b2ab567c7aaeb840a1
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Sat Apr 5 18:18:00 2014 -0430
+
+    * modificaciones en hooks
+    * se coloco timeout en las advertencias de los scripts
+    * se agrego funcion limpiar_1 en variables
+    * se corrige error en iceweasel
+    * se corrige error en el instalador
+    * se corrige verificacion de modo (live) en varios scripts
+
+commit 8ef9b348ecf24d77b84fbba640bdf35a6237d886
+Author: Sinfallas <sinfallas@users.noreply.github.com>
+Date:   Thu Apr 3 08:44:19 2014 -0430
+
+    Update README.md
+    
+    actualizacion del link
+
+commit d2e318bdc942cf84065ea8f54d75699bfeb422b2
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Thu Apr 3 00:34:28 2014 -0430
+
+    * se modifica la forma de montar cgroup para adaptarse a ulatency
+    * se agrega el paquete ulatency
+    * se adapta el script variables para la nueva configuracion de cgroup
+    * mejoras a zram
+    * se elimina cgroup-bin por conflicto con ulatency
+    * se eliminan paquetes innecesarios
+
+commit 23f22594df05d96b0c62131369787997e9a08f86
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Mon Mar 31 20:36:36 2014 -0430
+
+    * limpieza de directorios
+    * configuracion de openbox
+    * se resuelve el problema del logout
+
+commit 1b8d1f001201525a51b79a096d64d1559c7d1d28
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Sun Mar 30 19:51:27 2014 -0430
+
+    * se agrega el paquete ssh
+    * se elimina el icono adicionales del escritorio
+    * se eliminan funciones redundantes en los script
+    * se reactiva sudo
+
+commit 3599448c4c104e484999f1b59a4ce884f9da1d52
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Sat Mar 29 17:24:40 2014 -0430
+
+    * correcion de errores
+
+commit d32030cc83ab1daab892741784e2fc5a61a352c6
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Sat Mar 29 14:51:27 2014 -0430
+
+    * nueva numeracion, acorde con lo sugerido por debian
+
+commit d144d615fbbc4b9873c8eb67fc393a42943ba088
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Fri Mar 28 16:20:29 2014 -0430
+
+    * modificaciones a readme.md
+
+commit 6d4f6f3318a4fcebced7ecc3480cff162624340b
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Fri Mar 28 16:13:11 2014 -0430
+
+    * se agregaron nuevos repos (aptosid y siduction)
+    * se corrigieron errores en el script entorno
+    * se desactivo sudo en post-instalacion
+    * se cambio la clave de root a enfilade
+
+commit d6b6a3441b0731e53d8b9dffe170cf8143a6b9e3
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Thu Mar 27 19:27:02 2014 -0430
+
+    * se eliminaron archivos innecesarios
+
+commit 865d59edd23ab0155f18d1b004eac67e00abcd2d
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Tue Mar 25 16:09:21 2014 -0430
+
+    * se agrego fish shell
+    * correccion de errores
+
+commit 91fe92d707b648bf8ab2f89c9fbc32c2d23a4208
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Sat Mar 22 20:48:20 2014 -0430
+
+    * correcion de errores
+
+commit 48d47d3802aa181082b65fbd77ecffc5072273d4
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Sat Mar 22 16:05:36 2014 -0430
+
+    * se creo script llamado entorno
+    * se corrige error en microcode
+    * nuevos drivers para intel
+    * se eliminaron paquetes innecesarios
+
+commit ac7deecf9de732fb8d79490ed86f4d70291806a6
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Fri Mar 21 20:47:11 2014 -0430
+
+    * se cambio el repositorio de i2p por presentar problemas
+    * se actualizaron los repositorios
+
+commit f5b24d2e7bf7e0a663743af3e201648d0d7f2626
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Thu Mar 20 23:46:57 2014 -0430
+
+    * se elimino la verificacion de virtualizacion
+
+commit d21b4e1551057e659766e5b075b42a4b891991b1
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Thu Mar 20 21:08:33 2014 -0430
+
+    * modificaciones a instalar.sh
+
+commit 7c74d113b9d681fa39ac04939c1a65f17b162e26 (tag: v0.4)
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Thu Mar 20 19:45:46 2014 -0430
+
+    * se modificaron las opciones por defecto en iceweasel
+    * se agregaron algunos modulos a blacklist
+    * se modifico rc.local para detectar si se ejecuta en un entorno virtualizado
+    * ciertas optimizaciones solo se realizan fuera de un entorno virtualizado
+    * se agregaron acciones personalizadas a thunar
+    * se modifico post-gui para optimizar el sistema recien instalado
+    * se agrego el paquete virt-what
+    * se corrigieron errores en modo-server
+
+commit e85c9f8c9530f0b54375e30c1167344585f52204
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Wed Mar 19 21:32:36 2014 -0430
+
+    * se cambio el comando de inicio en syslinux
+    * se cambio el menu de arranque para hacerlo mas facil
+    * se cambiaron las configuraciones por defecto en iceweasel
+
+commit cc6ad40149ae9cc5257b6e5450683477da9ccb7b
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Tue Mar 18 20:17:09 2014 -0430
+
+    * se cambio el mensaje de advertencia de la opcion seguridad en adicionales
+    * se agrego la funcion optimizacion al modo server
+    * se simplificaron las listas de paquetes
+
+commit 9c6da93c75af0555529faffb79ec1257e309638c
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Tue Mar 18 01:10:23 2014 -0430
+
+    * correcion de errores
+
+commit ad353112f3f292638bcef83996e0a701f9637320
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Mon Mar 17 17:10:24 2014 -0430
+
+    * se modifico auto/clean
+    * se agrego el archivo changelog
+    * se corrigio el comportamiento de cgroup
+    * se movio el directorio .cache de los usuario a tmpfs
+    * se agrego una verificacion de modo live para el post-instalador
+    * se elimino turpial
+
+commit afd8379bf10588bfbc24961cac1b5f477657757f
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Fri Mar 14 15:11:09 2014 -0430
+
+    * en el instalar.sh se agrega una linea que deshabilita tmpfs /var/spool
+
+commit 19b5f1af2f95f29be1d8f31ddcb10d1a615d2637
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Fri Mar 14 12:29:29 2014 -0430
+
+    * bugfix
+
+commit 8677e00c922d772f10b711c8ca3d1d986165dfbf
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Fri Mar 14 11:00:38 2014 -0430
+
+    * correcion de errores
+
+commit 43cb7560c6001364cb28ffe15aef253b46695b29
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Fri Mar 14 10:25:47 2014 -0430
+
+    * se agrego un archivo leeme a config/archives con las instrucciones para agregar repositorios
+
+commit f46ff3a0b8b2a4256a0f23e860b7e24a7abcddc3
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Fri Mar 14 09:57:31 2014 -0430
+
+    * misc
+
+commit 15cdddf2eebe6aa5d87d096d078dc5dcc20db212
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Thu Mar 13 21:01:15 2014 -0430
+
+    * modificaciones en instalar.sh
+
+commit 8074d73b5f194751037acdd75e011d8e914a622f
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Thu Mar 13 20:34:36 2014 -0430
+
+    * se elimina auto/config por conflicto en construccion
+
+commit 8dbc346e906a529f5523a23c5101ae6c9456b332
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Thu Mar 13 17:13:57 2014 -0430
+
+    * se creo auto/config
+
+commit 0e4c962f38eb6f23435ae28fefcf65af0acb8ebe
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Thu Mar 13 17:08:32 2014 -0430
+
+    * modificaciones a instalar.sh
+
+commit 766cb4e58c940695806b251f606aafb68bc74758
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Thu Mar 13 16:52:21 2014 -0430
+
+    * correccion de errores
+
+commit 74b375b42d922f104faff516cec4a1f30aef94cc
+Merge: 6af3971 8b7f3b2
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Thu Mar 13 16:46:08 2014 -0430
+
+    Merge branch 'master' of github.com:sinfallas/xanadu-linux
+
+commit 6af397162d7a400d02aaeb759e7895eeedac96f6
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Thu Mar 13 16:45:33 2014 -0430
+
+    * modificaciones a instalar.sh
+
+commit 8b7f3b28133b87ed6a1d013c74ae96ae345ad055
+Author: Sinfallas <sinfallas@users.noreply.github.com>
+Date:   Wed Mar 12 12:55:08 2014 -0430
+
+    Update README.md
+
+commit fba6cbb454c6c4128ecf03f73d4fa5897cbc602a
+Author: Sinfallas <sinfallas@users.noreply.github.com>
+Date:   Wed Mar 12 12:54:29 2014 -0430
+
+    Update README.md
+    
+    nuevo link
+
+commit 2621f243f952f9048ee8356ec25c9a9e67d0e22d
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Tue Mar 11 22:26:27 2014 -0430
+
+    * se cambio el orden de los procesos dentro de hooks para hacerlo mas rapido
+    * correcion de errores en el instalador (yad y zenity)
+    * se agrego un alias que permite abrir archivos .rar rotos
+    * se agrego un script llamado modo-server que adapta el sistema para su uso en servidores
+
+commit 9533cff530c468f69146f3f8c9a72c47afaa2e57
+Merge: b3898b5 59ccc5c
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Mon Mar 10 00:42:54 2014 -0430
+
+    Merge branch 'master' of github.com:sinfallas/xanadu-linux
+
+commit b3898b56c85c5652874e05c75d735879f837812e
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Mon Mar 10 00:32:14 2014 -0430
+
+    * todos los script ya tienen una version YAD
+    * se agrego efecto scope y zoom
+    * se agrego la opcion de papel tapiz aleatorio
+    * se agrego splash para el grub
+    * se centralizaron los procesos de los script en el archivo variables
+    * corregido el error de visualizacion al usar compton
+    * se agregaron los keyring para sus respectivos repositorios
+    * mejoras en fail2ban y psad
+    * se corrige error en sudo despues de instalar el sistema
+    * se agrega spindown a hdparm.conf despues de instalar el sistema
+
+commit 59ccc5c74ac788eec8862b1108e9296188983a02
+Author: Sinfallas <sinfallas@users.noreply.github.com>
+Date:   Fri Mar 7 23:59:25 2014 -0430
+
+    Update README.md
+
+commit b91a6a106f982849efed6034b8c15914e60b22b1
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Fri Mar 7 18:26:00 2014 -0430
+
+    * correcion de errores
+
+commit 4f5a6bfb62c7bc9e8909b637f37b701f17cef7a2
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Thu Mar 6 01:07:36 2014 -0430
+
+    * se modifico la ayuda en el arranque
+    * se agregaron nuevos repositorios
+    * se desactivo IPv6
+    * nuevos paquetes: compton, gcp, macchanger
+
+commit 835d90e72c2de0703de0a60bab0e7fdc8db3602b
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Tue Mar 4 23:38:31 2014 -0430
+
+    * se agrega refractinstaller y sus dependencias
+    * se agrega yad
+    * se agrega soporte para cifrado de disco
+    * se agrega el repositorio de kali linux
+    * correcion de errores
+
+commit e68999b57bad80061f082ec56ae784b4ea416dc5
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Sun Mar 2 21:13:08 2014 -0430
+
+    * mejorando readme
+
+commit f3eab47bec0ad6a838c945a7b9077ea6f31405bd (tag: v0.3)
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Sat Mar 1 19:35:47 2014 -0430
+
+    2
+
+commit c9cd4859499e07e6a346d6120afdc7b51298e758
+Author: sinfallas <sinfallas@yahoo.com>
+Date:   Sat Mar 1 17:49:51 2014 -0430
+
+    * primer commit
+
+commit 88bc3ce3063fb49649d33aaf8cc811acd1956623
+Author: Sinfallas <sinfallas@users.noreply.github.com>
+Date:   Sat Mar 1 14:18:19 2014 -0800
+
+    Initial commit
