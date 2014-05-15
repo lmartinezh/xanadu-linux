@@ -1,4 +1,4 @@
-Xanadu GNU/Linux
+![Xanadu](https://secure.gravatar.com/blavatar/682914aac6283e9a208f6d5e847c8c3b?s=128&ts=1400168049) Xanadu GNU/Linux
 
 Es un derivado de Debian que utiliza SID como base y LXDE como entorno de escritorio, pensada para ser ligera y a la vez útil, contiene herramientas para rescate de sistemas, análisis forense y navegación anónima, además de todo lo necesario para su uso en el escritorio.
 
