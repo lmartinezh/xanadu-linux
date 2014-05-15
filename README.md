@@ -38,11 +38,10 @@ Desarrollador:
 
 	* Jesús Palencia
 
-Colaboradores:
 
-	* Alvaro Hernandez
-	* David Rondon
-	* Héctor Mantellini
+Para una lista completa de los miembros de la comunidad, visite:
+
+https://xanadulinux.wordpress.com/quienes-somos/
 
 
 Dudas, consultas y/o sugerencias por favor enviarlas a: sinfallas@gmail.com
