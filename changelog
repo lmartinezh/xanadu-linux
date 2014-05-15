@@ -1,4 +1,16 @@
-commit 666c5bcdd199951fb4fe0242518abe842bfb93a7 (HEAD, tag: v0.5.7, origin/master, origin/HEAD, master)
+commit 87c9027000f8c99f8e3d2a97a72f8ccfbda808fd (HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed May 14 23:06:12 2014 -0430
+
+    * se renombra la lista de pruebas
+
+commit 14912081646aef08c2e1cfc135859b5dd2de6ff5 (origin/master, origin/HEAD)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed May 14 22:46:16 2014 -0430
+
+    * nuevo changelog
+
+commit 666c5bcdd199951fb4fe0242518abe842bfb93a7 (tag: v0.5.7)
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Tue May 13 22:32:16 2014 -0430
 
