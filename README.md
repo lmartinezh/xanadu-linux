@@ -50,3 +50,8 @@ Dudas, consultas y/o sugerencias por favor enviarlas a: sinfallas@gmail.com
 Paquetes incluidos:
 
 https://xanadulinux.wordpress.com/paquetes-incluidos/
+
+
+Contiene material realizado por:
+
+Williams Campos (willithebest1988@gmail.com): logo y fondo de pantalla (ambos en .png) bajo "Licencia Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional"

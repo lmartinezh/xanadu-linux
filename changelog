@@ -1,10 +1,16 @@
-commit 87c9027000f8c99f8e3d2a97a72f8ccfbda808fd (HEAD, master)
+commit 3998c8e74ef2561ec452cba7f586940ef4455fe1 (HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed May 14 23:08:53 2014 -0430
+
+    * changelog
+
+commit 87c9027000f8c99f8e3d2a97a72f8ccfbda808fd (origin/master, origin/HEAD)
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Wed May 14 23:06:12 2014 -0430
 
     * se renombra la lista de pruebas
 
-commit 14912081646aef08c2e1cfc135859b5dd2de6ff5 (origin/master, origin/HEAD)
+commit 14912081646aef08c2e1cfc135859b5dd2de6ff5
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Wed May 14 22:46:16 2014 -0430
 
