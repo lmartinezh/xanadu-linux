@@ -1,10 +1,28 @@
-commit 3998c8e74ef2561ec452cba7f586940ef4455fe1 (HEAD, master)
+commit 14e946c396c456796ec6e3298299b4b03b7db4a7 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Fri May 16 13:56:18 2014 -0430
+
+    * se agrega informacion de licencia del logo y wallpaper
+
+commit 514fca0ca308433a5e3521911c41c44e5604d2e9
+Author: Sinfallas <sinfallas@users.noreply.github.com>
+Date:   Thu May 15 13:26:12 2014 -0430
+
+    Update README.md
+
+commit 8f9193006f07c12002ded7161b67294175080253
+Author: Sinfallas <sinfallas@users.noreply.github.com>
+Date:   Thu May 15 11:21:33 2014 -0430
+
+    Update README.md
+
+commit 3998c8e74ef2561ec452cba7f586940ef4455fe1
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Wed May 14 23:08:53 2014 -0430
 
     * changelog
 
-commit 87c9027000f8c99f8e3d2a97a72f8ccfbda808fd (origin/master, origin/HEAD)
+commit 87c9027000f8c99f8e3d2a97a72f8ccfbda808fd
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Wed May 14 23:06:12 2014 -0430
 
