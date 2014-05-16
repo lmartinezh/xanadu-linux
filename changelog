@@ -1,4 +1,10 @@
-commit 14e946c396c456796ec6e3298299b4b03b7db4a7 (HEAD, origin/master, origin/HEAD, master)
+commit 81fd07e83fc564a585cd21e8923302b6b6895db5 (HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Fri May 16 13:57:43 2014 -0430
+
+    * changelog
+
+commit 14e946c396c456796ec6e3298299b4b03b7db4a7 (origin/master, origin/HEAD)
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Fri May 16 13:56:18 2014 -0430
 
