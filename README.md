@@ -1,5 +1,6 @@
 ![Xanadu](https://secure.gravatar.com/blavatar/682914aac6283e9a208f6d5e847c8c3b?s=128&ts=1400168049) 
-![DOI](https://zenodo.org/badge/4102/sinfallas/xanadu-linux.png) 
+
+![DOI](https://zenodo.org/badge/4102/sinfallas/xanadu-linux.png)
 
 Xanadu GNU/Linux
 
