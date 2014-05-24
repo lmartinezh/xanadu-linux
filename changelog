@@ -1,10 +1,46 @@
-commit 81fd07e83fc564a585cd21e8923302b6b6895db5 (HEAD, master)
+commit 927e2ca95b49fa29f3f307217358582c64954fa3 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat May 24 15:45:59 2014 -0430
+
+    * se elimina la herramienta de deteccion de hardware del menu de arranque por redundante
+    * cambios en el menu de ayuda
+    * se eliminan archivos innecesarios de la carpeta isolinux
+    * se modifican los archivos leeme para agregar la licencia del wallpaper y el logo
+    * se corrigen errores en la configuracion de compton que afectaban el rendimiento
+    * se configura polipo para crear archivo .pid
+    * se corrige error en la configuracion de tor que desactiva las particiones swap al iniciar el servicio
+    * lxpanel ahora es semi-transparente
+    * se corrige error en syslinux que impide la construccion del archivo .iso
+    * en la funcion optimizar en el script variables, se mejora la implementacion del microcode y se activa readahead en systemd
+    * se cambia el wallpaper y el logo
+    * lxterminal ahora es semi-transparente
+    * se agrega el paquete isolinux
+
+commit 895f8ac1ebca75bcc7acaeeca043d924edc390d4
+Author: Sinfallas <sinfallas@users.noreply.github.com>
+Date:   Wed May 21 11:04:50 2014 -0430
+
+    Update README.md
+
+commit ed1a5ef09259ce9cfc4afd0e73b3342c9f8f8609
+Author: Sinfallas <sinfallas@users.noreply.github.com>
+Date:   Wed May 21 11:03:35 2014 -0430
+
+    Update README.md
+
+commit 17650d00777d795ba6b976bfa6137749c584196e (tag: v0.5.7.1)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Fri May 16 13:59:30 2014 -0430
+
+    * changelog
+
+commit 81fd07e83fc564a585cd21e8923302b6b6895db5
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Fri May 16 13:57:43 2014 -0430
 
     * changelog
 
-commit 14e946c396c456796ec6e3298299b4b03b7db4a7 (origin/master, origin/HEAD)
+commit 14e946c396c456796ec6e3298299b4b03b7db4a7
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Fri May 16 13:56:18 2014 -0430
 
