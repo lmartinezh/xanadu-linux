@@ -8,9 +8,9 @@ Global {
     widthtype=percent
     width=100
     height=26
-    transparent=0
-    tintcolor=#000000
-    alpha=0
+    transparent=1
+    tintcolor=0
+    alpha=43
     autohide=0
     heightwhenhidden=2
     setdocktype=1
@@ -19,7 +19,7 @@ Global {
     fontsize=10
     fontcolor=#ffffff
     usefontsize=0
-    background=1
+    background=0
     backgroundfile=/usr/share/lxpanel/images/background.png
     iconsize=24
 }
@@ -107,7 +107,7 @@ Plugin {
         ShowAllDesks=0
         UseMouseWheel=1
         UseUrgencyHint=1
-        FlatButton=0
+        FlatButton=1
         MaxTaskWidth=150
         spacing=1
         GroupedTasks=0
@@ -125,12 +125,12 @@ Plugin {
 Plugin {
     type = thermal
     Config {
-        NormalColor=#00ff00
+        NormalColor=#088A08
         Warning1Color=#fff000
         Warning2Color=#ff0000
         CustomLevels=1
-        Warning1Temp=110
-        Warning2Temp=115
+        Warning1Temp=85
+        Warning2Temp=90
         AutomaticSensor=1
     }
 }
@@ -138,7 +138,7 @@ Plugin {
 Plugin {
     type = dclock
     Config {
-        ClockFmt=%I:%M %p
+        ClockFmt=%I:%M
         TooltipFmt=%A %x
         BoldFont=0
         IconOnly=0

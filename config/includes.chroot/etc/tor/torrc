@@ -193,7 +193,6 @@ CookieAuthentication 1
 ## address manually to your friends, uncomment this line:
 #PublishServerDescriptor 0
 
-DisableAllSwap 1
 LearnCircuitBuildTimeout 1
 EnforceDistinctSubnets 1
 WarnUnsafeSocks 0
@@ -204,7 +203,7 @@ UseNTorHandshake auto
 NumCPUs 0
 ServerDNSDetectHijacking 1
 ServerDNSRandomizeCase 1
-PIDFile /var/run/tor/tor.pid
+PIDFile /run/tor/tor.pid
 AvoidDiskWrites 1
 VirtualAddrNetworkIPv4 10.192.0.0/10
 DNSPort 9053
@@ -213,8 +212,8 @@ AutomapHostsSuffixes .exit,.onion
 TransPort 9040
 User debian-tor
 DisableDebuggerAttachment 0
-ControlSocket /var/run/tor/control
+ControlSocket /run/tor/control
 ControlSocketsGroupWritable 1
 CookieAuthFileGroupReadable 1
-CookieAuthFile /var/run/tor/control.authcookie
+CookieAuthFile /run/tor/control.authcookie
 Log notice file /var/log/tor/log

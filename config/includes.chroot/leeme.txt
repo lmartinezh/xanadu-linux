@@ -32,11 +32,15 @@ Desarrollador:
 
 	* Jesús Palencia
 
-Colaboradores:
 
-	* Alvaro Hernandez
-	* David Rondon
-	* Héctor Mantellini
+Para una lista completa de los miembros de la comunidad, visite:
+
+https://xanadulinux.wordpress.com/quienes-somos/
 
 
 Dudas, consultas y/o sugerencias por favor enviarlas a: sinfallas@gmail.com
+
+
+Contiene material realizado por:
+
+Williams Campos (willithebest1988@gmail.com): logo y fondo de pantalla (ambos en .png) bajo "Licencia Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional"

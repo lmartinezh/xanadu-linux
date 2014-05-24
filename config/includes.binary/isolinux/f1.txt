@@ -14,7 +14,7 @@
 <09F707>   Parametros especiales - Unidades de disco.
 <09F807>   Persistencia.
 <09F907>   Que es Xanadu GNU/Linux.
-<09F1007>  Copyrights.
+<09F1107>  Copyrights.
 
 
 

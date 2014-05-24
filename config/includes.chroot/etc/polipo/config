@@ -26,4 +26,4 @@ maxConnectionRequests = 120
 serverMaxSlots = 8
 serverSlots = 2
 tunnelAllowedPorts = 1-65535
-pidFile = /var/run/polipo.pid
+pidFile = /run/polipo.pid

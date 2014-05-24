@@ -11,7 +11,7 @@ memoria=$(grep MemTotal /proc/meminfo | awk '{print $2}')
 
 function espera ()
 {
-	sleep 30
+	sleep 30 | zenity --progress --pulsate --no-cancel --text "Iniciando tor, por favor espere" --auto-close
 }
 
 function seguridad_1 ()
@@ -30,7 +30,7 @@ function seguridad_1 ()
 
 function antivirus_1 ()
 {
-	freshclam
+	freshclam | zenity --progress --pulsate --no-cancel --text "Actualizando base de firmas de virus, por favor espere" --auto-close
 	clamtk
 }
 
@@ -140,7 +140,10 @@ function optimizacion_1 ()
 		echo "tmpfs /var/cache/samba tmpfs noatime,nodev 0 0" >> /etc/fstab
 		echo "tmpfs /var/spool tmpfs noatime,nodev 0 0" >> /etc/fstab
 		echo "tmpfs /var/tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab
-		echo $miswap2 "none swap sw 0 0" >> /etc/fstab
+		echo $miswap2 "none swap sw,pri=25 0 0" >> /etc/fstab
+		systemctl enable systemd-readahead-collect systemd-readahead-replay
+		iucode_tool --scan-system
+		update-initramfs -u
 		chmod 600 /etc/sudoers
 		chage -M 183 $quien
 		chage -M 365 root
@@ -228,7 +231,7 @@ function icedove_1 ()
 
 function apparmor_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install apparmor-profiles menulibre mugshot ecryptfs-utils auditd passwdqc dnsutils
+	apt-get -q update && apt-get -q -y --force-yes install apparmor-profiles menulibre ecryptfs-utils auditd passwdqc dnsutils
 }
 
 function limpiar_1 ()
