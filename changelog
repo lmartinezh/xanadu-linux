@@ -1,4 +1,19 @@
-commit 927e2ca95b49fa29f3f307217358582c64954fa3 (HEAD, origin/master, origin/HEAD, master)
+commit 399a78f3cddd709115647ac126e2702eb3ef94d1 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon May 26 21:27:34 2014 -0430
+
+    * se eliminan los botones flat
+    * se eliminan archivos innecesarios
+    * se modifica el instalador para incorporar parte del proceso de optimizacion
+    * se modifica la funcion optimizar en variables para reiniciar la pc al final de la optimizacion
+
+commit 44a2d29dd8dd816b54190d637263b2aa2b771fcb (tag: v0.5.8)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat May 24 15:55:53 2014 -0430
+
+    * changelog
+
+commit 927e2ca95b49fa29f3f307217358582c64954fa3
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sat May 24 15:45:59 2014 -0430
 
