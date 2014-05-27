@@ -106,63 +106,25 @@ function optimizacion_1 ()
 	if [[ -f /root/.optimizado ]]; then
 		echo 1 > /dev/null
 	else
-		zenity --info --timeout 3 --text="Por favor reinicie el equipo, presione aceptar para continuar."		
+		zenity --info --timeout 3 --text="El sistema se reiniciara al finalizar la optimizacion, por favor espere..."		
 		if [[ $(hostname) = xanadu ]]; then
 			echo xanadu-$(printf '%02X%02X%02X\n' $((RANDOM%256)) $((RANDOM%256)) $((RANDOM%256))) > /etc/hostname
 			sed -i 's_xanadu_'$(cat /etc/hostname)'_g' /etc/hosts
 		fi
-		swapoff /swapfile
-		rm -f /etc/apt/preferences.d/exclude.pref
-		rm -f /etc/apt/preferences		
-		rm -f /etc/inittab
-		rm -f /swapfile
-		sed -i 's_/swapfile_#/swapfile_g' /etc/fstab
-		sed -i 's_proc_#proc_g' /etc/fstab
-		sed -i 's_miswap_#miswap_g' /etc/rc.local
-		sed -i 's_swapon -f_#swapon -f_g' /etc/rc.local
-		sed -i 's/autologin-user=user/#autologin-user=user/g' /etc/lightdm/lightdm.conf
-		sed -i 's/autologin-user-timeout=0/#autologin-user-timeout=0/g' /etc/lightdm/lightdm.conf
-		sed -i 's_umask 022_umask 027_g' /etc/init.d/rc
-		sed -i 's_umask 022_umask 027_g' /etc/login.defs
-		sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="quiet"/GRUB_CMDLINE_LINUX_DEFAULT="swapaccount=1 cgroup_enable=memory disable=1 disable_ipv6=1 security=apparmor panic=10 quiet splash"/g' /etc/default/grub
 		update-grub2
 		echo $dispositivo { >> /etc/hdparm.conf
 		echo "lookahead = on" >> /etc/hdparm.conf
 		echo "write_cache = on" >> /etc/hdparm.conf
 		echo "spindown_time = 18" >> /etc/hdparm.conf
 		echo "}" >> /etc/hdparm.conf
-		echo "user ALL=(ALL) ALL" > /etc/sudoers.d/live
-		echo "umask 027" >> /etc/profile
-		echo "auth required pam_succeed_if.so user != root quiet" >> /etc/pam.d/lightdm
-		echo "proc /proc proc defaults,hidepid=2 0 0" >> /etc/fstab
-		echo "tmpfs /tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab
-		echo "tmpfs /run tmpfs rw,nosuid,noexec,nodev,noatime,mode=755 0 0" >> /etc/fstab
-		echo "tmpfs /var/cache/samba tmpfs noatime,nodev 0 0" >> /etc/fstab
-		echo "tmpfs /var/spool tmpfs noatime,nodev 0 0" >> /etc/fstab
-		echo "tmpfs /var/tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /etc/fstab
 		echo $miswap2 "none swap sw,pri=25 0 0" >> /etc/fstab
 		systemctl enable systemd-readahead-collect systemd-readahead-replay
 		iucode_tool --scan-system
 		update-initramfs -u
-		chmod 600 /etc/sudoers
 		chage -M 183 $quien
 		chage -M 365 root
 		adduser $quien sambashare
 		yes "" | sensors-detect
-		if [ -n "$(lspci | grep -E 'VGA|Display' | head -n1 | cut -d ':' -f3 | grep -F 'Intel')" ]; then
-			echo 'Section "Device"' > /etc/X11/xorg.conf
-			echo ' Identifier "intel"' >> /etc/X11/xorg.conf
-			echo ' Driver "intel"' >> /etc/X11/xorg.conf
-			echo ' BusID  "PCI:0:2:0"' >> /etc/X11/xorg.conf
-			echo ' Option "AccelMethod" "SNA"' >> /etc/X11/xorg.conf
-			echo ' Option "SwapbuffersWait" "false"' >> /etc/X11/xorg.conf
-			echo ' Option "Tiling" "true"' >> /etc/X11/xorg.conf
-			echo ' Option "BackingStore" "True"' >> /etc/X11/xorg.conf
-			echo ' Option "XvMC" "on"' >> /etc/X11/xorg.conf
-			echo ' Option "TripleBuffer" "true"' >> /etc/X11/xorg.conf
-			echo ' Option "DRI" "true"' >> /etc/X11/xorg.conf
-			echo 'EndSection' >> /etc/X11/xorg.conf
-		fi
 		echo "$(date +%d/%m/%Y-%r)" > /root/.optimizado
 		if (( $memoria > 4096000 )); then
 			echo "vm.swappiness = 10" >> /etc/sysctl.conf
@@ -171,6 +133,7 @@ function optimizacion_1 ()
 				echo "tmpfs /home/$i/.cache  tmpfs noatime,nodev,rw 0 0" >> /etc/fstab
 			done
 		fi
+		reboot
 	fi
 }
 

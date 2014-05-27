@@ -4,8 +4,6 @@ version="Refracta Installer (Yad) 9.0.9beta6 (20131204)"
 # Based on refractainstaller-8.0.3 by Dean Linkous
 # License: GPL-3
 
-
-
 configfile="/etc/refractainstaller.conf"
 
 if [[ -f $configfile ]]; then
@@ -21,7 +19,6 @@ fi
 
 
 exec 2>"$error_log"
-
 
 show_help () {
 	printf "$help_text"
@@ -62,11 +59,9 @@ while [[ $1 == -* ]]; do
     esac
 done
 
-
 if [[ $DEBUG = "yes" ]] ; then
 	set -x
 fi
-
 
 [[ $DISPLAY ]] || { echo "No hay un servidor X corriendo. Saliendo..." ; exit 1 ; }
 if [[ $(id -u) -ne 0 ]] ; then
@@ -84,13 +79,10 @@ if [[ $yadversion < 17 ]]; then
 "
 fi
 
-
 if ! [[ -d /lib/live/mount/rootfs ]] ; then
 	live_session_warning=" ###	ALERTA: No se esta ejecutando desde un live-CD o live-USB	### 
  ###	o usa una configuracion no soportada	### "
 fi
-
-
 
 yad --text-align=fill --borders=6 --title="Instalador" --button="Instalacion simple":0 \
 	--button="Instalacion experta":1 --button="Salir":2 \
@@ -98,7 +90,7 @@ yad --text-align=fill --borders=6 --title="Instalador" --button="Instalacion sim
 
  Esta aplicacion instalara Xanadu en su disco duro.
 
- Basado en refractainstaller-8.0.3 por Dean Linkous. 
+ Basado en refractainstaller-9.0.9beta6 por fsmithred@gmail.com. 
 "
 mode="$?"
 	case $mode in
@@ -110,8 +102,6 @@ mode="$?"
 
 
 	grubversion=$(dpkg -l | egrep "ii|hi" | grep -v bin | grep -v doc | awk '$2 ~ "grub-[glp]" { print $2}')
-
-
 
 check_exit () {
 if [[ $? -ne 0 ]] ; then
@@ -125,7 +115,6 @@ if [[ $? -ne 0 ]] ; then
    fi
 fi
 }
-
 
 copy_excludes () {
         cat > "$rsync_excludes" <<EOF
@@ -161,7 +150,6 @@ EOF
     chmod 666 "$rsync_excludes"
 }
 
-
 if ! [[ -f  $rsync_excludes ]] ; then
     yad --text-align=fill --borders=6 --title=ALERTA --window-icon=error \
     --button=Continuar:0 --button=Salir:1 \
@@ -178,7 +166,6 @@ if ! [[ -f  $rsync_excludes ]] ; then
     fi
 fi
 
-
 if [[ $run_preinstall = "yes" ]] ; then
 	var16="TRUE"
 else
@@ -192,8 +179,6 @@ fi
 
 pre_install_list=$(ls -m /usr/lib/refractainstaller/pre-install)
 post_install_list=$(ls -m /usr/lib/refractainstaller/post-install)
-
-
 
 if [[ $install = "expert" ]]; then
     opts=$(yad --list --title="Opciones de instalacion" \
@@ -295,11 +280,11 @@ if $(echo $opts | grep -q 16); then
 else
 	run_preinstall="no"
 fi
-if $(echo $opts | grep -q 17); then
+#if $(echo $opts | grep -q 17); then
 	run_postinstall="yes"
-else
-	run_postinstall="no"
-fi
+#else
+#	run_postinstall="no"
+#fi
 
 if [[ $encrypt_os = "yes" ]] || [[ $encrypt_home = "yes" ]]; then
     if ! [[ -f /sbin/cryptsetup ]] ; then
@@ -314,7 +299,6 @@ if [[ $encrypt_os = "yes" ]] || [[ $encrypt_home = "yes" ]]; then
         fi
     fi
 fi    
-
 
 ## Partition a disk ##### Simple install now does get to partition the disk - uncomment the conditional below to change it back.
 #if [[ $install = "expert" ]]; then
@@ -424,7 +408,6 @@ fi
 if [[ $install = "simple" ]]; then
     grub_dev="/dev/sda"
 fi
-
 
 blkid -c /dev/null | yad --text-info --title="Lista de particiones" --text="Lista de particiones (para referencia)  Usted puede necesitar esto mas adelante." \
 --width 820 --height 400 --button="Cerrar":0 &
@@ -573,7 +556,6 @@ if [[ $sep_home = "yes" ]]; then
     choose_home
 fi
 
-
 choose_fs_home () {
 if [[ -n $home_dev ]]; then
      fs_type_home=$(yad --list --title="Sistema de archivos para /home" --text="Que sistema de archivos le gustaria para $home_dev?" \
@@ -720,7 +702,6 @@ else
 	postinstall_message="los scripts post-instalador estan desactivados."	
 fi
 
-
 yad --text-align=fill --borders=6 --info --title=Summary --button="Proceder con la instalacion.":0 --button="Salir":1 \
     --text="Por favor CIERRE cualquier otra aplicacion en ejecucion.
 
@@ -824,51 +805,37 @@ cleanup
 
 if [[ $write_random = "yes" ]]; then
     if [[ $encrypt_os = "yes" ]]; then
-        #xterm -fa monaco -fs 12 -geometry 80x20+0+0 -e dd if=/dev/urandom of="$install_dev"
-#       # Redirect stderr so we can see the output of dd
-		exec 2>&1
+       		exec 2>&1
         dd if=/dev/urandom of="$install_dev"
-#       # Resume logging errors in file
         exec 2>>"$error_log"
     fi  
 fi
 
 if [[ $write_random = "yes" ]]; then
     if [[ $encrypt_home = "yes" ]]; then
-        #xterm -fa monaco -fs 12 -geometry 80x20+0+0 -e dd if=/dev/urandom of="$home_dev"
-#       # Redirect stderr so we can see the output of dd
 		exec 2>&1
         dd if=/dev/urandom of="$home_dev"
-#       # Resume logging errors in file
         exec 2>>"$error_log"
     fi  
 fi
 
 if [[ $write_zero = "yes" ]]; then
-    #xterm -fa monaco -fs 12 -geometry 80x20+0+0 -e dd if=/dev/zero of="$install_dev"
     dd if=/dev/zero of="$install_dev"
     if [[ $sep_home = "yes" ]]; then
-        #xterm -fa monaco -fs 12 -geometry 80x20+0+0 -e dd if=/dev/zero of="$home_dev"
-#       # Redirect stderr so we can see the output of dd
 		exec 2>&1
         dd if=/dev/zero of="$home_dev"
-#       # Resume logging errors in file
+
         exec 2>>"$error_log"
     fi
     if [[ $sep_boot = "yes" ]]; then
-        #xterm -fa monaco -fs 12 -geometry 80x20+0+0 -e dd if=/dev/zero of="$boot_dev"
-#       # Redirect stderr so we can see the output of dd
 		exec 2>&1
         dd if=/dev/zero of="$boot_dev"
-#       # Resume logging errors in file
         exec 2>>"$error_log"
     fi
 fi
 
 mkdir /target ;  check_exit
 if [[ $encrypt_os = yes ]] ; then
-#    xterm -fa monaco -fs 12 -geometry 80x20+0+0 -e cryptsetup luksFormat "$install_dev" ; check_exit
-#    xterm -fa monaco -fs 12 -geometry 80x20+0+0 -e cryptsetup luksOpen "$install_dev" root_fs ; check_exit
     cryptsetup luksFormat "$install_dev" ; check_exit
     cryptsetup luksOpen "$install_dev" root_fs ; check_exit
     install_part="/dev/mapper/root_fs"
@@ -884,10 +851,8 @@ mount "$install_part" /target ; check_exit
 if [[ -n $home_dev ]] ; then
     mkdir /target_home ; check_exit
     if [[ $encrypt_home = yes ]]; then
-        #xterm -fa monaco -fs 12 -geometry 80x20+0+0 -e cryptsetup luksFormat "$home_dev"
         cryptsetup luksFormat "$home_dev"
         check_exit
-        #xterm -fa monaco -fs 12 -geometry 80x20+0+0 -e cryptsetup luksOpen "$home_dev" home_fs
         cryptsetup luksOpen "$home_dev" home_fs
         check_exit
         home_part="/dev/mapper/home_fs"
@@ -1200,7 +1165,6 @@ Editar /etc/sudoers ahora?"
 	ans="$?"
     if [[ $ans = "0" ]]; then
         edit_sudoers="yes"
-        #xterm  -fa monaco -fs 12 -geometry 80x20+0+0 -e chroot /target visudo
         chroot /target visudo
     fi
 fi
@@ -1223,11 +1187,8 @@ if [[ $install = "expert" ]]; then
      --text="Le gustaria cambiar la clave de root? (Recomendado)"
 		ans="$?"
         if [[ $ans = 0 ]]; then
-            #xterm  -fa monaco -fs 12 -geometry 80x20+0+0 -e chroot /target passwd
-#       # Redirect stderr so we can see the output of dd
 		exec 2>&1
             chroot /target passwd
-#       # Resume logging errors in file
         exec 2>>"$error_log"
         fi 
 fi
@@ -1237,11 +1198,8 @@ if [[ $change_user = "yes" ]]; then
      --text="Le gustaria cambiar la clave del usuario?" 
 		ans="$?"
         if [[ $ans = 0 ]]; then
-            #xterm  -fa monaco -fs 12 -geometry 80x20+0+0 -e chroot /target passwd "$newname"
-#       # Redirect stderr so we can see the output of dd
 		exec 2>&1
             chroot /target passwd "$newname"
-#       # Resume logging errors in file
         exec 2>>"$error_log"
         fi
 fi

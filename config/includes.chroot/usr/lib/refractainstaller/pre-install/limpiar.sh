@@ -19,12 +19,9 @@ service cron stop
 service rsyslog stop
 tsocks -off
 apt-get clean
+apt-get -y autoremove
 rm -rf /home/*/.mozilla/firefox/*/*Cache*
 rm -rf /tmp/*
 rm -rf /var/tmp/*
 rm -rf /var/cache/polipo/*
-for FILE in $(find /var/log/ -type f)
-do
-	: > ${FILE}
-done
 exit 0

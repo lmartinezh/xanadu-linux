@@ -14,9 +14,7 @@ else
 	exit 1
 fi
 
-# Record errors in a logfile.
 exec 2>"$error_log"
-
 
 show_help () {
 	printf "$help_text"
@@ -58,21 +56,16 @@ while [[ $1 == -* ]]; do
     esac
 done		
 
-
 if [[ $DEBUG = "yes" ]] ; then
 	set -x
 fi
 
-
-# Check that xserver is running and user is root.
 [[ $DISPLAY ]] || { echo "There is no xserver running. Exiting..." ; exit 1 ; }
 if [[ $(id -u) -ne 0 ]] ; then
 	zenity --error --text="You need to be root! "
 	exit 1
 fi
 
-
-# function to exit the script if there are errors
 check_exit () {
 if [[ $? -ne 0 ]] ; then
 	zenity --error --text="Exit due to error: $?
@@ -80,7 +73,6 @@ See $error_log for details." &
 	exit 1
 fi
 }
-
 
 copy_excludes () {
         cat > "$rsync_excludes" <<EOF
@@ -127,8 +119,6 @@ if ! [[ -d /lib/live/mount/rootfs ]] ; then
  ###	what you are doing. This may not work.			### "
 fi
 
-
-# Ask if user wants Simple Install or Expert Install
 choose_simple_expert () {
 install=$(zenity --list --title="Installation Mode" \
      --text="$live_session_warning
@@ -162,11 +152,6 @@ fi
 
 choose_simple_expert
 
-
-
-
-
-# Check that rsync excludes file exists, or create one.
 if [[ $install = "expert" ]]; then
     if ! [[ -f  $rsync_excludes ]] ; then
         zenity --question --ok-label=Continue --cancel-label=Exit \
@@ -185,10 +170,6 @@ else
     copy_excludes
 fi
 
-
-# These set the default setting in the options window,
-# based on setting in config file. Simple Install does
-# what config file says, Expert allows you to change it.
 if [[ $run_preinstall = "yes" ]] ; then
 	var16="TRUE"
 else
@@ -204,7 +185,6 @@ pre_install_list=$(ls -m /usr/lib/refractainstaller/pre-install)
 post_install_list=$(ls -m /usr/lib/refractainstaller/post-install)
 
 
-# Select expert installation options
 if [[ $install = "expert" ]]; then
     opts=$(zenity --list --title="Installation Options" \
      --text="Check the options you want for the installation.
@@ -306,15 +286,14 @@ if $(echo $opts | grep -q 16); then
 else
 	run_preinstall="no"
 fi
-if $(echo $opts | grep -q 17); then
+#if $(echo $opts | grep -q 17); then
 	run_postinstall="yes"
-else
-	run_postinstall="no"
-fi
+#else
+#	run_postinstall="no"
+#fi
 
 
 if [[ $encrypt_os = "yes" ]] || [[ $encrypt_home = "yes" ]]; then
-    # test for cryptsetup
     if ! [[ -f /sbin/cryptsetup ]] ; then
         zenity --question --title=Error \
          --ok-label="Proceed without encrypting partitions" \
@@ -326,14 +305,7 @@ if [[ $encrypt_os = "yes" ]] || [[ $encrypt_home = "yes" ]]; then
             exit 1
         fi
     fi
-    # end test for cryptsetup
 fi    
-
-
-
-
-
-
 
 partitioning_method () {
 ## Partition a disk ##### Simple install now does get to partition the disk - uncomment the conditional below to change it back.
@@ -346,7 +318,6 @@ each separate partition that you chose." \
   FALSE "Run GParted partitioner now." \
   FALSE "Run cfdisk partitioner in a terminal." \
   FALSE "No thanks, I already have a partition prepared. Continue." )
-#  FALSE "I'd like to exit the script now.") 
 	if [[ $? = 1 ]] ; then
 		exit 0
 	fi
@@ -361,15 +332,10 @@ each separate partition that you chose." \
 	if [[ -z $partitioner ]] ; then
 		partitioning_method
 	fi
-
-#	if $(echo $partitioner | grep -q exit) ; then
-#		exit 0
-#	fi
 }
 
 partitioning_method
 
-#    # test to make sure there's a separate /boot partition
 if [[ $sep_boot = "no" ]]; then
     if [[ $encrypt_os = "yes" ]]; then
         zenity --question --title=Error \
@@ -392,7 +358,7 @@ no_grub () {
 			choose_grub
 		fi
 }
-# Choose a place for grub: MBR, partition or none. If none selected, give warning.
+
 choose_grub () {
 opt=$(zenity --list --title="Install GRUB bootloader" \
   --text="Choose a location to install the GRUB bootloader. The usual choice 
@@ -447,14 +413,8 @@ if [[ -z $opt ]]; then
 fi
 }
 
-
-
-# determine grub version now, it gets used for installing the bootloader and
-# preventing simple install from using ext4 with grub-legacy or grub-gfx.
 	grubversion=$(dpkg -l | egrep "ii|hi" | grep -v bin | grep -v doc | awk '$2 ~ "grub-[glp]" { print $2}')
-#	grubversion="grub-legacy"   # for testing, comment out the above line and uncomment this one
 
-### Simple install gets default grub bootloader in /dev/sda
 if [[ $install = "expert" ]]; then
     if [[ $bootloader = "yes" ]]; then
         choose_grub
@@ -465,13 +425,10 @@ if [[ $install = "simple" ]]; then
     grub_dev="/dev/sda"
 fi
 
-# Show output of blkid for reference.
-#xterm  -fa monaco -fs 12 -geometry 90x20+0+0 -hold -e 'echo "Partition list (for reference.)  You may need this later." && blkid -c /dev/null' &
 blkid -c /dev/null | zenity --text-info --title="Partition List" --text="Partition list (for reference.)  You may need this later." \
 --width 820 --height 400 &
 sleep 2
 
-# Show the partition list in a menu, and choose one for /boot
 choose_boot () {
 boot_dev=$(find /dev -mindepth 1 -maxdepth 1  -name "*[sh]d[a-z][1-9]*" \
   | sort | awk '{print "FALSE\n" $0 }' \
@@ -486,8 +443,6 @@ if [[ $sep_boot = "yes" ]]; then
     choose_boot
 fi
 
-
-# Choose filesystem type for /boot
 choose_fs_boot () {
 if [[ -n $boot_dev ]]; then
      fs_type_boot=$(zenity --list --title="/boot filesystem" --text="What type of filesystem would you like on $boot_dev?" \
@@ -516,9 +471,6 @@ if [[ -n $boot_dev ]]; then
 	fi
 fi
 
-
-
-# Show the partition list in a menu, and choose one for the OS
 choose_root () {
 install_dev=$(find /dev -mindepth 1 -maxdepth 1  -name "*[sh]d[a-z][1-9]*" \
   | sort | awk '{print "FALSE\n" $0 }' \
@@ -555,8 +507,6 @@ fi
 
 choose_root
 
-
-# Choose filesystem type for OS.
 choose_fs_os () {
 fs_type_os=$(zenity --list --title="Root Filesystem" --text="What type of filesystem would you like on $install_dev?" \
   --radiolist --column "Choose" --column "Format" --height=200\
@@ -575,8 +525,6 @@ for the operating system"
 fi  
 }
 
-
-### Simple install gets default ext4 filesystem (or ext3 with older grub)
 if [[ $install = "expert" ]]; then
 	if [[ $no_format = "yes" ]]; then 
 		fs_type_os=$(blkid -s TYPE "$install_dev" | awk -F"\"" '{ print $2 }')
@@ -591,9 +539,6 @@ else
 	fi
 fi
 
-
-
-# Show the partition list in a menu, and choose one for /home
 choose_home () {
 home_dev=$(find /dev -mindepth 1 -maxdepth 1  -name "*[sh]d[a-z][1-9]*" \
   | sort | awk '{print "FALSE\n" $0 }' \
@@ -629,7 +574,6 @@ if [[ $sep_home = "yes" ]]; then
     choose_home
 fi
 
-# Choose filesystem type for /home
 choose_fs_home () {
 if [[ -n $home_dev ]]; then
      fs_type_home=$(zenity --list --title="/home filesystem" --text="What type of filesystem would you like on $home_dev?" \
@@ -658,8 +602,6 @@ if [[ -n $home_dev ]]; then
 	fi
 fi
 
-
-# Show the partition list in a menu, and choose one for swap
 choose_swap () {
 swap_info=$(/sbin/blkid |grep swap | awk '{print "\n" $0 }'\
 | zenity --list --radiolist  --title="swap partition" --text="Select a partition for swap." \
@@ -681,11 +623,6 @@ if [[ $use_existing_swap = "yes" ]]; then
     choose_swap
 fi
 
-
-
-# Enter new hostname (or use the old hostname as the new one)
-# Test to make sure it's a legal hostname, and let user fix it
-# if it's not.
 fix_hostname () {
 	new_hostname=$(zenity --entry --title="Change hostname" \
 	--text="Illegal hostname. Try again.
@@ -720,8 +657,6 @@ else
 	new_hostname="$HOSTNAME"
 fi
 
-
-# Show a summary of what will be done
 if [[ $change_user = "yes" ]]; then
     user_message="--> User name will be changed."
 fi
@@ -812,11 +747,6 @@ $proceed_message"
         exit 0
     fi
 
-
-# Actual installation begins here
-
-
-# Run pre-install scripts if enabled.
 if [[ $run_preinstall = "yes" ]] ; then
 	for file in /usr/lib/refractainstaller/pre-install/* ; do
 		if [[ -x $file ]] ; then
@@ -825,9 +755,6 @@ if [[ $run_preinstall = "yes" ]] ; then
 	done
 fi
 
-
-
-# Unmount or close anything that might need unmounting or closing
 cleanup () {
 if $(df | grep -q /target/proc/) ; then
     umount /target/proc/
@@ -841,7 +768,6 @@ if $(df | grep -q /target/sys/) ; then
     umount /target/sys/
 fi
 
-# grep gives an error if $boot_dev is null
 if $(df | grep -q $boot_dev) ; then
     umount $boot_dev
 fi
@@ -854,7 +780,6 @@ if $(df | grep -q /target_home) ; then
     umount -l /target_home/
 fi
 
-# grep gives an error if $home is null
 if $(df | grep -q $home_dev) ; then
     umount $home_dev
 fi
@@ -883,8 +808,6 @@ if [[ -h /dev/mapper/root_fs ]] ; then
     cryptsetup luksClose /dev/mapper/root_fs
 fi
 
-
-# These next ones might be unnecessary
 if [[ -d /target ]] ; then
     rm -rf /target
 fi
@@ -900,58 +823,37 @@ fi
 
 cleanup
 
-
-# Write random data to OS partition
 if [[ $write_random = "yes" ]]; then
     if [[ $encrypt_os = "yes" ]]; then
-        #xterm -fa monaco -fs 12 -geometry 80x20+0+0 -e dd if=/dev/urandom of="$install_dev"
-#       # Redirect stderr so we can see the output of dd
 		exec 2>&1
         dd if=/dev/urandom of="$install_dev"
-#       # Resume logging errors in file
         exec 2>>"$error_log"
     fi  
 fi
 
-# Write random data to /home partition
+
 if [[ $write_random = "yes" ]]; then
     if [[ $encrypt_home = "yes" ]]; then
-        #xterm -fa monaco -fs 12 -geometry 80x20+0+0 -e dd if=/dev/urandom of="$home_dev"
-#       # Redirect stderr so we can see the output of dd
 		exec 2>&1
         dd if=/dev/urandom of="$home_dev"
-#       # Resume logging errors in file
         exec 2>>"$error_log"
     fi  
 fi
 
-
-# Write zeros to partitions
 if [[ $write_zero = "yes" ]]; then
-#       # Redirect stderr so we can see the output of dd
 		exec 2>&1
-    #xterm -fa monaco -fs 12 -geometry 80x20+0+0 -e dd if=/dev/zero of="$install_dev"
     dd if=/dev/zero of="$install_dev"
     if [[ $sep_home = "yes" ]]; then
-        #xterm -fa monaco -fs 12 -geometry 80x20+0+0 -e dd if=/dev/zero of="$home_dev"
         dd if=/dev/zero of="$home_dev"
     fi
     if [[ $sep_boot = "yes" ]]; then
-        #xterm -fa monaco -fs 12 -geometry 80x20+0+0 -e dd if=/dev/zero of="$boot_dev"
         dd if=/dev/zero of="$boot_dev"
     fi
-#       # Resume logging errors in file
         exec 2>>"$error_log"
 fi
 
-
-# make mount point, format, adjust reserve and mount
-# install_dev must maintain the device name for cryptsetup
-# install_part will be either device name or /dev/mapper name as needed.
 mkdir /target ;  check_exit
 if [[ $encrypt_os = yes ]] ; then
-    #xterm -fa monaco -fs 12 -geometry 80x20+0+0 -e cryptsetup luksFormat "$install_dev" ; check_exit
-    #xterm -fa monaco -fs 12 -geometry 80x20+0+0 -e cryptsetup luksOpen "$install_dev" root_fs ; check_exit
     cryptsetup luksFormat "$install_dev" ; check_exit
     cryptsetup luksOpen "$install_dev" root_fs ; check_exit
     install_part="/dev/mapper/root_fs"
@@ -964,16 +866,11 @@ if [[ $no_format != "yes" ]]; then
 fi
 mount "$install_part" /target ; check_exit 
 
-
-# make mount point for separate home if needed
-# and add /home/* to the excludes list if it's not already there
 if [[ -n $home_dev ]] ; then
     mkdir /target_home ; check_exit
     if [[ $encrypt_home = yes ]]; then
-        #xterm -fa monaco -fs 12 -geometry 80x20+0+0 -e cryptsetup luksFormat "$home_dev"
         cryptsetup luksFormat "$home_dev"
         check_exit
-        #xterm -fa monaco -fs 12 -geometry 80x20+0+0 -e cryptsetup luksOpen "$home_dev" home_fs
         cryptsetup luksOpen "$home_dev" home_fs
         check_exit
         home_part="/dev/mapper/home_fs"
@@ -988,10 +885,6 @@ if [[ -n $home_dev ]] ; then
 	sep_home_opt="--exclude=/home/*"
 fi
 
-
-# make mount point for separate /boot if needed
-# and add /boot/* to the excludes list if it's not already there
-# allow default for reserved blocks (don't need tune2fs here)
 if [[ -n $boot_dev ]] ; then
     mkdir /target_boot ; check_exit
     if [[ $no_format != "yes" ]]; then
@@ -1001,13 +894,11 @@ if [[ -n $boot_dev ]] ; then
     sep_boot_opt="--exclude=/boot/*"
 fi
 
-# copy everything over except the things listed in the exclude list
 rsync -av / /target/ --exclude-from="$rsync_excludes" ${sep_home_opt} ${sep_boot_opt} | \
 tee >(zenity --progress --pulsate --auto-close \
  --text="Copying system to new partition.")
 check_exit 
 
-# copy separate /home if needed
 if ! [[ -z $home_dev ]] ; then
 	rsync -av /home/ /target_home/ --exclude-from="$home_boot_excludes" | \
     tee >(zenity --progress --pulsate --auto-close \
@@ -1015,7 +906,6 @@ if ! [[ -z $home_dev ]] ; then
     check_exit
 fi
 
-# copy separate /boot if needed
 if [[ -n $boot_dev ]] ; then
     rsync -av /boot/ /target_boot/ --exclude-from="$home_boot_excludes" ; check_exit | \
     tee >(zenity --progress --pulsate --auto-close \
@@ -1023,16 +913,12 @@ if [[ -n $boot_dev ]] ; then
     check_exit
 fi
 
-
-# create swapfile
 if ! [[ $use_existing_swap = "yes" ]] ; then
 	dd if=/dev/zero of=/target/swapfile bs="$swapfile_blocksize" count="$swapfile_count" | \
 	tee >(zenity --progress --pulsate --width=350 --auto-close --title="Making a swap file...")
 	mkswap /target/swapfile ; check_exit 
 fi
 
-
-# copy the real update-initramfs back in place
 if [[ -f /target/usr/sbin/update-initramfs.distrib ]] ; then
     cp /target/usr/sbin/update-initramfs.distrib /target/usr/sbin/update-initramfs
 fi
@@ -1040,23 +926,18 @@ if [[ -f /target/usr/sbin/update-initramfs.debian ]] ; then
     cp /target/usr/sbin/update-initramfs.debian /target/usr/sbin/update-initramfs
 fi
 
-
-# Disallow mounting of all fixed drives with pmount
 if [[ -f /target/etc/pmount.allow ]] ; then
 	if [[ $pmount_fixed = "no" ]] ; then
 		sed -i 's:/dev/sd\[a-z\]:#/dev/sd\[a-z\]:' /target/etc/pmount.allow
 	fi
 fi
 
-# Re-enable updatedb if it was disabled by an older version of refractasnapshot
 if [[ -e /target/usr/bin/updatedb.mlocate ]] ; then
 	if ! [[ -x /target/usr/bin/updatedb.mlocate ]] ; then
 		chmod +x /target/usr/bin/updatedb.mlocate
 	fi
 fi
 
-
-# Disable autologin to desktop
 if [[ $disable_auto_desktop = "yes" ]]; then
 
 	#gdm
@@ -1100,7 +981,6 @@ if [[ $disable_auto_desktop = "yes" ]]; then
 	fi
 fi
 
-# Disable console autologin
 if [[ $disable_auto_console = "yes" ]]; then
 	if grep -q "respawn:/bin/login -f" /target/etc/inittab ; then
 		mv /target/etc/inittab /target/etc/inittab.$(date +%Y%m%d_%H%M)
@@ -1108,17 +988,11 @@ if [[ $disable_auto_console = "yes" ]]; then
 	fi
 fi
 
-
-# Change hostname
 if [[ $new_hostname != $HOSTNAME ]]; then
 		sed -i "s/$HOSTNAME/$new_hostname/" /target/etc/hostname
 		sed -i "s/$HOSTNAME/$new_hostname/g" /target/etc/hosts
 fi
 
-
-# setup fstab
-
-# add entry for root filesystem
 if [[ $encrypt_os != "yes" ]]; then
 	if [[ $use_uuid = yes ]]; then
 		install_part="$(blkid -s UUID $install_dev | awk '{ print $2 }' | sed 's/\"//g')"
@@ -1143,8 +1017,6 @@ echo -e "proc\t\t/proc\tproc\tdefaults\t0\t0
 $install_part\t/\t$fs_type_os\tdefaults,noatime\t0\t1" >> /target/etc/fstab
 check_exit
 
-
-# add entry for /home to fstab if needed
 if ! [[ -z $home_dev ]] ; then
 	if [[ $encrypt_home != "yes" ]]; then
 		if [[ $use_uuid = yes ]]; then
@@ -1170,7 +1042,6 @@ fi
     check_exit
 fi
 
-# add entry for /boot to fstab if needed
 if [[ -n $boot_dev ]] ; then
 	if [[ $use_uuid = yes ]]; then
 		boot_part="$(blkid -s UUID $boot_dev | awk '{ print $2 }' | sed 's/\"//g')"
@@ -1194,8 +1065,6 @@ if [[ -n $boot_dev ]] ; then
     check_exit
 fi
 
-
-# add entry for swap to fstab if needed
 if [[ $use_existing_swap = "yes" ]] ; then
 	if [[ $use_uuid = yes ]]; then
 		swap_part="$(/sbin/blkid -s UUID $swap_dev | awk '{ print $2 }' | sed 's/\"//g')"
@@ -1208,26 +1077,18 @@ elif ! [[ $use_existing_swap = "yes" ]] ; then
 	echo -e "/swapfile\tswap\tswap\tdefaults\t0\t0" >> /target/etc/fstab
 fi
 
-
-# Add entry for root filesystem to crypttab if needed
 if [[ $encrypt_os = yes ]] ; then
     echo -e "root_fs\t\t$install_dev\t\tnone\t\tluks" >> /target/etc/crypttab
 fi
 
-
-# Add entry for /home to crypttab if needed
 if [[ $encrypt_home = yes ]] ; then
     echo -e "home_fs\t\t$home_dev\t\tnone\t\tluks" >> /target/etc/crypttab
 fi
 
-
-# mount stuff so grub will behave (so chroot will work)
 mount -t tmpfs --bind /dev/ /target/dev/ ; check_exit 
 mount -t proc --bind /proc/ /target/proc/ ; check_exit 
 mount -t sysfs --bind /sys/ /target/sys/ ; check_exit 
 
-
-# Re-enable freshclam if it was disabled by snapshot 		##### This ain't perfect, but it works!
 if type -p freshclam ; then
 	if [[ $enable_freshclam = "yes" ]] ; then
 		if ! [[ -h /target/etc/rc2.d/S02clamav-freshclam ]] ; then
@@ -1236,41 +1097,26 @@ if type -p freshclam ; then
 	fi
 fi
 
-
-# Disable root login through ssh for the installed system
 if [[ -f /etc/ssh/sshd_config ]] ; then
 	if [[ $root_ssh = "no" ]] ; then
 		sed -i~ 's/PermitRootLogin yes/PermitRootLogin no/' /target/etc/ssh/sshd_config
 	fi
 fi
 
-
-# Setup GRUB 
-
-
-# If /boot is separate partition, need to mount it in chroot for grub
 if [[ -n $boot_dev ]] ; then
     chroot /target mount $boot_dev /boot
 fi
 
-
-# If grub is installed to a partition, we need to know if it's grub-pc
-# or grub-legacy/grub-gfx to handle it properly.
 if [[ -n $grub_partition ]] ; then
 	if [[ $grubversion != "grub-pc" ]] ; then
 
-		# isolate the device (sdx) letter then use tr like this to translate to the right number for grub
 		GRUBDEVICENUM=$(echo $grub_partition |sed 's:/dev/sd::' |sed 's:[0-9]::'g |tr '[a-j]' '[0-9]')
 
-		# isolate the partition number
 		INSTALLPARTNUM=$(echo $grub_partition |sed 's:/dev/sd::'|sed 's:[a-z]::')
 
-		# and reduce it by 1 for grub
 		GRUBPARTNUM=$(expr $INSTALLPARTNUM - 1)
 
-		# finally get the finished grub root syntax
 		GRUBROOT="(hd$GRUBDEVICENUM,$GRUBPARTNUM)"
-
 
 		chroot /target /bin/bash grub-install $grub_partition
 		grub --batch <<EOF
@@ -1285,7 +1131,6 @@ EOF
 	fi
 fi
 
-
 if [[ -n $grub_dev ]]; then
     echo -e "\n Installing the boot loader...\n" >> "$error_log"
     error_message="grub-install failed."
@@ -1294,8 +1139,6 @@ fi
 
 error_message=""
 
-
-# Run update-initramfs to include dm-mod if using encryption
 if [[ $encrypt_os = yes ]] || [[ $encrypt_home = yes ]] ; then
     chroot /target /usr/sbin/update-initramfs.orig.initramfs-tools -u >> "$error_log"
 fi
@@ -1304,18 +1147,10 @@ if [[ -n $grub_dev ]] || [[ -n $grub_partition ]] ; then
     chroot /target update-grub ; check_exit 
 fi
 
-
-# INSTALLATION FINISHED - BEGIN CHANGE USERNAME
-
-# Need to mount the target home partition under the target root partition
-# so the commands can find it (for changing user configs gksu)
 if [[ $sep_home = "yes" ]]; then
     mount $home_part /target/home
 fi
 
-
-# Change the username   ### Change PRIMARY user's name - define $oldname
-# even if not changing name, and use it for gksu below #################################
 if [[ $change_user = "yes" ]]; then
 	oldname=$(awk -F: '/1000:1000/ { print $1 }' /target/etc/passwd)
 	newname=$(zenity --entry --title="Change login name" --text="The primary user's current login name is $oldname. 
@@ -1335,7 +1170,6 @@ Enter the new login name you want to use.")
 	done
 fi
 
-#### Add user's real name in /etc/passwd (for Refracta)
 if [[ $change_user = "yes" ]]; then
     live_user=$(awk -v pattern="$newname" -F: '$1 ~ pattern { print $5 }' /target/etc/passwd)
     real_name=$(zenity --entry --title="Change real name" --text="The user's real name is currently $live_user.
@@ -1344,8 +1178,6 @@ the trailing commas\).")
     sed -i~ "s/$live_user/$real_name,,,/" /target/etc/passwd
 fi
 
-
-# Edit /etc/sudoers
 if [[ $install = "expert" ]]; then
     zenity --question --title="Edit /etc/sudoers" --ok-label=Yes --cancel-label=No \
      --text="You may need to edit /etc/sudoers to comment out the line that gives $oldname absolute power, 
@@ -1354,13 +1186,10 @@ or replace $oldname with $newname. A simple text-editor will open in the termina
 Edit /etc/sudoers now?"
     if [[ $? = 0 ]]; then
         edit_sudoers="yes"
-        #xterm  -fa monaco -fs 12 -geometry 80x20+0+0 -e chroot /target visudo
 		chroot /target visudo    
 	fi
 fi
 
-
-# Disable sudo-mode for gksu
 if [[ $edit_sudoers = "yes" ]]; then
     zenity --question --title="Disable sudo mode for gksu" --ok-label="Yes, I commented out the line." --cancel-label="No, I replaced the old name with the new one." \
      --text="If you commented out the line in /etc/sudoers in the last step, one more file will be changed for you so that gksu will work properly."
@@ -1373,9 +1202,6 @@ if [[ $edit_sudoers = "yes" ]]; then
         fi
 fi
 
-
-
-# Change/create root password
 if [[ $install = "expert" ]]; then
     zenity --question --title="Change/create root password" --ok-label=Yes --cancel-label=No \
      --text="
@@ -1385,32 +1211,22 @@ You'll need to go to the terminal again...
 Note: If your system has no root user, and you want 
 to keep it that way, say No. " 
         if [[ $? = 0 ]]; then
-            #xterm  -fa monaco -fs 12 -geometry 80x20+0+0 -e chroot /target passwd
-#       # Redirect stderr so we can see the output of dd
 		exec 2>&1
             chroot /target passwd
-#       # Resume logging errors in file
         exec 2>>"$error_log"
         fi 
 fi
 
-
-# Change user password
 if [[ $change_user = "yes" ]]; then
     zenity --question --title="Change user password" --ok-label=Yes --cancel-label=No \
      --text="Would you like to change the user's password? The new user still has the old user's password. You'll need to go to the terminal again to do this."
         if [[ $? = 0 ]]; then
-            #xterm  -fa monaco -fs 12 -geometry 80x20+0+0 -e chroot /target passwd "$newname"
-#       # Redirect stderr so we can see the output of dd
 		exec 2>&1
 			chroot /target passwd "$newname"       
-#       # Resume logging errors in file
         exec 2>>"$error_log"
 		fi
 fi
 
-
-# Run post-install scripts if enabled.
 if [[ $run_postinstall = "yes" ]] ; then
 	for file in /usr/lib/refractainstaller/post-install/* ; do
 		if [[ -x "$file" ]] ; then
@@ -1419,11 +1235,8 @@ if [[ $run_postinstall = "yes" ]] ; then
 	done
 fi
 
-
-# copy error log to installation before calling cleanup function
 cp "$error_log" /target/var/log/
 cleanup
-
 
 zenity --info --text="Done!\n\n You may now reboot into the new system.\n\nRemember to remove your installation media.\n"
 

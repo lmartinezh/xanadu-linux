@@ -18,21 +18,17 @@ help_text="
         $0    <oldname>    <newname>
         "
 
-# function to exit the script if there are errors
 check_exit () {
 [[ $? -eq 0 ]] || { echo "Exit due to error:  $?" ; exit 1 ; }
 }
 
-# check root
 [[ $(id -un) = "root" ]] || { echo "You need to be root!" ; exit 1 ; }
 
-# check that there are two arguments
 if [[ $# -ne 2 ]] ; then
     echo "$help_text"
     exit 1
 fi
 
-# check that oldname exists
 if ! $(grep -q $oldname /etc/passwd) ; then
     echo "  $oldname does not exist."
     exit 1
@@ -88,8 +84,6 @@ elif
 fi
 HOLD1
 
-
-# Make sure the old user is not logged in - kill that user's processes.
 while true; do
 echo "
     $oldname must not be logged in if you want to proceed.
@@ -104,7 +98,6 @@ echo "
     case $ans in
       [Yy]*) for i in $(pgrep -u $oldname) ; do
 				kill $i
-			 #killall -u "$oldname"
 			 done
 			 break ;;
       [Nn]*) exit 0
@@ -116,12 +109,10 @@ echo "    Changing user name and group...
     "
 sleep 3
 
-# Change user name and group
 usermod -l $newname $oldname ; check_exit
 groupmod -n $newname $oldname ; check_exit
 usermod -d /home/$newname -m $newname ; check_exit
 
-# Show that it was done
 echo "
     Checking that the name has been changed...
   "
@@ -143,7 +134,6 @@ if ! id $newname ; then
 fi
 sleep 2
 
-# Ask to change newuser's password.
 while true; do
     echo "
     Do you want to give $newname a new password?
@@ -155,7 +145,6 @@ while true; do
       [Nn]*) break ;;
     esac
 done
-
 
 echo "
     This script will attempt to replace every instance of 
@@ -173,17 +162,12 @@ for i in $(grep -r "/home/$oldname" /home/$newname/.config | awk -F":" ' { print
     sed -i "s/\/home\/$oldname/\/home\/$newname/g" "$i"
 done
 
-#for i in $(grep -r "/home/$oldname" /home/$newname/.local | awk -F":" '{ print $1 }'); do
-#	sed -i "s/\/home\/$oldname/\/home\/$newname/g" "$i"
-#done
-
 if [[ -d /home/"$oldname"/.kde/share ]] ; then
 	sed -i "s/\/home\/$oldname/\/home\/$newname/g" /home/$newname/.kde/share/apps/kfileplaces/bookmarks.xml
 	sed -i "s/\/home\/$oldname/\/home\/$newname/g" /home/$newname/.kde/share/config/startupconfigfiles
 	sed -i "s/\/home\/$oldname/\/home\/$newname/g" /home/$newname/.kde/share/config/ksmserverrc
 fi
 
-# Change user's real name
 live_user=$(awk -v pattern="$newname" -F: '$1 ~ pattern { print $5 }' /etc/passwd)
 echo -n "
  The user's real name is currently $live_user.
@@ -191,8 +175,6 @@ echo -n "
  "
 read real_name
 sed -i~ "s/$live_user/$real_name,,,/" /etc/passwd
-
-
 
 :<<HOLD
 # Edit /etc/gdm3/daemon.conf
@@ -216,7 +198,6 @@ done
 HOLD
 
 sleep 2
-# Edit /etc/sudoers
 while true; do
     echo "
     You may need to edit /etc/sudoers to comment out the line that gives
@@ -233,7 +214,6 @@ while true; do
 done
 
 sleep 2
-# Disable sudo-mode for gksu
 while true; do
 echo "
     
@@ -254,8 +234,6 @@ echo "
     esac
 done
 
-
-# Restart the display manager
 echo "
     Done!
     
@@ -281,5 +259,4 @@ if [[ $dm_status = yes ]]; then
 	done
 fi
 HOLD2
-
 exit 0
