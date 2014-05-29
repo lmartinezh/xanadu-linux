@@ -1,4 +1,19 @@
-commit 399a78f3cddd709115647ac126e2702eb3ef94d1 (HEAD, origin/master, origin/HEAD, master)
+commit e5703e05de1d29712f3b124c0e9aae4a22a33408 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed May 28 23:02:38 2014 -0430
+
+    * modificaciones al instalador para colocar timeout en algunos dialogos y botones de pagar y reiniciar al finalizar
+    * se activa el script de post-install del instalador para modificar lightdm
+    * se crea el script fin para realizar limpieza al cerrar sesion
+    * se modifica el script de pre-install para corregir errores
+
+commit e76a0abfaed0509d07e8055e5f2abd14466dc424
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon May 26 21:30:10 2014 -0430
+
+    * changelog
+
+commit 399a78f3cddd709115647ac126e2702eb3ef94d1
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Mon May 26 21:27:34 2014 -0430
 
