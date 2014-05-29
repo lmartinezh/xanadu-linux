@@ -21,7 +21,5 @@ tsocks -off
 apt-get clean
 apt-get -y autoremove
 rm -rf /home/*/.mozilla/firefox/*/*Cache*
-rm -rf /tmp/*
-rm -rf /var/tmp/*
 rm -rf /var/cache/polipo/*
 exit 0

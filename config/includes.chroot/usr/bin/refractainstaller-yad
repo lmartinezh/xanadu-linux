@@ -88,7 +88,7 @@ yad --text-align=fill --borders=6 --title="Instalador" --button="Instalacion sim
 	--button="Instalacion experta":1 --button="Salir":2 \
 	--text="$live_session_warning
 
- Esta aplicacion instalara Xanadu en su disco duro.
+ Esta aplicacion instalara Xanadu GNU/Linux en su disco duro.
 
  Basado en refractainstaller-9.0.9beta6 por fsmithred@gmail.com. 
 "
@@ -409,7 +409,7 @@ if [[ $install = "simple" ]]; then
     grub_dev="/dev/sda"
 fi
 
-blkid -c /dev/null | yad --text-info --title="Lista de particiones" --text="Lista de particiones (para referencia)  Usted puede necesitar esto mas adelante." \
+blkid -c /dev/null | yad --timeout 20 --text-info --title="Lista de particiones" --text="Lista de particiones (para referencia) Usted puede necesitar esto mas adelante." \
 --width 820 --height 400 --button="Cerrar":0 &
 sleep 2
 
@@ -877,21 +877,21 @@ if [[ -n $boot_dev ]] ; then
 fi
 
 rsync -av / /target/ --exclude-from="$rsync_excludes" ${sep_home_opt} ${sep_boot_opt} | \
-tee >(yad --progress --pulsate --width=400 --auto-close --title="Copiando el sistema a la nueva particion.")
+tee >(yad --width=400 --fixed --progress --pulsate --auto-close --auto-kill --skip-taskbar --center --title="INSTALANDO" --progress-text="Copiando el sistema a la nueva particion, por favor espere.")
 
 if ! [[ -z $home_dev ]] ; then
     rsync -av /home/ /target_home/ --exclude-from="$home_boot_excludes" | \
-tee >(yad --progress --pulsate --width=350 --auto-close --title="Copying home folders to new partition.")
+tee >(yad --progress --pulsate --width=350 --auto-close --title="Copiando carpeta home a la nueva particion.")
 fi
 
 if [[ -n $boot_dev ]] ; then
     rsync -av /boot/ /target_boot/ --exclude-from="$home_boot_excludes" | \
-tee >(yad --progress --pulsate --width=350 --auto-close --title="Copying files to boot partition.")
+tee >(yad --progress --pulsate --width=350 --auto-close --title="Copiando archivos a la particion boot.")
 fi
 
 if ! [[ $use_existing_swap = "yes" ]] ; then
 	dd if=/dev/zero of=/target/swapfile bs="$swapfile_blocksize" count="$swapfile_count" | \
-	tee >(yad --progress --pulsate --width=350 --auto-close --title="Making a swap file...")
+	tee >(yad --progress --pulsate --width=350 --auto-close --title="Creando un archivo swap...")
 	mkswap /target/swapfile ; check_exit 
 fi
 
@@ -1215,7 +1215,12 @@ fi
 cp "$error_log" /target/var/log/
 cleanup
 
-
-yad --text-align=fill --borders=6 --image=gtk-dialog-info --title="Instalador" --text=" Instalacion completa. \n\n Usted puede reiniciar en el nuevo sistema.\n\n Recuerde remover el medio de instalacion.\n" --width=500 --button="OK":0
+yad --image=gtk-dialog-info --timeout 10 --fixed --center --width=500 --title=Instalador --text-align=fill --borders=6 --button="Apagar":0 --button="Reiniciar":1 --button="Salir":2 --text=" Instalacion completa. \n\n Usted puede reiniciar en el nuevo sistema.\n\n Recuerde remover el medio de instalacion.\n"
+ans="$?"
+case $ans in
+	0) poweroff ;;
+	1) reboot ;;
+	2) exit 0;;
+esac
 
 exit 0
