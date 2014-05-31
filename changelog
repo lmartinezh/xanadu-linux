@@ -1,4 +1,16 @@
-commit e5703e05de1d29712f3b124c0e9aae4a22a33408 (HEAD, origin/master, origin/HEAD, master)
+commit 5db234a604e221080c0f12a14fefabd794a7b995 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat May 31 13:34:03 2014 -0430
+
+    * cambios en auto/clean
+
+commit 32285e4f53e9f53396e200f360be33dd75f89958
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed May 28 23:07:35 2014 -0430
+
+    * changelog
+
+commit e5703e05de1d29712f3b124c0e9aae4a22a33408
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Wed May 28 23:02:38 2014 -0430
 
