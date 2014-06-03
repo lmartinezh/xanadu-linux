@@ -1,4 +1,16 @@
-commit 8f524a5ab74f259d62bef48025ad4eb2061d94a0 (HEAD, origin/master, origin/HEAD, master)
+commit 74b8db8d3bad0323a9006be0d4427f292acc381b (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Jun 2 23:30:39 2014 -0430
+
+    * se modifica el script revision para amd64
+
+commit 9c229c265e62a0d74b797051555562c906a830aa
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Jun 2 23:17:21 2014 -0430
+
+    * changelog
+
+commit 8f524a5ab74f259d62bef48025ad4eb2061d94a0
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Mon Jun 2 23:16:36 2014 -0430
 
