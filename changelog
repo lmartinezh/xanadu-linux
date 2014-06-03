@@ -1,4 +1,46 @@
-commit 74b8db8d3bad0323a9006be0d4427f292acc381b (HEAD, origin/master, origin/HEAD, master)
+commit 067832bb12a9880e3c5d4c0ac813f919e5150bbf (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Tue Jun 3 16:38:26 2014 -0430
+
+    * se agregan archivos para crear iso en i386
+
+commit 9eb352d6a15f1f7c5c03d2bb0bc3b6a51158928b
+Author: Jesus Palencia <sinfallas@users.noreply.github.com>
+Date:   Tue Jun 3 12:02:22 2014 -0430
+
+    Update THANKS
+
+commit 56e83ddc1c5d3e52635442a228f2990455d93046
+Author: Jesus Palencia <sinfallas@users.noreply.github.com>
+Date:   Tue Jun 3 11:37:39 2014 -0430
+
+    Update README.md
+
+commit 102b0bd7f606ffd3e9b600c70316b5e5c39957c1
+Author: Jesus Palencia <sinfallas@users.noreply.github.com>
+Date:   Tue Jun 3 11:37:14 2014 -0430
+
+    Create THANKS
+
+commit 8f9932e962e7225a6514198273c19d3e0dcd8329
+Author: Jesus Palencia <sinfallas@users.noreply.github.com>
+Date:   Tue Jun 3 11:35:59 2014 -0430
+
+    Create AUTHORS
+
+commit 8da64e52c0e1c13921db4fbd95a0041b12c169f2
+Author: Jesus Palencia <sinfallas@users.noreply.github.com>
+Date:   Tue Jun 3 11:35:57 2014 -0430
+
+    Update README.md
+
+commit c83cb732aa5654901df0bded69937754383e9a69
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Jun 2 23:31:05 2014 -0430
+
+    * changelog
+
+commit 74b8db8d3bad0323a9006be0d4427f292acc381b
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Mon Jun 2 23:30:39 2014 -0430
 
