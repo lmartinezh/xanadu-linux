@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 # cleanup-install.sh
 
-error_log=$(grep error_log /etc/refractainstaller.conf | cut -d"\"" -f2)
-exec 2>> "$error_log"
-
 rm -f /target/etc/apt/preferences.d/exclude.pref
 rm -f /target/etc/apt/preferences		
 rm -f /target/etc/inittab
