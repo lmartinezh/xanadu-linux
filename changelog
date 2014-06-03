@@ -1,4 +1,16 @@
-commit 5db234a604e221080c0f12a14fefabd794a7b995 (HEAD, origin/master, origin/HEAD, master)
+commit 8f524a5ab74f259d62bef48025ad4eb2061d94a0 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Jun 2 23:16:36 2014 -0430
+
+    * se agregan los archivos para generar la iso amd64
+
+commit 43832721f550c7f6d6b9af468f9aded21ed3101b
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat May 31 13:34:47 2014 -0430
+
+    * changelog
+
+commit 5db234a604e221080c0f12a14fefabd794a7b995
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sat May 31 13:34:03 2014 -0430
 
