@@ -38,16 +38,6 @@ Requerimientos mínimos:
 	* BIOS con capacidad de arranque por USB o CDROM
 	* 5 Gb de capacidad de disco para instalar
 
-Desarrollador:
-
-	* Jesús Palencia
-
-
-Para una lista completa de los miembros de la comunidad, visite:
-
-https://xanadulinux.wordpress.com/quienes-somos/
-
-
 Dudas, consultas y/o sugerencias por favor enviarlas a: sinfallas@gmail.com
 
 
