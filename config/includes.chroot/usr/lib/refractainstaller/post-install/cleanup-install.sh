@@ -29,7 +29,6 @@ echo "tmpfs /run tmpfs rw,nosuid,noexec,nodev,noatime,mode=755 0 0" >> /target/e
 echo "tmpfs /var/cache/samba tmpfs noatime,nodev 0 0" >> /target/etc/fstab
 echo "tmpfs /var/spool tmpfs noatime,nodev 0 0" >> /target/etc/fstab
 echo "tmpfs /var/tmp tmpfs noatime,nosuid,noexec,nodev,rw 0 0" >> /target/etc/fstab
-chmod 600 /target/etc/sudoers
 if [ -n "$(lspci | grep -E 'VGA|Display' | head -n1 | cut -d ':' -f3 | grep -F 'Intel')" ]; then
 	echo 'Section "Device"' > /target/etc/X11/xorg.conf
 	echo ' Identifier "intel"' >> /target/etc/X11/xorg.conf
@@ -44,4 +43,5 @@ if [ -n "$(lspci | grep -E 'VGA|Display' | head -n1 | cut -d ':' -f3 | grep -F '
 	echo ' Option "DRI" "true"' >> /target/etc/X11/xorg.conf
 	echo 'EndSection' >> /target/etc/X11/xorg.conf
 fi
+chmod 600 /target/etc/sudoers
 exit 0
