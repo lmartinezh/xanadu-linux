@@ -1,4 +1,24 @@
-commit 067832bb12a9880e3c5d4c0ac813f919e5150bbf (HEAD, origin/master, origin/HEAD, master)
+commit 0bffd23ee6e05eec1417dc8dd42df8dbf2741aba (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Jun 4 13:02:46 2014 -0430
+
+    * se modifica el script variables para adaptarlo a la nueva configuracion del robot
+    * se eliminan mirror de debian innecesarios
+    * se corrige error en cleanup-install que interrumpia la instalacion
+
+commit f0ea0dee04515fe33afefbd4cbba12641371b748
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Tue Jun 3 16:42:55 2014 -0430
+
+    * se agrega la etiqueta (i386) a os-release en i386
+
+commit da90164b707ba930be21d75fd84ad753551268d2
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Tue Jun 3 16:38:56 2014 -0430
+
+    * changelog
+
+commit 067832bb12a9880e3c5d4c0ac813f919e5150bbf
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Tue Jun 3 16:38:26 2014 -0430
 
