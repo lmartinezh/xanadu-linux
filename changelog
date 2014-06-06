@@ -1,4 +1,16 @@
-commit 0bffd23ee6e05eec1417dc8dd42df8dbf2741aba (HEAD, origin/master, origin/HEAD, master)
+commit da78c26349ec19b421a9384b5b404027a5c1c1df (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Fri Jun 6 17:49:22 2014 -0430
+
+    * se agrega deb-src de liquorix
+
+commit ec08ab2515e937297f7bbab562c93f7c91826388
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Jun 4 13:04:42 2014 -0430
+
+    * changelog
+
+commit 0bffd23ee6e05eec1417dc8dd42df8dbf2741aba
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Wed Jun 4 13:02:46 2014 -0430
 
