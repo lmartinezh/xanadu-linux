@@ -1,4 +1,22 @@
-commit be35d2e9bb4db60cb1ee5698a56df136c0c1cd04 (HEAD, origin/master, origin/HEAD, master)
+commit d8ee08266235dcef5dec5cb16a4614edc2505a8c (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Jun 9 18:04:54 2014 -0430
+
+    * misc
+
+commit 8b7002a4c4ba3bc79fa71c39ea4274d874ae77bf
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Jun 9 18:03:54 2014 -0430
+
+    * se restauran algunos archivos
+
+commit 9cbe086aa3c632dccaa093e44b0a66fe15360225
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Jun 8 21:18:08 2014 -0430
+
+    * changelog
+
+commit be35d2e9bb4db60cb1ee5698a56df136c0c1cd04
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sun Jun 8 21:17:43 2014 -0430
 
