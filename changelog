@@ -1,4 +1,22 @@
-commit da78c26349ec19b421a9384b5b404027a5c1c1df (HEAD, origin/master, origin/HEAD, master)
+commit be35d2e9bb4db60cb1ee5698a56df136c0c1cd04 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Jun 8 21:17:43 2014 -0430
+
+    * correccion de errores
+
+commit 46f59b1be6c812c6d3dc69e38b1e5ce7de4531e5
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Jun 8 21:08:32 2014 -0430
+
+    * se eliminan los archivos que fueron movidos al paquete .deb
+
+commit 6ef286e36cfb73c06dbd7709d41a05c9c1e805a6
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Fri Jun 6 17:49:46 2014 -0430
+
+    * changelog
+
+commit da78c26349ec19b421a9384b5b404027a5c1c1df
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Fri Jun 6 17:49:22 2014 -0430
 
