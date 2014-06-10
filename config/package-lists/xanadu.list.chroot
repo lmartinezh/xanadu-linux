@@ -1,7 +1,9 @@
-xanadu-base
-xanadu-varios
-xanadu-multimedia
-xanadu-oficina
-xanadu-script
-xanadu-drivers
+xanadu-basepack
 xanadu-complementos
+xanadu-drivers
+xanadu-installer
+xanadu-multimedia
+xanadu-nav
+xanadu-oficina
+xanadu-utilidades
+xanadu-varios
