@@ -1,4 +1,16 @@
-commit a4f5193ac82d35a60e3d371bb192a410fbb3e7ba (HEAD, origin/master, origin/HEAD, master)
+commit e72ec73e29419c53cc8fabe98bbaa847b9bb5c37 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Jun 9 19:30:48 2014 -0430
+
+    * mas limpieza
+
+commit 566b9ef54381e2d45a657f1988d5af0fa5cd93f5
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Jun 9 18:59:08 2014 -0430
+
+    * changelog
+
+commit a4f5193ac82d35a60e3d371bb192a410fbb3e7ba
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Mon Jun 9 18:58:49 2014 -0430
 
