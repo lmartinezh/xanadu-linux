@@ -43,6 +43,7 @@ echo "## deborphan ##"
 apt-get -y purge $(deborphan)
 apt-get clean
 echo "## Limpieza de directorios ##"
+find . -type f -name "*.old" -exec rm -fv {} \;
 rm -rf /usr/share/doc/*
 # rm -rf /usr/share/doc-base/*
 rm -rf /usr/share/gtk-doc/*
