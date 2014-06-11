@@ -1,4 +1,16 @@
-commit de3c3e32394165d70748ac9e55a388766d47afe4 (HEAD, origin/master, origin/HEAD, master)
+commit 17792e379c196108590ac2b9e835bd6d09c137be (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Tue Jun 10 20:05:40 2014 -0430
+
+    * se limpia /etc de archivos reubicados
+
+commit 053cafc33c62b308feab05b8d96385972c3b399e
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Tue Jun 10 18:46:46 2014 -0430
+
+    * changelog
+
+commit de3c3e32394165d70748ac9e55a388766d47afe4
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Tue Jun 10 18:44:34 2014 -0430
 
