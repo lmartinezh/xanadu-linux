@@ -1,4 +1,16 @@
-commit 9bab365984f20651c9a9682ac8fc20f93b97b571 (HEAD, origin/master, origin/HEAD, master)
+commit 8b1870903208f84e3b293ded85774079e73e827e (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Jul 3 21:55:07 2014 -0430
+
+    * se restauran otros archivos
+
+commit 62f884c1e94e370a86d0923cb782bb0ab75443c4
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Jul 3 20:39:28 2014 -0430
+
+    * changelog
+
+commit 9bab365984f20651c9a9682ac8fc20f93b97b571
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Thu Jul 3 20:38:53 2014 -0430
 
