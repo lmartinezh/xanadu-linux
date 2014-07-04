@@ -1,4 +1,16 @@
-commit b47b579ed1dece457f97721cd2aeb883dd207ef9 (HEAD, origin/master, origin/HEAD, master)
+commit 9bab365984f20651c9a9682ac8fc20f93b97b571 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Jul 3 20:38:53 2014 -0430
+
+    * se restauran algunos archivos
+
+commit c41c2f731a7e1592b07073deb825f44d78eb7b76
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Tue Jun 10 22:17:05 2014 -0430
+
+    * changelog
+
+commit b47b579ed1dece457f97721cd2aeb883dd207ef9
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Tue Jun 10 22:16:41 2014 -0430
 
