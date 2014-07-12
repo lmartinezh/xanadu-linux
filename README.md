@@ -6,7 +6,7 @@ Xanadu GNU/Linux
 
 Es un derivado de Debian que utiliza SID como base y LXDE como entorno de escritorio, pensada para ser ligera y a la vez útil, contiene herramientas para rescate de sistemas, análisis forense y navegación anónima, además de todo lo necesario para su uso en el escritorio.
 
-Es 100% compatible con los paquetes de Debian así como también con su contrato social (https://www.debian.org/social_contract.es.html)
+Es 100% compatible con los paquetes de Debian así como también con su contrato social.
 
 Se construye usando Live-build, la imagen .ISO y sus configuraciones para crearla se encuentran disponibles bajo licencia GPL v2 (GNU GENERAL PUBLIC LICENSE, Version 2, June 1991) y pueden ser descargadas desde: 
 
