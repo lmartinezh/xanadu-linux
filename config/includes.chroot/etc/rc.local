@@ -1,0 +1,35 @@
+#!/bin/sh -e
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+modprobe zram
+echo $((100*1024*1024)) > /sys/block/zram0/disksize
+mkswap /dev/zram0
+swapon -p 50 /dev/zram0
+echo "always" > /sys/kernel/mm/transparent_hugepage/enabled
+echo "20000" > /sys/kernel/mm/transparent_hugepage/khugepaged/pages_to_scan
+echo "1" > /sys/kernel/mm/ksm/run
+echo "20000" > /sys/kernel/mm/ksm/pages_to_scan
+echo "200" > /sys/kernel/mm/ksm/sleep_millisecs
+echo "/usr/local/sbin/cgroup_clean" > /sys/fs/cgroup/cpu/release_agent
+echo "1" > /sys/fs/cgroup/cpu/notify_on_release
+miswap=$(fdisk -l | grep swap | cut -c 1-9)
+swapon -p 25 -f $miswap
+rmmod -f ip_tables ip6_tables iptable_filter iptable_mangle iptable_nat iptable_raw bluetooth rfcomm
+service anacron stop
+service cron stop
+ulimit -f unlimited
+ulimit -t unlimited
+ulimit -v unlimited
+ulimit -m unlimited
+ulimit -n 64000
+ulimit -u 64000
+exit 0
