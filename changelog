@@ -1,4 +1,28 @@
-commit ad885aa327fa6cac5be00d9202e9ff6150ac2026 (HEAD, origin/master, origin/HEAD, master)
+commit 0acb2a6ec62fc6f9bd0952bddc23903848619e05 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Jul 14 21:07:30 2014 -0430
+
+    * se restaura base
+
+commit 36e1be5a295f0226a6f92a703344b65163344e30
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Jul 12 11:43:56 2014 -0430
+
+    * se eliminan copias de seguridad creadas al modificar algunos archivos
+
+commit 9402ec606c5950b5966f822ae90b4a6a9ea9fd6c
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Jul 12 11:41:40 2014 -0430
+
+    * se eliminan las referencias al contrato social de debian porque en el blog de xanadu se encuentra el nuevo contrato social
+
+commit 09f6dd3bd4835a5b0b1714b973a36bdb03492b31
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Jul 10 17:54:06 2014 -0430
+
+    * changelog
+
+commit ad885aa327fa6cac5be00d9202e9ff6150ac2026
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Thu Jul 10 17:52:46 2014 -0430
 
