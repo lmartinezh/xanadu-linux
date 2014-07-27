@@ -1,4 +1,24 @@
-commit 0acb2a6ec62fc6f9bd0952bddc23903848619e05 (HEAD, origin/master, origin/HEAD, master)
+commit 23b8c0feaac55e2510ea72caa73e73cf55f97fbd (HEAD, tag: v0.5.9, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Jul 27 11:27:56 2014 -0430
+
+    * se modifca el script build
+
+commit caf72caed82f99ca5a789edbd3955766c071d76b
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Jul 27 11:24:48 2014 -0430
+
+    * se corrigen errores en syslinux
+    * se crean las configuraciones necesarias para la version minimal
+    * se restauran algunas configuraciones
+
+commit f2fd868580a213a9506ab9c656f253a2ae70a7ef
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Jul 14 21:07:56 2014 -0430
+
+    * changelog
+
+commit 0acb2a6ec62fc6f9bd0952bddc23903848619e05
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Mon Jul 14 21:07:30 2014 -0430
 
