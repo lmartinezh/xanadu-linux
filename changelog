@@ -1,4 +1,16 @@
-commit 23b8c0feaac55e2510ea72caa73e73cf55f97fbd (HEAD, tag: v0.5.9, origin/master, origin/HEAD, master)
+commit 1865e3f70e50ea8a820e63de5d406e9dabb66ddd (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Jul 27 11:33:47 2014 -0430
+
+    * se modifica el script clean para adaptarse al nuevo build
+
+commit 542b49c6635a244c3d04ed5f78b267225db00dee
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Jul 27 11:30:17 2014 -0430
+
+    * changelog
+
+commit 23b8c0feaac55e2510ea72caa73e73cf55f97fbd (tag: v0.5.9)
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sun Jul 27 11:27:56 2014 -0430
 
