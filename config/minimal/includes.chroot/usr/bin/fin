@@ -1,0 +1,8 @@
+#!/bin/bash
+#elaborado por sinfallas
+#los comandos aca listados se ejecutan al cerrar sesion
+rm -rf /var/cache/polipo/*
+#rm -rf /root/.local/share/Trash/*
+#rm -rf /home/*/.local/share/Trash/*
+apt-get clean
+exit 0
