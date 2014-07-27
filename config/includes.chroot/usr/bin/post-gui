@@ -1,0 +1,13 @@
+#!/bin/bash
+#elaborado por sinfallas
+if [[ -f /usr/bin/yad ]]; then
+	source post-gui-yad
+
+elif [[ -f /usr/bin/zenity ]]; then
+	source post-gui-zen
+
+else
+	echo "ERROR: Los siguientes programas NO se encuentran instalados: Yad, Zenity" > /var/log/post-gui.log
+
+fi
+exit 0

@@ -43,9 +43,6 @@ echo "## deborphan ##"
 apt-get -y purge $(deborphan)
 apt-get clean
 echo "## Limpieza de directorios ##"
-find . -type f -name "*.old" -exec rm -fv {} \;
-find . -type f -name ".vacio" -exec rm -fv {} \;
-find . -type f -name ".log" -exec rm -fv {} \;
 rm -rf /usr/share/doc/*
 # rm -rf /usr/share/doc-base/*
 rm -rf /usr/share/gtk-doc/*
@@ -107,6 +104,17 @@ rm -f /usr/share/lxde/wallpapers/lxde_red.jpg
 rm -f /usr/share/xmms2/silence-cellule_snippet.ogg 
 rm -fv /var/cache/apt/pkgcache.bin
 rm -fv /var/cache/apt/srcpkgcache.bin
+rm -fv /etc/xanadu/.vacio
+rm -fv /var/cache/polipo/.vacio
+rm -fv /var/lib/samba/usershares/.vacio
+rm -fv /var/lib/tor/.vacio
+rm -fv /var/log/polipo/.vacio
+rm -fv /var/log/tor/.vacio
+echo "## limpieza de log ##"
+for FILE in $(find /var/log/ -type f)
+do
+	: > ${FILE}
+done
 echo "## tor ##"
 chown debian-tor:debian-tor /var/log/tor /var/lib/tor
 chmod 600 /var/lib/tor /var/log/tor

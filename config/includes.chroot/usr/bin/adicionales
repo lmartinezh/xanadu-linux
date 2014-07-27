@@ -1,0 +1,13 @@
+#!/bin/bash
+#elaborado por sinfallas
+if [[ -f /usr/bin/yad ]]; then
+	source adicionales-yad
+
+elif [[ -f /usr/bin/zenity ]]; then
+	source adicionales-zen
+
+else
+	echo "ERROR: Los siguientes programas NO se encuentran instalados: Yad, Zenity" > /var/log/adicionales.log
+
+fi
+exit 0

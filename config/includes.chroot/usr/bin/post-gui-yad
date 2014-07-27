@@ -1,0 +1,148 @@
+#!/bin/bash
+#elaborado por sinfallas
+source /usr/bin/variables
+
+if ! [[ -d /lib/live/mount/rootfs ]] ; then
+	optimizacion_1
+else
+	yad --timeout=3 --skip-taskbar --button=ACEPTAR:1 --title="ERROR" --fixed --center --text-align=fill --borders=6 --text="Este programa no se puede ejecutar en modo live."
+	exit 1
+fi
+echo $BASHPID > /run/post-gui-yad.pid
+file=$(yad --sticky --fixed --center --width=360 --height=420 --no-click --list --title="Post-instalación" --column=Acciones "Instalar Recomendados" "Instalar KDE" "Instalar GNOME" "Instalar XFCE" "Instalar ENLIGHTENMENT" "Instalar CINNAMON" "Instalar WINE" "Instalar XBMC" "Instalar driver ATI" "Instalar driver NVIDIA" "Instalar kernel LIQUORIX" "Instalar ICEDOVE")
+
+if [ "$file" = "Instalar KDE|" ]; then
+	if (( $memoria > 2048000 )); then	
+		if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="¿Esta seguro de querer instalar este software?"; then
+			kde_1 | progress_2
+			limpiar_1 | progress_limpiar_2
+		else
+			source $0
+		fi
+	else
+		yad --timeout=5 --skip-taskbar --button=ACEPTAR:1 --title="ERROR" --fixed --center --text-align=fill --borders=6 --text="Debe tener un equipo con 2 Gb de RAM o mas para instalar este software."
+	fi
+	source $0
+
+elif [ "$file" = "Instalar GNOME|" ]; then
+	if (( $memoria > 2048000 )); then
+		if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="¿Esta seguro de querer instalar este software?"; then
+			gnome_1 | progress_2
+			limpiar_1 | progress_limpiar_2
+		else
+			source $0
+		fi
+	else
+		yad --timeout=5 --skip-taskbar --button=ACEPTAR:1 --title="ERROR" --fixed --center --text-align=fill --borders=6 --text="Debe tener un equipo con 2 Gb de RAM o mas para instalar este software."
+	fi	
+	source $0
+
+elif [ "$file" = "Instalar XFCE|" ]; then
+	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="¿Esta seguro de querer instalar este software?"; then
+		xfce_1 | progress_2
+		limpiar_1 | progress_limpiar_2
+	else
+		source $0
+	fi	
+	source $0
+
+elif [ "$file" = "Instalar ENLIGHTENMENT|" ]; then
+	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="¿Esta seguro de querer instalar este software?"; then
+		e17_1 | progress_2
+		limpiar_1 | progress_limpiar_2
+	else
+		source $0
+	fi	
+	source $0
+
+elif [ "$file" = "Instalar CINNAMON|" ]; then
+	if (( $memoria > 2048000 )); then
+		if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="¿Esta seguro de querer instalar este software?"; then
+			cinnamon_1 | progress_2
+		l	impiar_1 | progress_limpiar_2
+		else
+			source $0
+		fi
+	else
+		yad --timeout=5 --skip-taskbar --button=ACEPTAR:1 --title="ERROR" --fixed --center --text-align=fill --borders=6 --text="Debe tener un equipo con 2 Gb de RAM o mas para instalar este software."
+	fi
+	source $0
+
+elif [ "$file" = "Instalar WINE|" ]; then
+	if (( $memoria > 2048000 )); then
+		if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="¿Esta seguro de querer instalar este software?"; then
+			wine_1 | progress_2
+			limpiar_1 | progress_limpiar_2
+		else
+			source $0
+		fi
+	else
+		yad --timeout=5 --skip-taskbar --button=ACEPTAR:1 --title="ERROR" --fixed --center --text-align=fill --borders=6 --text="Debe tener un equipo con 2 Gb de RAM o mas para instalar este software."
+	fi	
+	source $0
+
+elif [ "$file" = "Instalar XBMC|" ]; then
+	if (( $memoria > 2048000 )); then
+		if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="¿Esta seguro de querer instalar este software?"; then
+			xbmc_1 | progress_2
+			limpiar_1 | progress_limpiar_2
+		else
+			source $0
+		fi
+	else
+		yad --timeout=5 --skip-taskbar --button=ACEPTAR:1 --title="ERROR" --fixed --center --text-align=fill --borders=6 --text="Debe tener un equipo con 2 Gb de RAM o mas para instalar este software."
+	fi	
+	source $0
+
+elif [ "$file" = "Instalar driver ATI|" ]; then
+	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="¿Esta seguro de querer instalar este software?"; then
+		ati_1 | progress_2
+		limpiar_1 | progress_limpiar_2
+	else
+		source $0
+	fi	
+	source $0	
+
+elif [ "$file" = "Instalar driver NVIDIA|" ]; then
+	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="¿Esta seguro de querer instalar este software?"; then
+		nvidia_1 | progress_2
+		limpiar_1 | progress_limpiar_2
+	else
+		source $0
+	fi	
+	source $0	
+
+elif [ "$file" = "Instalar kernel LIQUORIX|" ]; then
+	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="¿Esta seguro de querer instalar este software?"; then
+		liquorix_1 | progress_2
+		limpiar_1 | progress_limpiar_2
+	else
+		source $0
+	fi	
+	source $0
+
+elif [ "$file" = "Instalar ICEDOVE|" ]; then
+	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="¿Esta seguro de querer instalar este software?"; then
+		icedove_1 | progress_2
+		limpiar_1 | progress_limpiar_2
+	else
+		source $0
+	fi	
+	source $0
+
+elif [ "$file" = "Instalar Recomendados|" ]; then
+	if yad --skip-taskbar --title="ADVERTENCIA" --fixed --center --text-align=fill --borders=6 --text="¿Esta seguro de querer instalar este software?"; then
+		apparmor_1 | progress_2
+		limpiar_1 | progress_limpiar_2
+	else
+		source $0
+	fi	
+	source $0
+
+else
+rm -f /run/post-gui-yad.pid
+exit 0
+
+fi
+rm -f /run/post-gui-yad.pid
+exit 0

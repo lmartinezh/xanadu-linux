@@ -1,0 +1,11 @@
+#!/bin/bash
+#elaborado por sinfallas
+sudo rmmod -f ip_tables ip6_tables iptable_filter iptable_mangle iptable_nat iptable_raw bluetooth rfcomm
+archiver="/home/user/.config/xarchiver/xarchiverrc"
+if [[ -f $archiver ]]; then
+	echo 1 > /dev/null
+else
+	mkdir -p /home/user/.config/xarchiver/
+	cp /usr/bin/xarchiverrc /home/user/.config/xarchiver/xarchiverrc
+fi
+exit 0

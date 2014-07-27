@@ -26,10 +26,4 @@ swapon -p 25 -f $miswap
 rmmod -f ip_tables ip6_tables iptable_filter iptable_mangle iptable_nat iptable_raw bluetooth rfcomm
 service anacron stop
 service cron stop
-ulimit -f unlimited
-ulimit -t unlimited
-ulimit -v unlimited
-ulimit -m unlimited
-ulimit -n 64000
-ulimit -u 64000
 exit 0
