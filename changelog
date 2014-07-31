@@ -1,4 +1,34 @@
-commit 1865e3f70e50ea8a820e63de5d406e9dabb66ddd (HEAD, origin/master, origin/HEAD, master)
+commit c3afeb7167b1a65823d5b2c39b896ee510da0468 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Jul 30 19:45:33 2014 -0430
+
+    * se renombra el instalador CLI
+
+commit 3f08e77f90f070e30879115f40105384ee3a5ccf
+Author: Jesus Palencia <sinfallas@users.noreply.github.com>
+Date:   Mon Jul 28 11:24:25 2014 -0430
+
+    Update README.md
+
+commit c4d743c49fcf2a0caabea73f43cdb6c8bb3cdfb2
+Author: Jesus Palencia <sinfallas@users.noreply.github.com>
+Date:   Mon Jul 28 09:22:33 2014 -0430
+
+    Update 01-localepurge.chroot
+
+commit 03e24dfb35c58c539b7dbfbaae1e984d81f891a4
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Jul 27 13:58:58 2014 -0430
+
+    * se agregan las configuraciones finales para la version minimal
+
+commit 40917404e119caf6afc4c200e64a0b1d9114a1e7
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Jul 27 11:34:14 2014 -0430
+
+    * changelog
+
+commit 1865e3f70e50ea8a820e63de5d406e9dabb66ddd
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sun Jul 27 11:33:47 2014 -0430
 
