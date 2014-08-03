@@ -510,8 +510,8 @@ choose_root
 choose_fs_os () {
 fs_type_os=$(zenity --list --title="Root Filesystem" --text="What type of filesystem would you like on $install_dev?" \
   --radiolist --column "Choose" --column "Format" --height=200\
-  FALSE "ext2" \
-  FALSE "ext3" \
+  FALSE "xfs" \
+  FALSE "btrfs" \
   FALSE "ext4")
 if [[ -z $fs_type_os ]]; then
     zenity --question --ok-label="Go back" --cancel-label=Exit \
@@ -578,8 +578,8 @@ choose_fs_home () {
 if [[ -n $home_dev ]]; then
      fs_type_home=$(zenity --list --title="/home filesystem" --text="What type of filesystem would you like on $home_dev?" \
   --radiolist --column "Choose" --column "Format" --height=200\
-  FALSE "ext2" \
-  FALSE "ext3" \
+  FALSE "xfs" \
+  FALSE "btrfs" \
   FALSE "ext4")
 fi
 
@@ -861,8 +861,8 @@ else
     install_part="$install_dev"
 fi 
 if [[ $no_format != "yes" ]]; then
-	mke2fs -t $fs_type_os "$install_part" ; check_exit 
-	tune2fs -r 10000 "$install_part" ; check_exit
+	mkfs.$fs_type_os -f "$install_part" ; check_exit 
+	#tune2fs -r 10000 "$install_part" ; check_exit
 fi
 mount "$install_part" /target ; check_exit 
 
@@ -878,8 +878,8 @@ if [[ -n $home_dev ]] ; then
         home_part=$home_dev
 	fi
 	if [[ $no_format != "yes" ]]; then
-	    mke2fs -t $fs_type_home "$home_part" ; check_exit
-	    tune2fs -r 10000 "$home_part" ; check_exit
+	    mkfs.$fs_type_home -f "$home_part" ; check_exit
+	    #tune2fs -r 10000 "$home_part" ; check_exit
 	fi
     mount "$home_part" /target_home ; check_exit
 	sep_home_opt="--exclude=/home/*"
@@ -888,7 +888,7 @@ fi
 if [[ -n $boot_dev ]] ; then
     mkdir /target_boot ; check_exit
     if [[ $no_format != "yes" ]]; then
-		mke2fs -t $fs_type_boot $boot_dev ; check_exit
+		mkfs.$fs_type_boot -f $boot_dev ; check_exit
 	fi
     mount $boot_dev /target_boot
     sep_boot_opt="--exclude=/boot/*"

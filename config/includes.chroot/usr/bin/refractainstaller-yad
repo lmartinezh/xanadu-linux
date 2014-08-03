@@ -486,8 +486,8 @@ choose_root
 choose_fs_os () {
 fs_type_os=$(yad --list --title="Sistema de archivos para la raiz" --text="Que sistema de archivos le gustaria para $install_dev?" \
   --separator="" --column "Formato" --height=200 --button="OK":0 \
-  "ext2" \
-  "ext3" \
+  "xfs" \
+  "btrfs" \
   "ext4")
 if [[ -z $fs_type_os ]]; then
         yad --window-icon=error --title=Error --button="Ir atras":0 --button="Salir":1 \
@@ -560,8 +560,8 @@ choose_fs_home () {
 if [[ -n $home_dev ]]; then
      fs_type_home=$(yad --list --title="Sistema de archivos para /home" --text="Que sistema de archivos le gustaria para $home_dev?" \
   --separator="" --column "Formato" --height=200 --button="OK":0 \
-  "ext2" \
-  "ext3" \
+  "xfs" \
+  "btrfs" \
   "ext4")
 fi
 
@@ -843,8 +843,8 @@ else
     install_part="$install_dev"
 fi 
 if [[ $no_format != "yes" ]]; then
-	mke2fs -q -F -t $fs_type_os "$install_part" ; check_exit 
-	tune2fs -r 10000 "$install_part" ; check_exit
+	mkfs.$fs_type_os -f "$install_part" ; check_exit 
+	#tune2fs -r 10000 "$install_part" ; check_exit
 fi
 mount "$install_part" /target ; check_exit 
 
@@ -860,8 +860,8 @@ if [[ -n $home_dev ]] ; then
         home_part=$home_dev
 	fi
 	if [[ $no_format != "yes" ]]; then
-	    mke2fs -q -F -t $fs_type_home "$home_part" ; check_exit
-	    tune2fs -r 10000 "$home_part" ; check_exit
+	    mkfs.$fs_type_home -f "$home_part" ; check_exit
+	    #tune2fs -r 10000 "$home_part" ; check_exit
 	fi
     mount "$home_part" /target_home ; check_exit
 	sep_home_opt="--exclude=/home/*"
@@ -870,7 +870,7 @@ fi
 if [[ -n $boot_dev ]] ; then
     mkdir /target_boot ; check_exit
     if [[ $no_format != "yes" ]]; then
-		mke2fs -q -F -t $fs_type_boot $boot_dev ; check_exit
+		mkfs.$fs_type_boot -f $boot_dev ; check_exit
 	fi
     mount $boot_dev /target_boot
     sep_boot_opt="--exclude=/boot/*"

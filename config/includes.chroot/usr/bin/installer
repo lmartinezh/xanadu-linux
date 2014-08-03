@@ -286,14 +286,14 @@ while true; do
  What type of filesystem would you like on $install_dev?
  
  Choices (enter number):
-    2) ext2
-    3) ext3
+    2) xfs
+    3) btrfs
     4) ext4
    "
     read ans
     case $ans in
-      2) fs_type_os="ext2" ; break ;;
-      3) fs_type_os="ext3" ; break ;;
+      2) fs_type_os="xfs" ; break ;;
+      3) fs_type_os="btrfs" ; break ;;
       4) fs_type_os="ext4" ; break ;;
     esac
 done
@@ -378,14 +378,14 @@ if [[ -n $home_dev ]] ; then
  What type of filesystem would you like on $home_dev?
  
  Choices (enter number):
-    2) ext2
-    3) ext3
+    2) xfs
+    3) btrfs
     4) ext4
    "
         read ans
         case $ans in
-          2) fs_type_home="ext2" ; break ;;
-          3) fs_type_home="ext3" ; break ;;
+          2) fs_type_home="xfs" ; break ;;
+          3) fs_type_home="btrfs" ; break ;;
           4) fs_type_home="ext4" ; break ;;
         esac
     done
@@ -620,8 +620,8 @@ if [[ $encrypt_os = yes ]] ; then
 else
     install_part="$install_dev"
 fi 
-mke2fs -t $fs_type_os "$install_part" ; check_exit 
-tune2fs -r 10000 "$install_part" ; check_exit 
+mkfs.$fs_type_os -f "$install_part" ; check_exit 
+#tune2fs -r 10000 "$install_part" ; check_exit 
 mount "$install_part" /target ; check_exit 
 
 if [[ -n $home_dev ]] ; then
@@ -643,15 +643,15 @@ if [[ -n $home_dev ]] ; then
     else
         home_part=$home_dev
 fi
-    mke2fs -t $fs_type_home "$home_part" ; check_exit
-    tune2fs -r 10000 "$home_part" ; check_exit
+    mkfs.$fs_type_home -f "$home_part" ; check_exit
+    #tune2fs -r 10000 "$home_part" ; check_exit
     mount "$home_part" /target_home ; check_exit
 	sep_home_opt="--exclude=/home/*"
 fi
 
 if [[ -n $boot_dev ]] ; then
     mkdir /target_boot ; check_exit
-    mke2fs -t $fs_type_boot $boot_dev ; check_exit
+    mkfs.$fs_type_boot -f $boot_dev ; check_exit
     mount $boot_dev /target_boot
     sep_boot_opt="--exclude=/boot/*"
 fi
