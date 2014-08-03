@@ -1,4 +1,16 @@
-commit c3afeb7167b1a65823d5b2c39b896ee510da0468 (HEAD, origin/master, origin/HEAD, master)
+commit ef3843c18eeefe251de3d2ec9ac79d3011deb377 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Aug 2 21:56:19 2014 -0430
+
+    * se modifica el wrapper para adaptarse al nuevo nombre del instalador cli
+
+commit d59ee7eddb9a0abc9496b8822d4518645fcd973f
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Jul 30 20:07:53 2014 -0430
+
+    * changelog
+
+commit c3afeb7167b1a65823d5b2c39b896ee510da0468
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Wed Jul 30 19:45:33 2014 -0430
 
