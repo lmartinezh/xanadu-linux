@@ -15,7 +15,7 @@ elif
 		gksu 'x-terminal-emulator -e /usr/bin/refractainstaller-gui' &
 else
 	xterm -hold -fa monaco -fs 14 -geometry 80x20+0+0 -e echo "
-  Yad y Zenity no estan instalados. Puede usar 'refractainstaller'
+  Yad y Zenity no estan instalados. Puede usar 'installer'
   desde un terminal para instalar el sistema con la version CLI.
   " &
 fi
