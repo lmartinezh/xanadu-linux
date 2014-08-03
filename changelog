@@ -1,4 +1,16 @@
-commit ef3843c18eeefe251de3d2ec9ac79d3011deb377 (HEAD, origin/master, origin/HEAD, master)
+commit 4a4b82559a221d1e6d0b758e3bcb42f16f5d6718 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Aug 2 23:35:31 2014 -0430
+
+    * se modifica el instalador para agregar XFS y BTRFS como opciones para el sistema de archivos
+
+commit 471bfa68bd836a8df329f7afe0820d5604f375fa
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Aug 2 21:58:42 2014 -0430
+
+    * changelog
+
+commit ef3843c18eeefe251de3d2ec9ac79d3011deb377
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sat Aug 2 21:56:19 2014 -0430
 
