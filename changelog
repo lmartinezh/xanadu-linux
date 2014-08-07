@@ -1,4 +1,16 @@
-commit a74a9c2af43444246cfe23c23e33172038f04c7d (HEAD, origin/master, origin/HEAD, master)
+commit f425df3b275544ec45a27820f01a8c23c44dffa6 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Aug 7 16:40:50 2014 -0430
+
+    * se corrige el error al agregar autojump
+
+commit 69acc910d85f4329392ae26237eb6389b26ae159
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Aug 7 16:18:14 2014 -0430
+
+    * changelog
+
+commit a74a9c2af43444246cfe23c23e33172038f04c7d
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Thu Aug 7 16:17:47 2014 -0430
 
