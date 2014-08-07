@@ -1,4 +1,35 @@
-commit 4a4b82559a221d1e6d0b758e3bcb42f16f5d6718 (HEAD, origin/master, origin/HEAD, master)
+commit a74a9c2af43444246cfe23c23e33172038f04c7d (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Aug 7 16:17:47 2014 -0430
+
+    * cambios a varios archivos leeme.txt
+
+commit 31fd3743d5c32dd98102a0e9dd69c88b5968e3a5
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Aug 7 16:07:33 2014 -0430
+
+    * modificaciones a varios archivos leeme.txt
+
+commit 618efc12a14d923d7769fb7d1cacd9635b66d08a
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Aug 7 16:05:12 2014 -0430
+
+    * cambios a varios archivos leeme.txt
+    * se agrega la funcion para borrar archivos .old al hooks
+
+commit 4c276ab4a069f8e804cfaacbb21fa20dd28973f5
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Aug 7 15:45:35 2014 -0430
+
+    * cambios en readme.md
+
+commit 201c7c027f1acfc9f1db048d8fd1a49122f3607f
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Aug 2 23:36:21 2014 -0430
+
+    * changelog
+
+commit 4a4b82559a221d1e6d0b758e3bcb42f16f5d6718
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sat Aug 2 23:35:31 2014 -0430
 
