@@ -194,7 +194,7 @@ function icedove_1 ()
 
 function apparmor_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install apparmor-profiles menulibre ecryptfs-utils auditd passwdqc dnsutils
+	apt-get -q update && apt-get -q -y --force-yes install apparmor-profiles menulibre ecryptfs-utils auditd passwdqc dnsutils autojump
 }
 
 function limpiar_1 ()
