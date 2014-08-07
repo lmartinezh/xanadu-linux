@@ -36,7 +36,7 @@ echo "## purge ##"
 apt-get -y purge $(deborphan --libdevel) $(deborphan --find-config) bluetooth bluez bluez-alsa bluez-firmware bluez-gstreamer linux-wlan-ng-doc aptitude aptitude-common vim-tiny vim-common libc6-dev gcc g++ make dpkg-dev build-essential
 # man-db manpages
 echo "## purge headers ##"
-apt-get -y purge linux-headers-3.14-2-686-pae linux-headers-3.14-2-common linux-headers-686-pae linux-headers-3.14-2-amd64 linux-headers-amd64
+apt-get -y purge linux-headers-3.14-2-686-pae linux-headers-3.14-2-common linux-headers-3.14-2-amd64 linux-headers-686-pae linux-headers-amd64
 echo "## autoremove ##"
 apt-get -y --force-yes autoremove
 echo "## deborphan ##"
@@ -110,6 +110,7 @@ rm -fv /var/lib/samba/usershares/.vacio
 rm -fv /var/lib/tor/.vacio
 rm -fv /var/log/polipo/.vacio
 rm -fv /var/log/tor/.vacio
+find . -type f -name "*.old" -exec rm -f {} \;
 echo "## limpieza de log ##"
 for FILE in $(find /var/log/ -type f)
 do

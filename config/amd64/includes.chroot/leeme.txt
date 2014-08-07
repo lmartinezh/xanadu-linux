@@ -6,7 +6,7 @@ Es 100% compatible con los paquetes de Debian.
 
 El nombre xanadu se ha considerado como sinónimo de opulencia y misterio, sobre todo gracias al poema Kubla Khan de Samuel Taylor Coleridge, también era la capital de verano del imperio Mongol de Kublai Jan y además fue el nombre seleccionado por Theodore Holm Nelson (Ted Nelson) para su idea de "concebir un documento global y único (docuverse), que cubra todo lo escrito en el mundo, mediante una gran cantidad de ordenadores interconectados, que contenga todo el conocimiento existente o, mejor dicho, información en forma de hipertexto."
 
-Se construye usando Live-build, la imagen .ISO y sus configuraciones para crearla se encuentran disponibles bajo licencia GPL v2 (GNU GENERAL PUBLIC LICENSE, Version 2, June 1991) y pueden ser descargadas desde: 
+La imagen .ISO y sus configuraciones para crearla se encuentran disponibles bajo licencia GPL v2 (GNU GENERAL PUBLIC LICENSE, Version 2, June 1991) y pueden ser descargadas desde: 
 
 https://xanadulinux.wordpress.com/
 
