@@ -8,7 +8,7 @@ Es un derivado de Debian que utiliza SID como base y LXDE como entorno de escrit
 
 Es 100% compatible con los paquetes de Debian.
 
-Se construye usando Live-build, la imagen .ISO y sus configuraciones para crearla se encuentran disponibles bajo licencia GPL v2 (GNU GENERAL PUBLIC LICENSE, Version 2, June 1991) y pueden ser descargadas desde: 
+La imagen .ISO y sus configuraciones para crearla se encuentran disponibles bajo licencia GPL v2 (GNU GENERAL PUBLIC LICENSE, Version 2, June 1991) y pueden ser descargadas desde: 
 
 
 ##### DESCARGA XANADU #####
