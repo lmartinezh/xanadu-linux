@@ -1,4 +1,16 @@
-commit dc36d83f8e136fe56805985ef28a696131e20c74 (HEAD, origin/master, origin/HEAD, master)
+commit d953142009a9156899fdf49209eb4e5f6530b3a6 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Fri Aug 8 15:47:39 2014 -0430
+
+    * se cambia el repositorio de libreoffice para incluir la version 4.3
+
+commit 0ccd954e4b665fd3535f34db9f313d4ae94e104d
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Fri Aug 8 15:05:32 2014 -0430
+
+    * changelog
+
+commit dc36d83f8e136fe56805985ef28a696131e20c74
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Fri Aug 8 15:02:03 2014 -0430
 
