@@ -1,4 +1,16 @@
-commit f425df3b275544ec45a27820f01a8c23c44dffa6 (HEAD, origin/master, origin/HEAD, master)
+commit dc36d83f8e136fe56805985ef28a696131e20c74 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Fri Aug 8 15:02:03 2014 -0430
+
+    * se agrega tcp_mtu_probing al sysctl
+
+commit 6e68a74243749aa230f1d72cc2d79936e67d7ab8
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Aug 7 16:42:52 2014 -0430
+
+    * changelog
+
+commit f425df3b275544ec45a27820f01a8c23c44dffa6
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Thu Aug 7 16:40:50 2014 -0430
 
