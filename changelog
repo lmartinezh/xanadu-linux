@@ -1,4 +1,16 @@
-commit d953142009a9156899fdf49209eb4e5f6530b3a6 (HEAD, origin/master, origin/HEAD, master)
+commit 9a6675f085c0f7a0cb978d62f0578a08b21504d8 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Aug 9 12:02:23 2014 -0430
+
+    * se adaptan los script revision y variables a las diversas arquitecturas
+
+commit 206866fc60d1d5709338ff01227a673461d43ace
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Fri Aug 8 15:48:29 2014 -0430
+
+    changelog
+
+commit d953142009a9156899fdf49209eb4e5f6530b3a6
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Fri Aug 8 15:47:39 2014 -0430
 
