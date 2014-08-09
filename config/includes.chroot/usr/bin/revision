@@ -22,30 +22,30 @@ clear
 echo -e "## kernel ##""\n" > /tmp/$nombre
 if [[ $tipo = x86_64 ]];then
 	if [[ $kernel = 3.14-2-amd64 ]]; then
-		echo "OK" >> /tmp/$nombre
+		echo "BIEN" >> /tmp/$nombre
 	else
-		echo "FAIL" >> /tmp/$nombre
+		echo "FALLO" >> /tmp/$nombre
 	fi
 else
 	if [[ $kernel = 3.14-2-686-pae ]]; then
-		echo "OK" >> /tmp/$nombre
+		echo "BIEN" >> /tmp/$nombre
 	else
-		echo "FAIL" >> /tmp/$nombre
+		echo "FALLO" >> /tmp/$nombre
 	fi
 fi
 
 echo -e "\n""## hostname ##""\n" >> /tmp/$nombre
 if [[ $name = xanadu ]]; then
-	echo "OK" >> /tmp/$nombre
+	echo "BIEN" >> /tmp/$nombre
 else
-	echo "FAIL" >> /tmp/$nombre
+	echo "FALLO" >> /tmp/$nombre
 fi
 
 echo -e "\n""## disksize ##""\n" >> /tmp/$nombre
 if [[ $var1 = 104857600 ]]; then
-	echo "OK" >> /tmp/$nombre
+	echo "BIEN" >> /tmp/$nombre
 else
-	echo "FAIL" >> /tmp/$nombre
+	echo "FALLO" >> /tmp/$nombre
 fi
 
 echo -e "\n""## thp ##""\n" >> /tmp/$nombre
@@ -53,44 +53,44 @@ echo $var2 >> /tmp/$nombre
 
 echo -e "\n""## thp pages_to_scan ##""\n" >> /tmp/$nombre
 if [[ $var3 = 20000 ]]; then
-	echo "OK" >> /tmp/$nombre
+	echo "BIEN" >> /tmp/$nombre
 else
-	echo "FAIL" >> /tmp/$nombre
+	echo "FALLO" >> /tmp/$nombre
 fi
 
 echo -e "\n""## ksm run ##""\n" >> /tmp/$nombre
 if [[ $var4 = 1 ]]; then
-	echo "OK" >> /tmp/$nombre
+	echo "BIEN" >> /tmp/$nombre
 else
-	echo "FAIL" >> /tmp/$nombre
+	echo "FALLO" >> /tmp/$nombre
 fi
 
 echo -e "\n""## ksm pages_to_scan ##""\n" >> /tmp/$nombre
 if [[ $var5 = 20000 ]]; then
-	echo "OK" >> /tmp/$nombre
+	echo "BIEN" >> /tmp/$nombre
 else
-	echo "FAIL" >> /tmp/$nombre
+	echo "FALLO" >> /tmp/$nombre
 fi
 
 echo -e "\n""## sleep_millisecs ##""\n" >> /tmp/$nombre
 if [[ $var6 = 200 ]]; then
-	echo "OK" >> /tmp/$nombre
+	echo "BIEN" >> /tmp/$nombre
 else
-	echo "FAIL" >> /tmp/$nombre
+	echo "FALLO" >> /tmp/$nombre
 fi
 
 echo -e "\n""## release_agent ##""\n" >> /tmp/$nombre
 if [[ $var7 = /usr/local/sbin/cgroup_clean ]]; then
-	echo "OK" >> /tmp/$nombre
+	echo "BIEN" >> /tmp/$nombre
 else
-	echo "FAIL" >> /tmp/$nombre
+	echo "FALLO" >> /tmp/$nombre
 fi
 
 echo -e "\n""## notify_on_release ##""\n" >> /tmp/$nombre
 if [[ $var8 = 1 ]]; then
-	echo "OK" >> /tmp/$nombre
+	echo "BIEN" >> /tmp/$nombre
 else
-	echo "FAIL" >> /tmp/$nombre
+	echo "FALLO" >> /tmp/$nombre
 fi
 
 echo -e "\n""## tmpfs ##""\n" >> /tmp/$nombre
