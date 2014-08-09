@@ -182,7 +182,12 @@ function nvidia_1 ()
 
 function liquorix_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install linux-image-liquorix-686 linux-headers-liquorix-686
+	tipo=$(lscpu | grep Architecture | cut -c 24-30)	
+	if [[ $tipo = x86_64 ]];then
+		apt-get -q update && apt-get -q -y --force-yes install linux-image-liquorix-amd64 linux-headers-liquorix-amd64
+	else
+		apt-get -q update && apt-get -q -y --force-yes install linux-image-liquorix-686 linux-headers-liquorix-686
+	fi
 }
 
 function icedove_1 ()

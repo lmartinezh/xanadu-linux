@@ -6,7 +6,7 @@ exit 1
 fi
 lock="/run/tor.lock"
 lock2="/run/i2p.lock"
-persistencia="/usr/local/bin/persistencia"
+persistencia="/usr/bin/persistencia"
 memoria=$(grep MemTotal /proc/meminfo | awk '{print $2}')
 
 function espera ()
@@ -50,7 +50,7 @@ function tor_1 ()
 function tor_0 ()
 {
 	rm -f $lock
-	mv -f /etc/iceweasel/pref/iceweasel.js /etc/iceweasel/pref/iceweasel.old
+	mv -f /etc/iceweasel/pref/iceweasel.js /etc/iceweasel/pref/iceweasel.ald
 	mv -f /etc/iceweasel/pref/iceweasel.bk /etc/iceweasel/pref/iceweasel.js
 	systemctl stop privoxy
 	systemctl stop polipo
@@ -58,8 +58,6 @@ function tor_0 ()
 	systemctl restart dnsmasq
 	tsocks -off
 	systemctl stop memlockd
-	mv -f /etc/tor/torrc /etc/tor/torrc.obfs
-	mv -f /etc/tor/torrc.old /etc/tor/torrc
 	rm -rf /var/cache/polipo/*
 }
 
@@ -184,7 +182,12 @@ function nvidia_1 ()
 
 function liquorix_1 ()
 {
-	apt-get -q update && apt-get -q -y --force-yes install linux-image-liquorix-amd64 linux-headers-liquorix-amd64
+	tipo=$(lscpu | grep Architecture | cut -c 24-30)	
+	if [[ $tipo = x86_64 ]];then
+		apt-get -q update && apt-get -q -y --force-yes install linux-image-liquorix-amd64 linux-headers-liquorix-amd64
+	else
+		apt-get -q update && apt-get -q -y --force-yes install linux-image-liquorix-686 linux-headers-liquorix-686
+	fi
 }
 
 function icedove_1 ()
