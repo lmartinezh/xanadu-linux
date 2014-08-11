@@ -17,4 +17,5 @@ sfill -f $dispositivo &
 sdmem -f &
 sswap -f $miswap
 rm -f /run/destruir.pid
+reboot
 exit 0
