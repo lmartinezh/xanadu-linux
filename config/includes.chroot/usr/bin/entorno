@@ -10,6 +10,8 @@ echo -e "## CPU ##""\n" > /tmp/$nombre
 lscpu >> /tmp/$nombre
 echo -e "\n""## HARDWARE ##""\n" >> /tmp/$nombre
 hwinfo --short >> /tmp/$nombre
+echo -e "\n""## PCI ##""\n" >> /tmp/$nombre
+lspci >> /tmp/$nombre
 echo -e "\n""## USB ##""\n" >> /tmp/$nombre
 lsusb >> /tmp/$nombre
 echo -e "\n""## MEMORIA ##""\n" >> /tmp/$nombre
