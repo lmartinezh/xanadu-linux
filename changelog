@@ -1,4 +1,22 @@
-commit 5b3287926f176c1a5fdb89959bfe95678d0bf835 (HEAD, origin/master, origin/HEAD, master)
+commit 8954957b5bc6b6ce2ed4c0e702848523f62735eb (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Aug 10 20:40:15 2014 -0430
+
+    * se incorpora apparmor a la version live
+
+commit 8a44ae2338155111efe3506a7a8fb883ad122370
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Aug 10 20:18:15 2014 -0430
+
+    * se corrige un error en los archivos de copyright
+
+commit 580cc1dcfbd8c45cff6050231a03aeb41304504b
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Aug 9 12:08:24 2014 -0430
+
+    changelog
+
+commit 5b3287926f176c1a5fdb89959bfe95678d0bf835
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sat Aug 9 12:07:27 2014 -0430
 
