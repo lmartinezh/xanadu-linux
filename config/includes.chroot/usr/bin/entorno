@@ -5,7 +5,7 @@ echo -e "\e[00;31mERROR: DEBES SER ROOT\e[00m"
 exit 1
 fi
 echo $BASHPID > /run/entorno.pid
-nombre=reporte
+nombre=entorno.txt
 echo -e "## CPU ##""\n" > /tmp/$nombre
 lscpu >> /tmp/$nombre
 echo -e "\n""## HARDWARE ##""\n" >> /tmp/$nombre

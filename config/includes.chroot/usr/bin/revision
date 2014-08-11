@@ -5,7 +5,7 @@ echo -e "\e[00;31mERROR: DEBES SER ROOT\e[00m"
 exit 1
 fi
 echo $BASHPID > /run/revision.pid
-nombre=revision
+nombre=revision.txt
 kernel=$(uname -r)
 name=$(hostname)
 tipo=$(lscpu | grep Architecture | cut -c 24-30)
