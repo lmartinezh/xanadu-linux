@@ -1,4 +1,22 @@
-commit 8954957b5bc6b6ce2ed4c0e702848523f62735eb (HEAD, origin/master, origin/HEAD, master)
+commit 374be9ee14e5252f58474ab4d2350e591e7e9ee0 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Aug 10 20:59:00 2014 -0430
+
+    * bugfix
+
+commit 79d2e747c37d4735cc0aee1cf27f1c9289314cc9
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Aug 10 20:50:26 2014 -0430
+
+    * se agrega lspci al script entorno
+
+commit 8ebe45a92078ee6bbdceb95332843555675eb2e4
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Aug 10 20:43:20 2014 -0430
+
+    * changelog
+
+commit 8954957b5bc6b6ce2ed4c0e702848523f62735eb
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sun Aug 10 20:40:15 2014 -0430
 
