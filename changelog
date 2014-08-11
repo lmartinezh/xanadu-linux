@@ -1,4 +1,23 @@
-commit 374be9ee14e5252f58474ab4d2350e591e7e9ee0 (HEAD, origin/master, origin/HEAD, master)
+commit 60a32d510d6de7b3ebe1765bece6f03f15517644 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Aug 11 15:18:57 2014 -0430
+
+    * se agrega la extension .txt a los archivos generados por los script entorno y revision
+    * se cambia el nombre del archivo generado por el script entorno
+
+commit 33c98867e5351dc5ea4e1b2bff0f6ae43790062e
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Aug 11 15:01:00 2014 -0430
+
+    * se corrige un error de parametros en mkfs
+
+commit 39482f5ef686029c46d18fd5a2e0a6058a60cfe6
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Aug 10 20:59:29 2014 -0430
+
+    * changelog
+
+commit 374be9ee14e5252f58474ab4d2350e591e7e9ee0
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sun Aug 10 20:59:00 2014 -0430
 
