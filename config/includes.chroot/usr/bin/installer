@@ -620,7 +620,7 @@ if [[ $encrypt_os = yes ]] ; then
 else
     install_part="$install_dev"
 fi 
-mkfs.$fs_type_os -f "$install_part" ; check_exit 
+mkfs.$fs_type_os "$install_part" ; check_exit 
 #tune2fs -r 10000 "$install_part" ; check_exit 
 mount "$install_part" /target ; check_exit 
 
@@ -643,7 +643,7 @@ if [[ -n $home_dev ]] ; then
     else
         home_part=$home_dev
 fi
-    mkfs.$fs_type_home -f "$home_part" ; check_exit
+    mkfs.$fs_type_home "$home_part" ; check_exit
     #tune2fs -r 10000 "$home_part" ; check_exit
     mount "$home_part" /target_home ; check_exit
 	sep_home_opt="--exclude=/home/*"
@@ -651,7 +651,7 @@ fi
 
 if [[ -n $boot_dev ]] ; then
     mkdir /target_boot ; check_exit
-    mkfs.$fs_type_boot -f $boot_dev ; check_exit
+    mkfs.$fs_type_boot $boot_dev ; check_exit
     mount $boot_dev /target_boot
     sep_boot_opt="--exclude=/boot/*"
 fi
