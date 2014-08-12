@@ -1,4 +1,16 @@
-commit 60a32d510d6de7b3ebe1765bece6f03f15517644 (HEAD, origin/master, origin/HEAD, master)
+commit cb7e9cd52e5e6e43a304735ee8172471f29c8614 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Aug 11 21:28:38 2014 -0430
+
+    * se sustituye BASH por FISH tanto para los usuarios existentes como para los nuevos
+
+commit d8153df8a27644e4c507f29bf51a9bbee175d504
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Aug 11 15:20:31 2014 -0430
+
+    * changelog
+
+commit 60a32d510d6de7b3ebe1765bece6f03f15517644
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Mon Aug 11 15:18:57 2014 -0430
 
