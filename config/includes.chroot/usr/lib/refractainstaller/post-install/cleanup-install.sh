@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # cleanup-install.sh
-
 rm -f /target/etc/apt/preferences.d/exclude.pref
 rm -f /target/etc/apt/preferences		
 rm -f /target/etc/inittab
@@ -45,4 +44,8 @@ if [ -n "$(lspci | grep -E 'VGA|Display' | head -n1 | cut -d ':' -f3 | grep -F '
 	echo 'EndSection' >> /target/etc/X11/xorg.conf
 fi
 chmod 600 /target/etc/sudoers
+mkdir -p /target/home/user/.config/fish/functions
+echo -e "function actualizar""\n""     apt update && apt -y full-upgrade && apt-get -y autoremove;""\n""end" >> /target/home/user/.config/fish/functions/actualizar.fish
+echo -e "function cp""\n""     gcp;""\n""end" >> /target/home/user/.config/fish/functions/cp.fish
+echo -e "function rotorar""\n""     unrar e -kb -y;""\n""end" >> /target/home/user/.config/fish/functions/rotorar.fish
 exit 0
