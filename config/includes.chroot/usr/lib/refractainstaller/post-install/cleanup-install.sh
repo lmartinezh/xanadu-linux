@@ -45,7 +45,7 @@ if [ -n "$(lspci | grep -E 'VGA|Display' | head -n1 | cut -d ':' -f3 | grep -F '
 fi
 chmod 600 /target/etc/sudoers
 mkdir -p /target/home/user/.config/fish/functions
-echo -e "function actualizar""\n""     apt update && apt -y full-upgrade && apt-get -y autoremove;""\n""end" >> /target/home/user/.config/fish/functions/actualizar.fish
+echo -e "function actualizar""\n""     apt update && apt -y full-upgrade && apt-get -y autoremove;""\n""end" >> /target/root/.config/fish/functions/actualizar.fish
 echo -e "function cp""\n""     gcp;""\n""end" >> /target/home/user/.config/fish/functions/cp.fish
 echo -e "function rotorar""\n""     unrar e -kb -y;""\n""end" >> /target/home/user/.config/fish/functions/rotorar.fish
 exit 0
