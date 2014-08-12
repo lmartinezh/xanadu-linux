@@ -19,6 +19,7 @@ sed -i 's_#clock-format=_clock-format=%a, %d %b %I:%M_g' /target/etc/lightdm/lig
 sed -i 's_umask 022_umask 027_g' /target/etc/init.d/rc
 sed -i 's_umask 022_umask 027_g' /target/etc/login.defs
 sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="quiet"/GRUB_CMDLINE_LINUX_DEFAULT="swapaccount=1 cgroup_enable=memory disable=1 disable_ipv6=1 security=apparmor panic=10 quiet splash"/g' /target/etc/default/grub
+sed -i 's_/bin/bash_/usr/bin/fish_g' /target/etc/passwd
 echo "default-user-image=/usr/share/images/desktop-base/logo.png" >> /target/etc/lightdm/lightdm-gtk-greeter.conf
 echo "user ALL=(ALL) ALL" > /target/etc/sudoers.d/live
 echo "umask 027" >> /target/etc/profile
