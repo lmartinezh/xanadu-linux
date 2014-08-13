@@ -843,8 +843,12 @@ else
     install_part="$install_dev"
 fi 
 if [[ $no_format != "yes" ]]; then
-	mkfs.$fs_type_os "$install_part" ; check_exit 
-	#tune2fs -r 10000 "$install_part" ; check_exit
+	if [[ $fs_type_os = ext4 ]];then
+		mkfs.$fs_type_os -F "$install_part" ; check_exit
+		tune2fs -r 10000 "$install_part" ; check_exit
+	else
+		mkfs.$fs_type_os -f "$install_part" ; check_exit
+	fi
 fi
 mount "$install_part" /target ; check_exit 
 
@@ -860,8 +864,12 @@ if [[ -n $home_dev ]] ; then
         home_part=$home_dev
 	fi
 	if [[ $no_format != "yes" ]]; then
-	    mkfs.$fs_type_home "$home_part" ; check_exit
-	    #tune2fs -r 10000 "$home_part" ; check_exit
+	    if [[ $fs_type_os = ext4 ]];then
+		mkfs.$fs_type_home -F "$home_part" ; check_exit
+		tune2fs -r 10000 "$home_part" ; check_exit
+	    else
+		mkfs.$fs_type_home -f "$home_part" ; check_exit
+	    fi
 	fi
     mount "$home_part" /target_home ; check_exit
 	sep_home_opt="--exclude=/home/*"
@@ -870,8 +878,12 @@ fi
 if [[ -n $boot_dev ]] ; then
     mkdir /target_boot ; check_exit
     if [[ $no_format != "yes" ]]; then
-		mkfs.$fs_type_boot $boot_dev ; check_exit
+	if [[ $fs_type_os = ext4 ]];then
+		mkfs.$fs_type_boot -F $boot_dev ; check_exit
+	else
+		mkfs.$fs_type_boot -f $boot_dev ; check_exit
 	fi
+    fi
     mount $boot_dev /target_boot
     sep_boot_opt="--exclude=/boot/*"
 fi
