@@ -1,4 +1,34 @@
-commit 3620608e03b1d7617fe2fb28aab20a8380eafce6 (HEAD, origin/master, origin/HEAD, master)
+commit 85df947ac4008d654a3c70e35e5c74e87d0e383e (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Aug 13 13:13:12 2014 -0430
+
+    * se agrega un if para verificar el tipo de filesystem y utilizar los parametros correspondientes en mkfs
+
+commit 37236a37a18d443597ab0684ac445e20ef8413eb
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Aug 13 12:10:41 2014 -0430
+
+    * se agregan nuevos alias
+
+commit 71fcf63fdab0f16634e12f2e2594c75a67b6579f
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Aug 13 12:05:54 2014 -0430
+
+    * se trasladan los alias desde el instalador al hooks
+
+commit a3f8928e4f15532d72914ff057b6d6bb6a909484
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Tue Aug 12 16:17:02 2014 -0430
+
+    * se coloca la nueva version en os-release
+
+commit 94025b9928f0a7d172aa7b051e405a2d4a28e9a1
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Tue Aug 12 13:08:41 2014 -0430
+
+    * changelog
+
+commit 3620608e03b1d7617fe2fb28aab20a8380eafce6
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Tue Aug 12 13:07:26 2014 -0430
 
