@@ -1,4 +1,28 @@
-commit 85df947ac4008d654a3c70e35e5c74e87d0e383e (HEAD, origin/master, origin/HEAD, master)
+commit 7de74c872c84c9f2526550eb4cb6d90ba9c9b50b (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Aug 13 22:43:22 2014 -0430
+
+    * se elimina dnscrypt por incompatibilidad con dnsmasq
+
+commit 051873f50b5950e92bff7704b72327a95ddb33ef
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Aug 13 19:42:14 2014 -0430
+
+    * se agrega el paquete a la lista
+
+commit 44172475664dd87418bd5e80e1dc2940833b64a8
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Aug 13 19:38:48 2014 -0430
+
+    * se agrega el repo para dnscrypt
+
+commit 8de6d1d15a8b57e1fb94a5391a63386d4ca8d428
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Aug 13 13:14:29 2014 -0430
+
+    * changelog
+
+commit 85df947ac4008d654a3c70e35e5c74e87d0e383e
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Wed Aug 13 13:13:12 2014 -0430
 
