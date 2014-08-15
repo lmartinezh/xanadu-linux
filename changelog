@@ -1,4 +1,16 @@
-commit 1e47c2fb91bd802a88fc3c43da6915143043c7c4 (HEAD, origin/master, origin/HEAD, master)
+commit 2cc30a24af4152edab405d71627bd3e100ca7f46 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Aug 14 23:09:08 2014 -0430
+
+    * se eliminan archivos redundantes en minimal
+
+commit 236a674c1bde9d08dc97260996e769f455b0bdb1
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Aug 14 23:05:39 2014 -0430
+
+    * changelog
+
+commit 1e47c2fb91bd802a88fc3c43da6915143043c7c4
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Thu Aug 14 23:04:41 2014 -0430
 
