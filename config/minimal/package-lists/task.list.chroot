@@ -1,4 +1,5 @@
 task-laptop
 xanadu-basepack
 xanadu-installer
-top
+ssh
+htop
