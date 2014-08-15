@@ -1,4 +1,16 @@
-commit 7de74c872c84c9f2526550eb4cb6d90ba9c9b50b (HEAD, origin/master, origin/HEAD, master)
+commit 546173b7e81743af0eb51acd201db8afda0ed147 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Aug 14 22:01:07 2014 -0430
+
+    * se agrega SSH a la version minimal
+
+commit b599d8658666b9e6481e5d9f7ec1c1bbf30e6b5e
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Aug 13 22:44:20 2014 -0430
+
+    * changelog
+
+commit 7de74c872c84c9f2526550eb4cb6d90ba9c9b50b
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Wed Aug 13 22:43:22 2014 -0430
 
