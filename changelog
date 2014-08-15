@@ -1,4 +1,16 @@
-commit 546173b7e81743af0eb51acd201db8afda0ed147 (HEAD, origin/master, origin/HEAD, master)
+commit 1e47c2fb91bd802a88fc3c43da6915143043c7c4 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Aug 14 23:04:41 2014 -0430
+
+    * se reinicia la migraciones de las configuraciones a sus respectivos paquetes, en este caso el instalador y los scripts complementarios
+
+commit d37ce78f342a431db255da4edac09f1720879331
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Aug 14 22:40:19 2014 -0430
+
+    * changelog
+
+commit 546173b7e81743af0eb51acd201db8afda0ed147
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Thu Aug 14 22:01:07 2014 -0430
 
