@@ -1,4 +1,16 @@
-commit 18cddde75c8e499f348c93cbb3ac5391e098e78d (HEAD, origin/master, origin/HEAD, master)
+commit 7ed9f21d20731f07c96552a6d8475d69b479f582 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Aug 24 13:33:47 2014 -0430
+
+    * se reactiva el soporte para IPv6
+
+commit f17655ae2f5a12142f99fbb53e2a9d3cb6bd1b02
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Aug 14 23:14:18 2014 -0430
+
+    * changelog
+
+commit 18cddde75c8e499f348c93cbb3ac5391e098e78d
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Thu Aug 14 23:13:39 2014 -0430
 
