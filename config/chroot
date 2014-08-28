@@ -26,11 +26,11 @@ LB_KEYRING_PACKAGES="debian-archive-keyring aptosid-archive-keyring deb-multimed
 
 # $LB_LINUX_FLAVOURS: set kernel flavour to use
 # (Default: autodetected)
-LB_LINUX_FLAVOURS="686-pae"
+LB_LINUX_FLAVOURS="686"
 
 # $LB_LINUX_PACKAGES: set kernel packages to use
 # (Default: autodetected)
-LB_LINUX_PACKAGES="linux-image"
+LB_LINUX_PACKAGES="linux-image-liquorix"
 
 # $LB_SECURITY: enable security updates
 # (Default: true)
