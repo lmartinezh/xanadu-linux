@@ -1,4 +1,16 @@
-commit 7ed9f21d20731f07c96552a6d8475d69b479f582 (HEAD, origin/master, origin/HEAD, master)
+commit aa1e02f30b45c5802db3b4071b3f9b49f3926226 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Aug 28 11:20:47 2014 -0430
+
+    * se sustituye el kernel por defecto por liquorix
+
+commit a178d477a63c45460e72e77c624b292a5500aa04
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Aug 24 13:35:13 2014 -0430
+
+    * changelog
+
+commit 7ed9f21d20731f07c96552a6d8475d69b479f582
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sun Aug 24 13:33:47 2014 -0430
 
