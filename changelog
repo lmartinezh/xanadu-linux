@@ -1,4 +1,16 @@
-commit cabb3dc256e3822b67f83f24e5c3aa94a01f3b0e (HEAD, origin/master, origin/HEAD, master)
+commit cf9285ae8e188be288cb1bbeb124fea03da2e225 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Sep 6 16:40:49 2014 -0430
+
+    * se eliminan las redundancias en los repos
+
+commit c1c4c64315aa72c3134a2acaf1f6d8020c68dd75
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Aug 31 12:29:14 2014 -0430
+
+    * changelog
+
+commit cabb3dc256e3822b67f83f24e5c3aa94a01f3b0e
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sun Aug 31 12:28:40 2014 -0430
 
