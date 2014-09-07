@@ -1,4 +1,16 @@
-commit cf9285ae8e188be288cb1bbeb124fea03da2e225 (HEAD, origin/master, origin/HEAD, master)
+commit 8bf8ec5ddf89589c102f4b91a22e35ebed9af97d (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Sep 7 16:29:19 2014 -0430
+
+    * se simplifica la lista de paquetes a instalar
+
+commit fcffdec65f9dd89f07b989cf795dd63c5b794707
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Sep 6 16:42:04 2014 -0430
+
+    * changelog
+
+commit cf9285ae8e188be288cb1bbeb124fea03da2e225
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sat Sep 6 16:40:49 2014 -0430
 
