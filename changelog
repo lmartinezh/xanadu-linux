@@ -1,4 +1,16 @@
-commit 8bf8ec5ddf89589c102f4b91a22e35ebed9af97d (HEAD, origin/master, origin/HEAD, master)
+commit adf61e800be28d6526b34fa7a2d3ccba07b648b1 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Sep 7 19:15:56 2014 -0430
+
+    * se renuevan las llaves del repositorio tor
+
+commit 6bbadbc339533a2fdf0ef7205700d852f06db32c
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Sep 7 16:29:55 2014 -0430
+
+    * changelog
+
+commit 8bf8ec5ddf89589c102f4b91a22e35ebed9af97d
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sun Sep 7 16:29:19 2014 -0430
 
