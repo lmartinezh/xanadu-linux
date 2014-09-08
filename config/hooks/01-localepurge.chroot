@@ -110,14 +110,6 @@ chmod 600 /var/lib/tor /var/log/tor
 chmod u+x /var/lib/tor /var/log/tor
 chgrp debian-tor /etc/tor/ /etc/tor/*
 chmod g+rw /etc/tor/ /etc/tor/*
-echo "## alias ##"
-mkdir -p /home/user/.config/fish/functions
-mkdir -p /root/.config/fish/functions
-echo -e "function actualizar""\n""     apt update && apt -y full-upgrade && apt-get -y autoremove;""\n""end" > /root/.config/fish/functions/actualizar.fish
-echo -e "function cp""\n""     gcp;""\n""end" > /home/user/.config/fish/functions/cp.fish
-echo -e "function top""\n""     htop;""\n""end" > /home/user/.config/fish/functions/top.fish
-echo -e "function top""\n""     htop;""\n""end" > /root/.config/fish/functions/top.fish
-echo -e "function rotorar""\n""     unrar e -kb -y;""\n""end" > /home/user/.config/fish/functions/rotorar.fish
 echo "## hardlink ##"
 hardlink -f -x /sys -t -o /
 echo "## prelink ##"
