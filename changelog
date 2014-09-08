@@ -1,4 +1,22 @@
-commit adf61e800be28d6526b34fa7a2d3ccba07b648b1 (HEAD, origin/master, origin/HEAD, master)
+commit b8e9a5892cadc1820f13300a49780106931a7226 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Sep 7 20:44:47 2014 -0430
+
+    * se corrige el proceso de purga de headers en el hooks
+
+commit 48d9dc888e0f1a85e8702ea099957593d9663553
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Sep 7 20:34:17 2014 -0430
+
+    * se restaura el repositorio i2p original
+
+commit 024b1bf2e4f6e937c291706f8ad414bb5f995d9b
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Sep 7 19:17:20 2014 -0430
+
+    * changelog
+
+commit adf61e800be28d6526b34fa7a2d3ccba07b648b1
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sun Sep 7 19:15:56 2014 -0430
 
