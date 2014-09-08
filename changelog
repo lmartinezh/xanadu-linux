@@ -1,4 +1,16 @@
-commit a2ba24d1997eb3e7dabbc2ca824054d7962e85b0 (HEAD, origin/master, origin/HEAD, master)
+commit ef7194a092de59ac6efa886fb166d9e58dc47c24 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Sep 8 14:28:13 2014 -0430
+
+    * se adaptan los perfiles para las diferentes arquitecturas a liquorix
+
+commit 0aa27e6f93686dec76eeb6241cee1a1e0e3cf8fe
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Sep 8 12:46:36 2014 -0430
+
+    * changelog
+
+commit a2ba24d1997eb3e7dabbc2ca824054d7962e85b0
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Mon Sep 8 12:45:47 2014 -0430
 
