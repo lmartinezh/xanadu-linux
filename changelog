@@ -1,4 +1,16 @@
-commit b8e9a5892cadc1820f13300a49780106931a7226 (HEAD, origin/master, origin/HEAD, master)
+commit 8b497ff613d517744e434b142879ee02dfd024b5 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Sep 8 12:22:49 2014 -0430
+
+    * se restaura el directorio /home por ser necesario para el correcto funcionamiento de lxpanel
+
+commit 834c3b28fa04344fee092c93b981f8733a7d55e6
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Sep 7 20:45:21 2014 -0430
+
+    * changelog
+
+commit b8e9a5892cadc1820f13300a49780106931a7226
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sun Sep 7 20:44:47 2014 -0430
 
