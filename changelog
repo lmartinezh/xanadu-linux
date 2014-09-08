@@ -1,4 +1,16 @@
-commit 7815ab77ab0c53927b5e3bd65e6ea5524661471d (HEAD, origin/master, origin/HEAD, master)
+commit 0de79889908418b562b060f0fc60dacff1c650db (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Sep 8 18:14:14 2014 -0430
+
+    * se trasladan los alias del hook a include.chroot
+
+commit 05a169b00e03618eef9f6182f0eb7d37158ac63a
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Sep 8 17:56:38 2014 -0430
+
+    * changelog
+
+commit 7815ab77ab0c53927b5e3bd65e6ea5524661471d
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Mon Sep 8 17:55:21 2014 -0430
 
