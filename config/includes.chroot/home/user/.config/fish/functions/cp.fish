@@ -1,3 +1,0 @@
-function cp
-     gcp;
-end
