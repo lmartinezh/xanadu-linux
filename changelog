@@ -1,4 +1,16 @@
-commit 0de79889908418b562b060f0fc60dacff1c650db (HEAD, origin/master, origin/HEAD, master)
+commit b34df0b58228b89ab4fce9025b69272edb8c875e (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Sep 8 18:27:54 2014 -0430
+
+    * se eliminan los archivos de los alias porque se crearan mediando otro metodo
+
+commit cd5384b1768a2c87f44413e1ca316d54a34fb212
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Sep 8 18:14:51 2014 -0430
+
+    * changelog
+
+commit 0de79889908418b562b060f0fc60dacff1c650db
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Mon Sep 8 18:14:14 2014 -0430
 
