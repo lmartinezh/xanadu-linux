@@ -19,8 +19,6 @@ echo "## proteger paquetes ##"
 /bin/echo amd64-microcode hold | /usr/bin/dpkg --set-selections
 /bin/echo dash hold | /usr/bin/dpkg --set-selections
 /bin/echo locales hold | /usr/bin/dpkg --set-selections
-/bin/echo i965-va-driver hold | /usr/bin/dpkg --set-selections
-/bin/echo libva-intel-vaapi-driver hold | /usr/bin/dpkg --set-selections
 /bin/echo vainfo hold | /usr/bin/dpkg --set-selections
 /bin/echo systemd-shim hold | /usr/bin/dpkg --set-selections
 echo "## purge ##"
