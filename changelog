@@ -1,4 +1,16 @@
-commit 099c07c335d1b52b757609e841a7427a76bb54a3 (HEAD, origin/master, origin/HEAD, master)
+commit 7815ab77ab0c53927b5e3bd65e6ea5524661471d (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Sep 8 17:55:21 2014 -0430
+
+    * se corrige un error que impide el inicio de ip6_tables
+
+commit 2e0e58fd44e7866b9b3efa81904a243f3d038da3
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Sep 8 15:04:43 2014 -0430
+
+    * changelog
+
+commit 099c07c335d1b52b757609e841a7427a76bb54a3
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Mon Sep 8 15:04:21 2014 -0430
 
