@@ -1,4 +1,16 @@
-commit ef7194a092de59ac6efa886fb166d9e58dc47c24 (HEAD, origin/master, origin/HEAD, master)
+commit 099c07c335d1b52b757609e841a7427a76bb54a3 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Sep 8 15:04:21 2014 -0430
+
+    * se elimina un valor repetido en sysctl.conf
+
+commit c308d542f36b723851873289da20bacb543a0ed0
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Sep 8 14:28:56 2014 -0430
+
+    * changelog
+
+commit ef7194a092de59ac6efa886fb166d9e58dc47c24
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Mon Sep 8 14:28:13 2014 -0430
 
