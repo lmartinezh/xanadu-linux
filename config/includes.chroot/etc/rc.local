@@ -16,9 +16,9 @@ mkswap /dev/zram0
 swapon -p 50 /dev/zram0
 echo "always" > /sys/kernel/mm/transparent_hugepage/enabled
 echo "20000" > /sys/kernel/mm/transparent_hugepage/khugepaged/pages_to_scan
-echo "1" > /sys/kernel/mm/ksm/run
-echo "20000" > /sys/kernel/mm/ksm/pages_to_scan
-echo "200" > /sys/kernel/mm/ksm/sleep_millisecs
+# echo "1" > /sys/kernel/mm/ksm/run
+# echo "20000" > /sys/kernel/mm/ksm/pages_to_scan
+# echo "200" > /sys/kernel/mm/ksm/sleep_millisecs
 echo "/usr/local/sbin/cgroup_clean" > /sys/fs/cgroup/cpu/release_agent
 echo "1" > /sys/fs/cgroup/cpu/notify_on_release
 miswap=$(fdisk -l | grep swap | cut -c 1-9)
