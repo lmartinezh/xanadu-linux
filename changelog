@@ -1,4 +1,16 @@
-commit b34df0b58228b89ab4fce9025b69272edb8c875e (HEAD, origin/master, origin/HEAD, master)
+commit 9abeb5cc827249bdfe2b112105b444e013d84fa3 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Sep 8 20:58:45 2014 -0430
+
+    * se desactiva KSM
+
+commit 459174d4c260f2d8cd2db1f7f5f5f39b25a38219
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Sep 8 18:29:26 2014 -0430
+
+    * changelog
+
+commit b34df0b58228b89ab4fce9025b69272edb8c875e
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Mon Sep 8 18:27:54 2014 -0430
 
