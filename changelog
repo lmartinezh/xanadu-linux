@@ -1,4 +1,16 @@
-commit d94b313dc273168febc0384acea81f614488df27 (HEAD, origin/master, origin/HEAD, master)
+commit 13877926e00e43053890c2dd9fd839be7351fd67 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Tue Sep 9 00:15:44 2014 -0430
+
+    * se elimina el soporte a plymouth por no funcionar correctamente desde 0.5.9
+
+commit 01ac6aab4e8acfa63d742abd66ada5abdb4b8aac
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Sep 8 23:50:43 2014 -0430
+
+    * changelog
+
+commit d94b313dc273168febc0384acea81f614488df27
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Mon Sep 8 23:48:48 2014 -0430
 
