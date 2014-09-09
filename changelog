@@ -1,4 +1,16 @@
-commit 54918323617bd07c05a1a1e1c754ebe7099acae8 (HEAD, origin/master, origin/HEAD, master)
+commit d94b313dc273168febc0384acea81f614488df27 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Sep 8 23:48:48 2014 -0430
+
+    * se agrega la correccion de permisos de carpetas al cambiar las claves
+
+commit c9d7038ca65e1ea0405e2831dc0bdc4fb8e0bd25
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Sep 8 21:29:53 2014 -0430
+
+    * changelog
+
+commit 54918323617bd07c05a1a1e1c754ebe7099acae8
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Mon Sep 8 21:28:41 2014 -0430
 
