@@ -1,4 +1,16 @@
-commit 13877926e00e43053890c2dd9fd839be7351fd67 (HEAD, origin/master, origin/HEAD, master)
+commit 692107840a3cc919cf7514ad3243b0660aae262c (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Tue Sep 9 18:31:52 2014 -0430
+
+    * se elimina el perfil del sabor minimal ya que no se utilizara de nuevo
+
+commit 1bcd6cc291f919998d5583cea03efdabfd79316c
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Tue Sep 9 00:16:27 2014 -0430
+
+    * changelog
+
+commit 13877926e00e43053890c2dd9fd839be7351fd67
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Tue Sep 9 00:15:44 2014 -0430
 
