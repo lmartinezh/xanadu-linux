@@ -8,6 +8,7 @@ LISTA DE PRUEBAS
 * Verificar si la clave de user y de root son correctas
 * Verificar si xzoom, expose y demás combinaciones de teclas funcionan adecuadamente
 * Ejecutar los programas de uso común para verificar si funcionan adecuadamente y están en español
+* Probar el reproductor de flash 
 * Verificar si las ultimas correcciones que aparecen en changelog realmente funcionan
 * Ejecutar el script "revision" para realizar las pruebas automatizadas
 * Verificar si el instalador funciona correctamente
