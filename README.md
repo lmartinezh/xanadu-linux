@@ -18,18 +18,6 @@ https://xanadulinux.wordpress.com/descarga/
 
 El nombre xanadu se ha considerado como sinónimo de opulencia y misterio, sobre todo gracias al poema Kubla Khan de Samuel Taylor Coleridge, también era la capital de verano del imperio Mongol de Kublai Jan y además fue el nombre seleccionado por Theodore Holm Nelson (Ted Nelson) para su idea de "concebir un documento global y único (docuverse), que cubra todo lo escrito en el mundo, mediante una gran cantidad de ordenadores interconectados, que contenga todo el conocimiento existente o, mejor dicho, información en forma de hipertexto."
 
-Para copiar el contenido de la imagen ISO a una memoria USB puede utilizar unetbootin o el comando dd de la siguiente forma: dd if=nombre.iso of=/dev/sdx oflag=direct bs=1048576
-
---------------------------
-
-El usuario es:		user
-
-La clave de user es:	xanadu
-
-La clave de ROOT es:	enfilade
-
---------------------------
-
 Requerimientos mínimos:
 
 	* 512 Mb RAM (1 Gb RAM recomendado)
