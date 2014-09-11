@@ -1,4 +1,22 @@
-commit a225341edd25d662ec0504bb3ec1672128ed752f (HEAD, origin/master, origin/HEAD, master)
+commit d5db15d3786c151f53a103a240798b09751240b6 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Sep 10 22:36:50 2014 -0430
+
+    * se actualiza la informacion del readme.md
+
+commit 832489aca5bc6645f2132a9bca0ebce373ecdc3a
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Sep 10 22:14:31 2014 -0430
+
+    * se agregan las fuentes a los repositorios de kali
+
+commit 06e524be48b45b66f8e3c31ff1232b346365f48b
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Sep 10 22:02:56 2014 -0430
+
+    * changelog
+
+commit a225341edd25d662ec0504bb3ec1672128ed752f
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Wed Sep 10 22:02:13 2014 -0430
 
