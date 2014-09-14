@@ -1,4 +1,16 @@
-commit 6dcbbc20938c26c3c9b7afa17ccea78a629444e6 (HEAD, origin/master, origin/HEAD, master)
+commit e1be0ff69706711c2ff3eac90a022e5bc622498a (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Sep 13 21:44:17 2014 -0430
+
+    se se fusiona test.txt con el archivo de pruebas en la rama de desarrollo
+
+commit e7ef93b256ec2f0951b7011e8ada4f95a8fcddb3
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Fri Sep 12 00:40:15 2014 -0430
+
+    * changelog
+
+commit 6dcbbc20938c26c3c9b7afa17ccea78a629444e6
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Fri Sep 12 00:33:02 2014 -0430
 
