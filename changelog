@@ -1,4 +1,16 @@
-commit e1be0ff69706711c2ff3eac90a022e5bc622498a (HEAD, origin/master, origin/HEAD, master)
+commit 0e739c0f89525553bed935e874618df103dbc857 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Sep 13 21:47:58 2014 -0430
+
+    * se agrega un parametro de apparmor al arranque
+
+commit e01612eedd473dc2cb04cc05b3c8429eebd4f5eb
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Sep 13 21:45:00 2014 -0430
+
+    * changelog
+
+commit e1be0ff69706711c2ff3eac90a022e5bc622498a
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sat Sep 13 21:44:17 2014 -0430
 
