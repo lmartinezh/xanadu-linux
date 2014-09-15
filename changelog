@@ -1,4 +1,16 @@
-commit 0e739c0f89525553bed935e874618df103dbc857 (HEAD, origin/master, origin/HEAD, master)
+commit f92dc5f5e7c7113c6166cb6823c5d2f79ee41525 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Sep 14 22:27:04 2014 -0430
+
+    * se agregan los archivos para resolver la falla de flash-player
+
+commit f7cfe94d2c26e05deb00ed6b4341111f357a4a4e
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Sep 13 21:48:51 2014 -0430
+
+    * changelog
+
+commit 0e739c0f89525553bed935e874618df103dbc857
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sat Sep 13 21:47:58 2014 -0430
 
