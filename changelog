@@ -1,4 +1,22 @@
-commit f92dc5f5e7c7113c6166cb6823c5d2f79ee41525 (HEAD, origin/master, origin/HEAD, master)
+commit d18660d764041a7a457c13548bdd853452286775 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Sep 15 23:16:10 2014 -0430
+
+    * se deja un archivo leeme generico para ambas arquitecturas
+
+commit 9f03c753e23466a110849418a81ac64fd1663f7d
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Sep 15 23:07:17 2014 -0430
+
+    * se completa la lista de keyring en chroot para amd64
+
+commit 05135420f1b9ae66e09d44a932da943180106b27
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Sep 14 22:33:19 2014 -0430
+
+    * changelog
+
+commit f92dc5f5e7c7113c6166cb6823c5d2f79ee41525
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sun Sep 14 22:27:04 2014 -0430
 
