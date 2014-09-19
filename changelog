@@ -1,4 +1,22 @@
-commit d18660d764041a7a457c13548bdd853452286775 (HEAD, origin/master, origin/HEAD, master)
+commit cbbde607f0e0e3a02fa2a633f7de599342300044 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Fri Sep 19 12:33:22 2014 -0430
+
+    * se crean las carpetas para flashplayer en amd64
+
+commit 010b224c86ca89b24830c89f036af90edf623d5a
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Fri Sep 19 12:30:10 2014 -0430
+
+    * se crean las carpetas para flashplayer en i386
+
+commit 955712421d0eafb6935eea9e6e6096a8b7b73f50
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Sep 15 23:16:41 2014 -0430
+
+    * changelog
+
+commit d18660d764041a7a457c13548bdd853452286775
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Mon Sep 15 23:16:10 2014 -0430
 
