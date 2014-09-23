@@ -102,6 +102,9 @@ rm -fv /var/lib/tor/.vacio
 rm -fv /var/log/polipo/.vacio
 rm -fv /var/log/tor/.vacio
 find . -type f -name "*.old" -exec rm -f {} \;
+find . -type f -name "readme.*" -exec rm -f {} \;
+find . -type f -name "README.*" -exec rm -f {} \;
+find . -type f -name "README" -exec rm -f {} \;
 echo "## limpieza de log ##"
 for FILE in $(find /var/log/ -type f)
 do
