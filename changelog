@@ -1,4 +1,16 @@
-commit cbbde607f0e0e3a02fa2a633f7de599342300044 (HEAD, origin/master, origin/HEAD, master)
+commit 831cd1a93eb7220509d1616475e8c8165137472b (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Sep 22 21:19:08 2014 -0430
+
+    * se buscan y eliminan los archivos leeme de algunos paquetes y se eliminan durante la ejecucion de hooks
+
+commit 7b9a8c03b910687d625fed84ff667f39696f6ff0 (tag: v0.6.0)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Fri Sep 19 12:37:32 2014 -0430
+
+    * changelog
+
+commit cbbde607f0e0e3a02fa2a633f7de599342300044
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Fri Sep 19 12:33:22 2014 -0430
 
