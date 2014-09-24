@@ -1,4 +1,22 @@
-commit 90fbc28c12791a9b9c379cefbc6f28fe370da105 (HEAD, origin/master, origin/HEAD, master)
+commit 7b8fd4b6a9313ed01c1f38450a373d3cd9370659 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Sep 24 16:26:06 2014 -0430
+
+    * cambios en los leeme.txt incluidos en la imagen iso
+
+commit 8bd3a87695aa0d3f6c9e4795a26546d3ba6a114a
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Sep 24 16:20:03 2014 -0430
+
+    * cambios en el readme para agregar la nueva informacion ubicada en la pagina web
+
+commit cd6332c4adf2800f7d843b61ac94d8099453391a
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Tue Sep 23 13:20:23 2014 -0430
+
+    * changelog
+
+commit 90fbc28c12791a9b9c379cefbc6f28fe370da105
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Tue Sep 23 13:19:34 2014 -0430
 
