@@ -1,10 +1,6 @@
 Xanadu GNU/Linux
 
-Es un derivado de Debian que utiliza SID como base y LXDE como entorno de escritorio, pensada para ser ligera y a la vez útil, contiene herramientas para rescate de sistemas, análisis forense y navegación anónima, además de todo lo necesario para su uso en el escritorio.
-
-Es 100% compatible con los paquetes de Debian.
-
-El nombre xanadu se ha considerado como sinónimo de opulencia y misterio, sobre todo gracias al poema Kubla Khan de Samuel Taylor Coleridge, también era la capital de verano del imperio Mongol de Kublai Jan y además fue el nombre seleccionado por Theodore Holm Nelson (Ted Nelson) para su idea de "concebir un documento global y único (docuverse), que cubra todo lo escrito en el mundo, mediante una gran cantidad de ordenadores interconectados, que contenga todo el conocimiento existente o, mejor dicho, información en forma de hipertexto."
+Es un distribución Rolling Release (No necesitara reinstalar cada vez que una nueva versión es liberada, los programas se actualizan en cuanto sale una nueva versión de ellos. De esta forma nuestra distribución siempre estará actualizada) basada en Debian SID garantizando un sistema innovador y 100% compatible con los paquetes de Debian o derivados, desarrollada para ser rápida, ligera y a la vez útil pensando en las necesidades del usuario y ofreciendo herramientas para el usuario avanzado.
 
 La imagen .ISO y sus configuraciones para crearla se encuentran disponibles bajo licencia GPL v2 (GNU GENERAL PUBLIC LICENSE, Version 2, June 1991) y pueden ser descargadas desde: 
 
