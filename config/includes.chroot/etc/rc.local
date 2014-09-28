@@ -21,18 +21,21 @@ echo "20000" > /sys/kernel/mm/transparent_hugepage/khugepaged/pages_to_scan
 # echo "200" > /sys/kernel/mm/ksm/sleep_millisecs
 echo "/usr/local/sbin/cgroup_clean" > /sys/fs/cgroup/cpu/release_agent
 echo "1" > /sys/fs/cgroup/cpu/notify_on_release
-memor=$(grep MemTotal /proc/meminfo | awk '{print $2}')
-page_size=$(getconf PAGE_SIZE)
-phys_pages=$(getconf _PHYS_PAGES)
-shmall=`expr $phys_pages / 2`
-shmmax=`expr $shmall \* $page_size`
-echo kernel.shmmax = $shmmax >> /etc/sysctl.conf
-echo kernel.shmall = $shmall >> /etc/sysctl.conf
-if (( $memor > 4096000 )); then
-	echo "vm.swappiness = 10" >> /etc/sysctl.conf
-	echo "vm.vfs_cache_pressure = 50" >> /etc/sysctl.conf
+if [ ! -f /root/.mem ]; then
+	memor=$(grep MemTotal /proc/meminfo | awk '{print $2}')
+	page_size=$(getconf PAGE_SIZE)
+	phys_pages=$(getconf _PHYS_PAGES)
+	shmall=`expr $phys_pages / 2`
+	shmmax=`expr $shmall \* $page_size`
+	echo kernel.shmmax = $shmmax >> /etc/sysctl.conf
+	echo kernel.shmall = $shmall >> /etc/sysctl.conf
+	echo "1" > /root/.mem
+	if (( $memor > 4096000 )); then
+		echo "vm.swappiness = 10" >> /etc/sysctl.conf
+		echo "vm.vfs_cache_pressure = 50" >> /etc/sysctl.conf
+	fi
+	sysctl -p
 fi
-sysctl -p
 miswap=$(fdisk -l | grep swap | cut -c 1-9)
 swapon -p 25 -f $miswap
 rmmod -f ip_tables ip6_tables iptable_filter iptable_mangle iptable_nat iptable_raw bluetooth rfcomm
