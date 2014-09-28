@@ -1,4 +1,16 @@
-commit 7b8fd4b6a9313ed01c1f38450a373d3cd9370659 (HEAD, origin/master, origin/HEAD, master)
+commit 757118f968f1502478fd8907ea0680bf41636f5b (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Sep 28 01:07:56 2014 -0430
+
+    * se coloca un condicional para evitar que se dupliquen valores en sysctl.conf
+
+commit 9d37970c069799ad0e9e1eb3e9032a3b631b682b
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Sep 24 16:26:31 2014 -0430
+
+    * changelog
+
+commit 7b8fd4b6a9313ed01c1f38450a373d3cd9370659
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Wed Sep 24 16:26:06 2014 -0430
 
