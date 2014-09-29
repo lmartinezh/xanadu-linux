@@ -96,11 +96,6 @@ rm -f /usr/share/lxde/wallpapers/lxde_red.jpg
 rm -f /usr/share/xmms2/silence-cellule_snippet.ogg 
 rm -f /var/cache/apt/pkgcache.bin
 rm -f /var/cache/apt/srcpkgcache.bin
-rm -fv /var/cache/polipo/.vacio
-rm -fv /var/lib/samba/usershares/.vacio
-rm -fv /var/lib/tor/.vacio
-rm -fv /var/log/polipo/.vacio
-rm -fv /var/log/tor/.vacio
 find . -type f -name "*.old" -exec rm -f {} \;
 find . -type f -name "readme.*" -exec rm -f {} \;
 find . -type f -name "README.*" -exec rm -f {} \;
