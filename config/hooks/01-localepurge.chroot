@@ -110,6 +110,12 @@ for FILE in $(find /var/log/ -type f)
 do
 	: > ${FILE}
 done
+echo "## creacion de carpetas ##"
+mkdir -pv /var/cache/polipo
+mkdir -pv /var/lib/samba/usershares
+mkdir -pv /var/lib/tor
+mkdir -pv /var/log/polipo
+mkdir -pv /var/log/tor
 echo "## tor ##"
 chown debian-tor:debian-tor /var/log/tor /var/lib/tor
 chmod 600 /var/lib/tor /var/log/tor
