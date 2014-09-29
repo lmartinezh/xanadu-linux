@@ -1,4 +1,16 @@
-commit 757118f968f1502478fd8907ea0680bf41636f5b (HEAD, origin/master, origin/HEAD, master)
+commit ad0a147b059c2a94ee657902b42874b0c0ff573d (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Sep 28 22:04:39 2014 -0430
+
+    * se inicia la limpieza de nuevo
+
+commit e41ccf6413dcfe6aca68c9f05bfa9e1ed3600b17
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Sep 28 01:08:31 2014 -0430
+
+    * changelog
+
+commit 757118f968f1502478fd8907ea0680bf41636f5b
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sun Sep 28 01:07:56 2014 -0430
 
