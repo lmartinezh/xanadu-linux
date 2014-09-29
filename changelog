@@ -1,4 +1,16 @@
-commit ad0a147b059c2a94ee657902b42874b0c0ff573d (HEAD, origin/master, origin/HEAD, master)
+commit 8b7753e239bde9252bae88a8a32a443f9340ec82 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Sep 28 22:13:41 2014 -0430
+
+    * se eliminan directorios de polipo, tor y se traslada su creacion a hooks
+
+commit c420fdd9016dc8218844510b5c2884441c357090
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Sep 28 22:05:08 2014 -0430
+
+    * changelog
+
+commit ad0a147b059c2a94ee657902b42874b0c0ff573d
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sun Sep 28 22:04:39 2014 -0430
 
