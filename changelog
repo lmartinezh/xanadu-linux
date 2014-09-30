@@ -1,4 +1,16 @@
-commit 3d390c545a1d2f4ed484fe51e8be96ff6f4b737f (HEAD, origin/master, origin/HEAD, master)
+commit 4581c205e34c1d913bd0d9ba563de33eae53e5cc (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Tue Sep 30 14:07:11 2014 -0430
+
+    * se mejora la sesion de openbox
+
+commit 2d850776b0313687ffb360b8c35aadb5ff0fbaab
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Sep 28 22:16:59 2014 -0430
+
+    * changelog
+
+commit 3d390c545a1d2f4ed484fe51e8be96ff6f4b737f
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sun Sep 28 22:16:45 2014 -0430
 
