@@ -52,7 +52,7 @@ Requerimientos mínimos:
 
 El nombre Xanadu se ha considerado como sinónimo de opulencia y misterio, sobre todo gracias al poema de Samuel Taylor Coleridge; también fue la capital de verano del imperio Mongol de Kublai Jan y además fue el nombre seleccionado por Theodore Holm Nelson para su idea de: “concebir un documento global y único (docuverse), que cubra todo lo escrito en el mundo, mediante una gran cantidad de ordenadores interconectados, que contenga todo el Conocimiento existente o, mejor dicho, información en forma de hipertexto.”
 
-Dudas, consultas y/o sugerencias por favor enviarlas a: sinfallas@gmail.com
+Si quiere hacer una donación, puede realizarla mediante PayPal a: sinfallas@gmail.com
 
 Paquetes incluidos:
 
