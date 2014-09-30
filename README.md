@@ -42,7 +42,7 @@ En este apartado, Xanadu incluye la ultima versión de la suite Libreoffice, VLC
 En este apartado se incluye la aplicación Pidgin para mensajería y como gestor de archivos tenemos a Thunar y Pcmanfm.
 
 
-Requerimientos mínimos:
+##### Requerimientos mínimos #####
 
 	* 512 Mb RAM (1 Gb RAM recomendado)
 	* CPU a 800 Mhz o superior (1.0 Ghz recomendado)
