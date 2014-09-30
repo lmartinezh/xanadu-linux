@@ -50,7 +50,11 @@ Requerimientos mínimos:
 	* BIOS con capacidad de arranque por USB o CDROM
 	* 5 Gb de capacidad de disco para instalar
 
-El nombre Xanadu se ha considerado como sinónimo de opulencia y misterio, sobre todo gracias al poema de Samuel Taylor Coleridge; también fue la capital de verano del imperio Mongol de Kublai Jan y además fue el nombre seleccionado por Theodore Holm Nelson para su idea de: “concebir un documento global y único (docuverse), que cubra todo lo escrito en el mundo, mediante una gran cantidad de ordenadores interconectados, que contenga todo el Conocimiento existente o, mejor dicho, información en forma de hipertexto.”
+El nombre Xanadu se ha considerado como sinónimo de opulencia y misterio, sobre todo gracias al poema de Samuel Taylor Coleridge; también fue la capital de verano del imperio Mongol de Kublai Jan y además fue el nombre seleccionado por Theodore Holm Nelson para su idea de: 
+
+<blockquote>
+  <p>“concebir un documento global y único (docuverse), que cubra todo lo escrito en el mundo, mediante una gran cantidad de ordenadores interconectados, que contenga todo el Conocimiento existente o, mejor dicho, información en forma de hipertexto.”</p>
+</blockquote>
 
 Si quiere hacer una donación, puede realizarla mediante PayPal a: sinfallas@gmail.com
 
