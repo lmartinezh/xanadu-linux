@@ -1,4 +1,16 @@
-commit 4581c205e34c1d913bd0d9ba563de33eae53e5cc (HEAD, origin/master, origin/HEAD, master)
+commit 6dc4f0c86fba586e8dbfa768931a94dba1aee59b (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Tue Sep 30 17:45:59 2014 -0430
+
+    * se cambian los archivos leeme para agregar la informacion para donaciones
+
+commit 91f418874f8dc251ce01ec968f3331c9e824e449
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Tue Sep 30 14:08:18 2014 -0430
+
+    * changelog
+
+commit 4581c205e34c1d913bd0d9ba563de33eae53e5cc
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Tue Sep 30 14:07:11 2014 -0430
 
