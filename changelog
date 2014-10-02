@@ -1,4 +1,16 @@
-commit 628001c37c82244c1927c119ac2b82ba385b2b62 (HEAD, origin/master, origin/HEAD, master)
+commit 3ddd3e7878cf5cb97d66498dc4f78202a59e9657 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Oct 1 19:36:07 2014 -0430
+
+    * se desactiva temporalmente el repo de yad, se usa el ppa de xanadu como respaldo
+
+commit f6ddd7fa2161163dadf67a0a09a2fcd32a259c67
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Tue Sep 30 18:05:23 2014 -0430
+
+    * changelog
+
+commit 628001c37c82244c1927c119ac2b82ba385b2b62
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Tue Sep 30 18:05:06 2014 -0430
 
