@@ -1,4 +1,16 @@
-commit 3ddd3e7878cf5cb97d66498dc4f78202a59e9657 (HEAD, origin/master, origin/HEAD, master)
+commit fc48070c498ea90acb625b4744f64f7f197191d0 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Fri Oct 3 22:44:26 2014 -0430
+
+    * se elimina el keyring del repo de yad
+
+commit 53a861e069936c27c55c0c91752b7a49c241c1be
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Oct 1 19:36:38 2014 -0430
+
+    * changelog
+
+commit 3ddd3e7878cf5cb97d66498dc4f78202a59e9657
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Wed Oct 1 19:36:07 2014 -0430
 
