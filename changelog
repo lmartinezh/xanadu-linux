@@ -1,4 +1,16 @@
-commit fc48070c498ea90acb625b4744f64f7f197191d0 (HEAD, origin/master, origin/HEAD, master)
+commit 3f0638c504c0e5d83272b2b028ce456d02365e64 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Fri Oct 3 22:56:33 2014 -0430
+
+    * se elimina el acento de la palabra donacion
+
+commit ac38d30e777bfd33c9287de0f6c33627e8ba4ff3
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Fri Oct 3 22:45:12 2014 -0430
+
+    * changelog
+
+commit fc48070c498ea90acb625b4744f64f7f197191d0
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Fri Oct 3 22:44:26 2014 -0430
 
