@@ -1,4 +1,16 @@
-commit 67c0cc03f0491eebbecc005a50dbf05cb566e941 (HEAD, origin/master, origin/HEAD, master)
+commit ec042eca9f3eb1979941451e9e5e0c2eae0cad57 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Oct 5 12:31:28 2014 -0430
+
+    * se repara el un error en la modificacion de lxpanel
+
+commit 839d8ee336877e7d5de475cab654c6c1e39e038c
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Oct 4 17:52:55 2014 -0430
+
+    * changelog
+
+commit 67c0cc03f0491eebbecc005a50dbf05cb566e941
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sat Oct 4 17:52:28 2014 -0430
 
