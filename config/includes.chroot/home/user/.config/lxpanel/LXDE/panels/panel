@@ -2,15 +2,15 @@
 # Use preference dialog in lxpanel to adjust config when you can.
 
 Global {
-    edge=top
+    edge=bottom
     allign=left
     margin=0
     widthtype=percent
     width=100
     height=26
     transparent=1
-    tintcolor=0
-    alpha=43
+    tintcolor=#000000
+    alpha=61
     autohide=0
     heightwhenhidden=2
     setdocktype=1
