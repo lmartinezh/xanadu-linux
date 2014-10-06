@@ -1,4 +1,16 @@
-commit ec042eca9f3eb1979941451e9e5e0c2eae0cad57 (HEAD, origin/master, origin/HEAD, master)
+commit 2316daf9033b5b92838ed72470d17e94e69c20f0 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Oct 6 16:13:48 2014 -0430
+
+    * se impide la instalacion de w3m
+
+commit 84bb59e49dbd181a8f8abe0056463ca2411bcfc0
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Oct 5 12:32:14 2014 -0430
+
+    * changelog
+
+commit ec042eca9f3eb1979941451e9e5e0c2eae0cad57
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sun Oct 5 12:31:28 2014 -0430
 
