@@ -265,3 +265,7 @@ Pin-Priority: -1
 Package: yelp
 Pin: version *
 Pin-Priority: -1
+
+Package: w3m
+Pin: version *
+Pin-Priority: -1

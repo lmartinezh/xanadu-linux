@@ -218,7 +218,7 @@
 <!-- Zoom inicio-->
     <keybind key="A-z">
       <action name="Execute">
-        <command>xzoom -source 250x150 -mag 2</command>
+        <command>xmag</command>
       </action>
     </keybind>
 <!-- Zoom fin-->
