@@ -1,4 +1,22 @@
-commit d842c453da361608673ad44f14e2984591dbba27 (HEAD, origin/master, origin/HEAD, master)
+commit e49d474b3ac89f19648d72eaad4b32240e988ab9 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Tue Oct 7 19:01:07 2014 -0430
+
+    * se simplifican los leeme
+
+commit 26dc67b1e9ce27d11a658e5fa2efaacb5107405e
+Author: Jesus Palencia <sinfallas@users.noreply.github.com>
+Date:   Tue Oct 7 18:55:30 2014 -0430
+
+    Update README.md
+
+commit a9804aed8d08065f2c1db11da8e688fc54013ebb
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Oct 6 17:11:28 2014 -0430
+
+    * changelog
+
+commit d842c453da361608673ad44f14e2984591dbba27
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Mon Oct 6 16:14:15 2014 -0430
 
