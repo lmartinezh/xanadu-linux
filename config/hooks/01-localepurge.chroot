@@ -111,6 +111,7 @@ mkdir -pv /var/lib/samba/usershares
 mkdir -pv /var/lib/tor
 mkdir -pv /var/log/polipo
 mkdir -pv /var/log/tor
+mkdir -pv /etc/fstab.d
 echo "## tor ##"
 chown debian-tor:debian-tor /var/log/tor /var/lib/tor
 chmod 600 /var/lib/tor /var/log/tor
