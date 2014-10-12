@@ -1,4 +1,16 @@
-commit 61ad1e653256f11dbe2b9931ef1e573a0e74ac54 (HEAD, origin/master, origin/HEAD, master)
+commit c16bfec83f240f65fbad9e552928904d39e91dc4 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Oct 11 20:42:46 2014 -0430
+
+    * se eliminan del hooks los actualizadores de ids
+
+commit 01953014951f60dd4b47fa93fb133b69a8503223
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Fri Oct 10 20:35:24 2014 -0430
+
+    * changelog
+
+commit 61ad1e653256f11dbe2b9931ef1e573a0e74ac54
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Fri Oct 10 20:34:52 2014 -0430
 
