@@ -2,10 +2,6 @@
 #elaborado por sinfallas
 echo "## localepurge ##"
 localepurge
-echo "## pci ids ##"
-update-pciids
-echo "## usb ids ##"
-update-usbids
 echo "## usuarios - grupos ##"
 groupadd -r dnsmasq
 adduser dnsmasq dnsmasq
