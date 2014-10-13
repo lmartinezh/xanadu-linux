@@ -45,7 +45,7 @@ En este apartado se incluye la aplicación Pidgin para mensajería y como gestor
 ##### Requerimientos mínimos #####
 
 	* 512 Mb RAM (1 Gb RAM recomendado)
-	* CPU a 800 Mhz o superior (1.0 Ghz recomendado)
+	* CPU a 1.0 Ghz o superior (1.5 Ghz recomendado)
 	* Tarjeta de video a 800x600, 16 Mb vídeo RAM
 	* BIOS con capacidad de arranque por USB o CDROM
 	* 5 Gb de capacidad de disco para instalar
