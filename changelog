@@ -1,4 +1,40 @@
-commit c16bfec83f240f65fbad9e552928904d39e91dc4 (HEAD, origin/master, origin/HEAD, master)
+commit bd32cdc824b4fb618f49d7aaddf6cb3b58191a08 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Oct 16 12:02:39 2014 -0430
+
+    * se traslada el enlace simbolico hasta hooks
+
+commit 8340706e9c3100be98e37400965bfd7c55bf594a
+Author: Jesus Palencia <sinfallas@users.noreply.github.com>
+Date:   Mon Oct 13 09:24:20 2014 -0430
+
+    * se actualizan los requerimientos minimos
+
+commit c9766c20c7f5ecc80ffc054f0e37f3479ede77c5
+Author: Jesus Palencia <sinfallas@users.noreply.github.com>
+Date:   Mon Oct 13 09:23:47 2014 -0430
+
+    * se actualizan los requerimientos minimos
+
+commit 5632b6bae820c0f300e4e0f02b372c6a2ea4bf89
+Author: Jesus Palencia <sinfallas@users.noreply.github.com>
+Date:   Mon Oct 13 09:22:59 2014 -0430
+
+    * se actualizan los requerimientos minimos
+
+commit 045a2125fa7d16aad09340f7baa1d43933b0197e
+Author: Jesus Palencia <sinfallas@users.noreply.github.com>
+Date:   Mon Oct 13 09:21:10 2014 -0430
+
+    se actualizan los requerimientos minimos
+
+commit f921c15ea116674000e90bf733c5cf3034dd3e1a
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Oct 11 20:43:15 2014 -0430
+
+    * changelog
+
+commit c16bfec83f240f65fbad9e552928904d39e91dc4
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sat Oct 11 20:42:46 2014 -0430
 
