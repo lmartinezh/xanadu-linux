@@ -108,7 +108,6 @@ mkdir -pv /var/lib/tor
 mkdir -pv /var/log/polipo
 mkdir -pv /var/log/tor
 mkdir -pv /etc/fstab.d
-mkdir -pv /usr/share/tor
 echo "## tor ##"
 chown debian-tor:debian-tor /var/log/tor /var/lib/tor
 chmod 600 /var/lib/tor /var/log/tor
@@ -118,7 +117,6 @@ chmod g+rw /etc/tor/ /etc/tor/*
 echo "## links ##"
 ln -sv /usr/lib/flashplugin-nonfree/libflashplayer.so /usr/lib/mozilla/plugins/flash-mozilla.so
 ln -sv /proc/mounts /etc/mtab
-ln -sv /etc/tor/torrc /usr/share/tor/tor-service-defaults-torrc
 echo "## hardlink ##"
 hardlink -f -x /sys -t -o /
 echo "## prelink ##"
