@@ -114,8 +114,9 @@ chmod 600 /var/lib/tor /var/log/tor
 chmod u+x /var/lib/tor /var/log/tor
 chgrp debian-tor /etc/tor/ /etc/tor/*
 chmod g+rw /etc/tor/ /etc/tor/*
-echo "## link ##"
+echo "## links ##"
 ln -sv /usr/lib/flashplugin-nonfree/libflashplayer.so /usr/lib/mozilla/plugins/flash-mozilla.so
+ln -sv /proc/mounts /etc/mtab
 echo "## hardlink ##"
 hardlink -f -x /sys -t -o /
 echo "## prelink ##"
