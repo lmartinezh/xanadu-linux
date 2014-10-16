@@ -1,4 +1,16 @@
-commit bd32cdc824b4fb618f49d7aaddf6cb3b58191a08 (HEAD, origin/master, origin/HEAD, master)
+commit c5715211539b01db4d5fd797a720279dc106a2cc (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Oct 16 12:07:50 2014 -0430
+
+    * se traslada enlace simbolico de torrc al hooks
+
+commit d245eedb8e9da1aa7284b5b0f19ee922915a59f3
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Oct 16 12:03:32 2014 -0430
+
+    * changelog
+
+commit bd32cdc824b4fb618f49d7aaddf6cb3b58191a08
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Thu Oct 16 12:02:39 2014 -0430
 
