@@ -1,4 +1,16 @@
-commit c5715211539b01db4d5fd797a720279dc106a2cc (HEAD, origin/master, origin/HEAD, master)
+commit d1d3c4abf6d557016237c843a019d483b5961036 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Oct 16 12:27:38 2014 -0430
+
+    * se trasladan las configuraciones de tor a su correspondiente paquete
+
+commit 348894990d6242ed172f4074eef2a088c256808b
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Oct 16 12:08:37 2014 -0430
+
+    * changelog
+
+commit c5715211539b01db4d5fd797a720279dc106a2cc
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Thu Oct 16 12:07:50 2014 -0430
 
