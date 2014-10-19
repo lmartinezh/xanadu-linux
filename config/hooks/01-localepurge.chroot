@@ -96,11 +96,7 @@ find . -type f -name "*.old" -exec rm -f {} \;
 find . -type f -name "readme.*" -exec rm -f {} \;
 find . -type f -name "README.*" -exec rm -f {} \;
 find . -type f -name "README" -exec rm -f {} \;
-echo "## limpieza de log ##"
-for FILE in $(find /var/log/ -type f)
-do
-	: > ${FILE}
-done
+find /var/log/ -type f -exec rm -f {} \;
 echo "## creacion de carpetas ##"
 mkdir -pv /var/cache/polipo
 mkdir -pv /var/lib/samba/usershares
