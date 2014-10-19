@@ -1,4 +1,16 @@
-commit d1d3c4abf6d557016237c843a019d483b5961036 (HEAD, origin/master, origin/HEAD, master)
+commit ea98e19fa0737374beb502194e1e36cb39345c28 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Oct 18 19:41:36 2014 -0430
+
+    * se corrige la funcion de limpiar logs
+
+commit 892f63f865798d2b211c7886477b1ca1ff379f00
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Oct 16 12:29:08 2014 -0430
+
+    * changelog
+
+commit d1d3c4abf6d557016237c843a019d483b5961036
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Thu Oct 16 12:27:38 2014 -0430
 
