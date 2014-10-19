@@ -1,4 +1,16 @@
-commit ea98e19fa0737374beb502194e1e36cb39345c28 (HEAD, origin/master, origin/HEAD, master)
+commit 555905aa1563055b9694d6953557ecb0d6be64a8 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Oct 18 20:52:31 2014 -0430
+
+    * se crea la copia del archivo de configuracion de dnsmasq
+
+commit 80a3701cb821e75f8895753fe5f6f3b175b274ca
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Oct 18 19:42:03 2014 -0430
+
+    * changelog
+
+commit ea98e19fa0737374beb502194e1e36cb39345c28
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sat Oct 18 19:41:36 2014 -0430
 
