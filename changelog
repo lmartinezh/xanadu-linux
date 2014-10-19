@@ -1,4 +1,16 @@
-commit 555905aa1563055b9694d6953557ecb0d6be64a8 (HEAD, origin/master, origin/HEAD, master)
+commit 1b57eb04ee337a3c60b4b904cbec61ca8c9beed0 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Oct 18 22:27:26 2014 -0430
+
+    * se traslada el archivo a su respectivo paquete
+
+commit 65221e67d9bdae4f47e19009b53f1e67716cf446
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Oct 18 20:53:09 2014 -0430
+
+    * changelog
+
+commit 555905aa1563055b9694d6953557ecb0d6be64a8
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sat Oct 18 20:52:31 2014 -0430
 
