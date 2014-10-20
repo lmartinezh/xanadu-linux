@@ -1,4 +1,16 @@
-commit 55e860457167b81c67bca9a19c0dffd3f0603e06 (HEAD, origin/master, origin/HEAD, master)
+commit 924368e3338c493beeb6cfd5e6967c365377c720 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Oct 20 17:46:59 2014 -0430
+
+    * se trasladan los wallpapers a su paquete
+
+commit 314a5f0278eadb66cd77e71af75a1346b57e2e05
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Oct 20 17:34:11 2014 -0430
+
+    * changelog
+
+commit 55e860457167b81c67bca9a19c0dffd3f0603e06
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Mon Oct 20 17:32:45 2014 -0430
 
