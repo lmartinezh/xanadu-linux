@@ -1,4 +1,16 @@
-commit 1b57eb04ee337a3c60b4b904cbec61ca8c9beed0 (HEAD, origin/master, origin/HEAD, master)
+commit 55e860457167b81c67bca9a19c0dffd3f0603e06 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Oct 20 17:32:45 2014 -0430
+
+    * se eliminan las configuraciones de aide, compton, dnsmasq, iceweasel, psad, shorewall, ssh, synaptic y se trasladan a su respectivo paquete
+
+commit 0894979c0ac9e55d3921798494905cc1a1e520b8
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sat Oct 18 22:27:55 2014 -0430
+
+    * changelog
+
+commit 1b57eb04ee337a3c60b4b904cbec61ca8c9beed0
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sat Oct 18 22:27:26 2014 -0430
 
