@@ -1,4 +1,16 @@
-commit 924368e3338c493beeb6cfd5e6967c365377c720 (HEAD, origin/master, origin/HEAD, master)
+commit d0aed928ae633baef10e8d2e599ba8166f8298b4 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Oct 20 18:08:55 2014 -0430
+
+    * se agregan los logos a su paquete
+
+commit 9cbbe4e38ddc7f11e3adbe5498a72c6c35ad34af
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Oct 20 17:47:32 2014 -0430
+
+    * changelog
+
+commit 924368e3338c493beeb6cfd5e6967c365377c720
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Mon Oct 20 17:46:59 2014 -0430
 
