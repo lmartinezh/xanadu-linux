@@ -1,4 +1,16 @@
-commit d0aed928ae633baef10e8d2e599ba8166f8298b4 (HEAD, origin/master, origin/HEAD, master)
+commit a179a83ae5ab2fbb8d71aab14075aa129107e709 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Oct 22 15:06:52 2014 -0430
+
+    * se trasladan las configuraciones de tint2 y syslinux a sus paquetes
+
+commit 454ea612ff62da94af2496ff6d9d7803378131ac
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Mon Oct 20 18:09:21 2014 -0430
+
+    * changelog
+
+commit d0aed928ae633baef10e8d2e599ba8166f8298b4
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Mon Oct 20 18:08:55 2014 -0430
 
