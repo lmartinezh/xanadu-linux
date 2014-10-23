@@ -1,4 +1,16 @@
-commit d1ce7783f46001571c7449c5fb53781005febf1d (HEAD, origin/master, origin/HEAD, master)
+commit 942d8797ec5a0dcc5dd60f08492a88ce4d10fe49 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Oct 23 10:37:48 2014 -0430
+
+    * se pasa la configuracion de memlockd a su paquete
+
+commit 952098d0a6c3e894b0f28e84d7c94b049923b4dd
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Wed Oct 22 22:00:16 2014 -0430
+
+    * changelog
+
+commit d1ce7783f46001571c7449c5fb53781005febf1d
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Wed Oct 22 21:59:43 2014 -0430
 
