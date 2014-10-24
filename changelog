@@ -1,4 +1,16 @@
-commit 942d8797ec5a0dcc5dd60f08492a88ce4d10fe49 (HEAD, origin/master, origin/HEAD, master)
+commit c0717b0c7f365c27ca4f6103edfb84c80b688a7c (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Oct 23 21:12:48 2014 -0430
+
+    * se mudan las configuraciones de pcmanfm, lxterminal y el tema a sus paquetes
+
+commit 3c3a33bfa998fccea59d0b771907d61fd5a8800a
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Oct 23 10:38:20 2014 -0430
+
+    * changelog
+
+commit 942d8797ec5a0dcc5dd60f08492a88ce4d10fe49
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Thu Oct 23 10:37:48 2014 -0430
 
