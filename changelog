@@ -1,4 +1,16 @@
-commit c0717b0c7f365c27ca4f6103edfb84c80b688a7c (HEAD, origin/master, origin/HEAD, master)
+commit 7663b9907b32561089fad154748f1c30a5ecf15c (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Oct 23 21:31:08 2014 -0430
+
+    * se empaqueta el theme xanadu
+
+commit 9460025c3e0d5fb38df402f956068814d9e00de2
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Oct 23 21:13:46 2014 -0430
+
+    * changelog
+
+commit c0717b0c7f365c27ca4f6103edfb84c80b688a7c
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Thu Oct 23 21:12:48 2014 -0430
 
