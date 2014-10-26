@@ -93,6 +93,7 @@ rm -f /usr/share/xmms2/silence-cellule_snippet.ogg
 rm -f /var/cache/apt/pkgcache.bin
 rm -f /var/cache/apt/srcpkgcache.bin
 find . -type f -name "*.old" -exec rm -f {} \;
+find . -type f -name "*-old" -exec rm -f {} \;
 find . -type f -name "readme.*" -exec rm -f {} \;
 find . -type f -name "README.*" -exec rm -f {} \;
 find . -type f -name "README" -exec rm -f {} \;
