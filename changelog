@@ -1,10 +1,22 @@
-commit d0a5fe98ef2d96bbc7424c51b9077b6150a85e58 (HEAD, master)
+commit 4eb548c038b12a9f575ae15ab015d034974410b4 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Oct 30 17:25:51 2014 -0430
+
+    * se elimina manpages-dev
+
+commit 35c0c6637301729136a05e25f1a23db96bd14094
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Sun Oct 26 19:14:02 2014 -0430
+
+    * changelog
+
+commit d0a5fe98ef2d96bbc7424c51b9077b6150a85e58
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Sun Oct 26 19:12:07 2014 -0430
 
     * bugfix
 
-commit 3883944bbd45f88247b7549a8a200c0c5915327c (origin/master, origin/HEAD)
+commit 3883944bbd45f88247b7549a8a200c0c5915327c
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Thu Oct 23 21:31:30 2014 -0430
 
