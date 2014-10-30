@@ -269,3 +269,7 @@ Pin-Priority: -1
 Package: w3m
 Pin: version *
 Pin-Priority: -1
+
+Package: manpages-dev
+Pin: version *
+Pin-Priority: -1
