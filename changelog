@@ -1,4 +1,16 @@
-commit 4eb548c038b12a9f575ae15ab015d034974410b4 (HEAD, origin/master, origin/HEAD, master)
+commit 1e9e1b0b30b38469f6284610eaa99b904c6ba6b3 (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Oct 30 17:58:41 2014 -0430
+
+    * se reactiva ctrl+alt+backspace par reiniciar las X
+
+commit 037381d3aa5300454d2401b1b1cefc3311d7f250
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Oct 30 17:26:24 2014 -0430
+
+    * changelog
+
+commit 4eb548c038b12a9f575ae15ab015d034974410b4
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Thu Oct 30 17:25:51 2014 -0430
 
