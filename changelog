@@ -1,4 +1,16 @@
-commit 1e9e1b0b30b38469f6284610eaa99b904c6ba6b3 (HEAD, origin/master, origin/HEAD, master)
+commit 74e66fc4cab1a48906dcba2a09ff02a16cabda3b (HEAD, origin/master, origin/HEAD, master)
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Oct 30 22:51:58 2014 -0430
+
+    * se sacan de la lista negra las librerias necesarias para x11vnc
+
+commit 364ea3f0ae1e216ea2d75705d34a44fa368cc3d1
+Author: sinfallas <sinfallas@gmail.com>
+Date:   Thu Oct 30 17:59:16 2014 -0430
+
+    * changelog
+
+commit 1e9e1b0b30b38469f6284610eaa99b904c6ba6b3
 Author: sinfallas <sinfallas@gmail.com>
 Date:   Thu Oct 30 17:58:41 2014 -0430
 
